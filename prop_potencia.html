@@ -1,232 +1,69 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clase Interactiva: Leyes de los Exponentes</title>
+    <title>Clase Interactiva: Propiedades de las Potencias</title>
     
+    <!-- MathJax para fórmulas matemáticas -->
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
-
+    
+    <!-- Fuente Roboto de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Estilos específicos para esta página -->
     <style>
-        /* Sidebar Styles */
-        .sidebar {
-            width: 250px;
-            height: 100%;
-            position: fixed;
-            left: 0;
-            top: 0;
-            background-color: #2c3e50;
-            color: white;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-            z-index: 1000;
-            overflow-y: auto;
-            padding-bottom: 20px;
-        }
-
-        .sidebar.show {
-            transform: translateX(0);
-        }
-
-        .sidebar-header {
-            padding: 20px;
-            background-color: #1a252f;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .sidebar-title {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        .toggle-sidebar {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5em;
-            cursor: pointer;
-            padding: 5px 10px;
-        }
-
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            padding: 15px 0;
-        }
-
-        .sidebar-nav a {
-            color: #ecf0f1;
-            text-decoration: none;
-            padding: 12px 25px;
-            transition: all 0.3s;
-        }
-
-        .sidebar-nav a:hover {
-            background-color: #34495e;
-            padding-left: 30px;
-        }
-
-        .content-wrapper {
-            transition: margin 0.3s;
-            margin-left: 0;
-            padding: 20px;
-        }
-
-        .content-wrapper.shifted {
-            margin-left: 250px;
-        }
-
-        @media (max-width: 768px) {
-            .content-wrapper.shifted {
-                margin-left: 0;
-            }
-        }
-
-        /* Estilo general del cuerpo */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            line-height: 1.7;
-            margin: 0;
-            padding: 20px;
-        }
-
-        /* Contenedor principal de la clase */
-        .class-container {
-            max-width: 850px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
-            overflow: hidden;
-        }
-
-        /* Encabezado */
-        header {
-            background: linear-gradient(135deg, #f96d00, #c32f00);
-            color: white;
-            padding: 30px 35px;
+        /* Estilos específicos para esta página */
+        .formula {
+            font-size: 1.3em;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #dc3545;
+            margin: 15px 0;
+            overflow-x: auto;
             text-align: center;
         }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.6em;
-            font-weight: 700;
-        }
-
-        /* Área de contenido principal */
-        .content-area {
-            padding: 25px 30px;
-        }
-
-        .instructions {
-            font-size: 1.15em;
-            text-align: center;
-            color: #555;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #f96d00;
-            padding-bottom: 15px;
-        }
-
-        /* Tarjeta de propiedad (Acordeón) */
+        
         .property-card {
-            border: 1px solid #e0e0e0;
+            margin-bottom: 25px;
             border-radius: 8px;
-            margin-bottom: 15px;
-            transition: box-shadow 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid #dc3545;
         }
         
         .property-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        /* Encabezado de la tarjeta (el botón clickeable) */
-        .card-header {
-            background-color: #fffaf5;
-            padding: 18px 25px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.4em;
-            font-weight: 600;
-            color: #c32f00;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
-        /* Indicador de expandir/colapsar */
-        .indicator {
-            font-size: 1.6em;
-            font-weight: 300;
-            color: #f96d00;
-            transition: transform 0.3s ease-in-out;
-        }
-        
-        /* Estilo cuando está activo */
-        .card-header.active {
-            background-color: #fff0e6;
-        }
-
-        .card-header.active .indicator {
-            transform: rotate(45deg);
-        }
-
-        /* Contenido colapsable */
-        .card-content {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            padding: 0 25px;
-            transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
-            border-top: 1px solid #e9e9e9;
-        }
-
-        .card-content.visible {
-            max-height: 2000px; /* Suficiente para contenido extenso */
-            opacity: 1;
-            padding: 20px 25px 25px 25px;
-        }
-
-        .card-content h3 {
-            color: #c32f00;
-            margin-top: 0;
-            border-bottom: 1px solid #ffe0cc;
-            padding-bottom: 5px;
-        }
-
-        /* Estilo para las fórmulas de MathJax */
-        .formula {
-            font-size: 1.3em;
-            text-align: center;
-            padding: 20px;
-            background-color: #fdfdfd;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            margin: 20px 0;
-            overflow-x: auto;
-        }
-        
-        .intuition {
-            background-color: #fffaf5;
-            border-left: 4px solid #f96d00;
-            padding: 15px;
-            margin: 15px 0;
+        .example {
+            background-color: #fee;
+            border-left: 4px solid #dc3545;
+            padding: 10px 15px;
+            margin: 10px 0;
             border-radius: 4px;
         }
         
-        .property-image {
-            width: 100%;
-            max-width: 400px;
-            height: auto;
-            border-radius: 8px;
-            margin: 15px auto;
-            display: block;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        .note {
+            background-color: #e7f5ff;
+            border-left: 4px solid #228be6;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        
+        .warning {
+            background-color: #fff3bf;
+            border-left: 4px solid #ffd43b;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -238,314 +75,358 @@
             <a href="index.html" class="sidebar-title">Matemáticas</a>
         </div>
         <nav class="sidebar-nav">
-            <a href="prop_igualdad.html">Propiedades de Igualdad</a>
-            <a href="prop_suma.html">Propiedades de la Suma</a>
-            <a href="prop_resta.html">Propiedades de la Resta</a>
-            <a href="prop_multiplicacion.html">Propiedades de la Multiplicación</a>
-            <a href="prop_division.html">Propiedades de la División</a>
-            <a href="prop_potencia.html">Propiedades de la Potencia</a>
-            <a href="prop_raices.html">Propiedades de las Raíces</a>
-            <a href="prop_derivada.html">Propiedades de la Derivada</a>
-            <a href="prop_derivadas parciales.html">Propiedades de las Derivadas Parciales</a>
-            <a href="prop_integral.html">Propiedades de la Integral</a>
-            <a href="prop_integracionporpartes.html">Integración por Partes</a>
-            <a href="prop_fourier.html">Transformada de Fourier</a>
-            <a href="prop_fraccparciales.html">Fracciones Parciales</a>
-            <a href="prop_identidadestrigono.html">Identidades Trigonométricas</a>
-            <a href="prop_laplace.html">Transformada de Laplace</a>
-            <a href="prop_teoremas.html">Teoremas Matemáticos</a>
+            <a href="prop_suma.html"><i>+</i> Propiedad de la Suma</a>
+            <a href="prop_resta.html"><i>-</i> Propiedad de la Resta</a>
+            <a href="prop_multiplicacion.html"><i>×</i> Propiedad Multiplicativa</a>
+            <a href="prop_division.html"><i>÷</i> Propiedad de la División</a>
+            <a href="prop_potencia.html" class="active"><i>x²</i> Propiedad de la Potencia</a>
+            <a href="prop_raices.html"><i>√</i> Propiedad de la Raíz</a>
+            <a href="prop_igualdad.html"><i>=</i> Propiedad de la Igualdad</a>
+            <a href="prop_teoremas.html"><i>📚</i> Teoremas Fundamentales</a>
+            <a href="prop_derivada.html"><i>d/dx</i> Propiedades de la Derivada</a>
+            <a href="prop_integral.html"><i>∫</i> Propiedades de la Integral</a>
         </nav>
     </div>
+
     <div class="content-wrapper">
+        <div class="class-container">
+            <header>
+                <h1>Propiedades de las Potencias</h1>
+                <div class="back-to-home">
+                    <a href="index.html" class="btn-back">
+                        <span class="material-icons-round">home</span>
+                        Volver al Inicio
+                    </a>
+                </div>
+            </header>
 
-    <div class="class-container">
-        <header>
-            <h1>Dominando las Leyes de los Exponentes</h1>
-        </header>
+            <div class="content-area">
+                <p class="instructions">
+                    Explora las propiedades fundamentales de las potencias. 
+                    Haz clic en cada propiedad para ver su definición, fórmula y ejemplos.
+                </p>
 
-        <div class="content-area">
-            <p class="instructions">
-                Haz clic en cada propiedad para revelar su fórmula, la intuición detrás de ella y un ejemplo.
-            </p>
+                <!-- Multiplicación de potencias de igual base -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>1. Multiplicación de potencias de igual base</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>Al multiplicar potencias de la misma base, se suman los exponentes.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$a^m \times a^n = a^{m+n}$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Multiplicar potencias con la misma base:</p>
+                            <div class="formula">
+                                $$2^3 \times 2^4 = 2^{3+4} = 2^7 = 128$$
+                                $$5^2 \times 5^3 = 5^{2+3} = 5^5 = 3125$$
+                            </div>
+                        </div>
+                        
+                        <h3>Aplicaciones</h3>
+                        <ul>
+                            <li>Simplificación de expresiones algebraicas</li>
+                            <li>Cálculo de intereses compuestos</li>
+                            <li>Notación científica</li>
+                        </ul>
+                    </div>
+                </div>
 
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>1. El Fundamento: ¿Qué es una Potencia?</span>
-                    <span class="indicator">+</span>
+                <!-- División de potencias de igual base -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>2. División de potencias de igual base</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>Al dividir potencias de la misma base, se restan los exponentes.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$\frac{a^m}{a^n} = a^{m-n} \quad (a \neq 0)$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Dividir potencias con la misma base:</p>
+                            <div class="formula">
+                                $$\frac{3^5}{3^2} = 3^{5-2} = 3^3 = 27$$
+                                $$\frac{10^7}{10^4} = 10^{7-4} = 10^3 = 1000$$
+                            </div>
+                        </div>
+                        
+                        <div class="note">
+                            <strong>Nota:</strong> Si el exponente del numerador es menor que el del denominador, 
+                            el resultado tendrá exponente negativo, que equivale a 1 sobre la potencia con exponente positivo.
+                        </div>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>La potencia es una <strong>multiplicación repetida</strong>. El exponente nos dice cuántas veces multiplicar la base por sí misma.</p>
-                    <div class="formula">
-                        $$a^n = \underbrace{a \cdot a \cdot a \cdots a}_{n \text{ veces}}$$
-                    </div>
-                    <div class="intuition">
-                        <p><strong>Intuición:</strong> Es una "taquigrafía" para no escribir $$a \cdot a \cdot a \cdot a \cdot a \cdot a \cdot a$$</p>
-                        <p><strong>Base ($$a$$):</strong> El número que se multiplica (el "actor").</p>
-                        <p><strong>Exponente ($$n$$):</strong> Cuántas veces aparece el actor (la "instrucción").</p>
-                    </div>
-                    <h3>Ejemplo</h3>
-                    <div class="formula">
-                        $$2^5 = 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 = 32$$
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?fireworks,explosion" alt="Imagen de una explosión" class="property-image"> -->
-                </div>
-            </div>
 
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>2. Producto de Potencias (Misma Base)</span>
-                    <span class="indicator">+</span>
+                <!-- Potencia de una potencia -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>3. Potencia de una potencia</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>Al elevar una potencia a otra potencia, se multiplican los exponentes.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$(a^m)^n = a^{m \times n}$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Elevar una potencia a otra potencia:</p>
+                            <div class="formula">
+                                $$(2^3)^4 = 2^{3 \times 4} = 2^{12} = 4096$$
+                                $$(5^2)^3 = 5^{2 \times 3} = 5^6 = 15625$$
+                            </div>
+                        </div>
+                        
+                        <h3>Aplicaciones</h3>
+                        <ul>
+                            <li>Simplificación de expresiones con exponentes múltiples</li>
+                            <li>Cálculo de crecimiento exponencial compuesto</li>
+                            <li>Álgebra de funciones exponenciales</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <h3>La Regla</h3>
-                    <p>Al multiplicar dos potencias con la misma base, mantienes la base y <strong>sumas los exponentes</strong>.</p>
-                    <div class="formula">
-                        $$a^m \cdot a^n = a^{m+n}$$
-                    </div>
-                    <div class="intuition">
-                        <p><strong>Intuición (¡Solo cuenta!):</strong></p>
-                        <p>$$a^2 \cdot a^3 = (a \cdot a) \cdot (a \cdot a \cdot a)$$</p>
-                        <p>¿Cuántas 'a' multiplicándose hay en total? ¡Exacto, 5! ($$2+3=5$$)</p>
-                        <p>$$ = a \cdot a \cdot a \cdot a \cdot a = a^5$$</p>
-                    </div>
-                    <h3>Ejemplo</h3>
-                    <div class="formula">
-                        $$x^4 \cdot x^3 = x^{4+3} = x^7$$
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?chain,links" alt="Imagen de eslabones de cadena" class="property-image"> -->
-                </div>
-            </div>
-            
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>3. Cociente de Potencias (Misma Base)</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>La Regla</h3>
-                    <p>Al dividir dos potencias con la misma base, mantienes la base y <strong>restas los exponentes</strong>.</p>
-                    <div class="formula">
-                        $$\frac{a^m}{a^n} = a^{m-n}$$
-                    </div>
-                    <div class="intuition">
-                        <p><strong>Intuición (¡Solo cancela!):</strong></p>
-                        <p>$$\frac{a^5}{a^2} = \frac{a \cdot a \cdot a \cdot a \cdot a}{a \cdot a}$$</p>
-                        <p>Cancelamos dos pares de 'a' (uno de arriba con uno de abajo) y... ¿cuántas 'a' sobreviven arriba? ¡Exacto, 3! ($$5-2=3$$)</p>
-                        <p>$$ = a \cdot a \cdot a = a^3$$</p>
-                    </div>
-                    <h3>Ejemplo</h3>
-                    <div class="formula">
-                        $$\frac{7^6}{7^2} = 7^{6-2} = 7^4$$
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?cutting,scissors" alt="Imagen de tijeras cortando" class="property-image"> -->
-                </div>
-            </div>
 
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>4. Potencia de una Potencia</span>
-                    <span class="indicator">+</span>
+                <!-- Potencia de un producto -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>4. Potencia de un producto</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>La potencia de un producto es igual al producto de las potencias de los factores.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$(a \times b)^n = a^n \times b^n$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Elevar un producto a una potencia:</p>
+                            <div class="formula">
+                                $$(2 \times 3)^4 = 2^4 \times 3^4 = 16 \times 81 = 1296$$
+                                $$(5x)^2 = 5^2 \times x^2 = 25x^2$$
+                            </div>
+                        </div>
+                        
+                        <h3>Importancia</h3>
+                        <ul>
+                            <li>Fundamental para la factorización de expresiones algebraicas</li>
+                            <li>Útil en cálculos con notación científica</li>
+                            <li>Base para entender raíces de productos</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <h3>La Regla</h3>
-                    <p>Al elevar una potencia a otra potencia, mantienes la base y <strong>multiplicas los exponentes</strong>.</p>
-                    <div class="formula">
-                        $$(a^m)^n = a^{m \cdot n}$$
-                    </div>
-                    <div class="intuition">
-                        <p><strong>Intuición (Repetición de grupos):</strong></p>
-                        <p>$$(a^3)^2$$ significa "toma $$a^3$$ y multiplícalo por sí mismo 2 veces".</p>
-                        <p>$$ (a^3)^2 = (a^3) \cdot (a^3) $$</p>
-                        <p>Y por la regla del producto (Nº 2), esto es:</p>
-                        <p>$$ (a \cdot a \cdot a) \cdot (a \cdot a \cdot a) = a^{3+3} = a^6 $$</p>
-                        <p>El atajo fue simplemente $$3 \cdot 2 = 6$$.</p>
-                    </div>
-                    <h3>Ejemplo</h3>
-                    <div class="formula">
-                        $$(x^5)^3 = x^{5 \cdot 3} = x^{15}$$
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?fractal,nested,recursion" alt="Imagen de un fractal" class="property-image"> -->
-                </div>
-            </div>
 
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>5. Potencia de un Producto</span>
-                    <span class="indicator">+</span>
+                <!-- Potencia de un cociente -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>5. Potencia de un cociente</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>La potencia de un cociente es igual al cociente de la potencia del numerador entre la potencia del denominador.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$\left(\frac{a}{b}\right)^n = \frac{a^n}{b^n} \quad (b \neq 0)$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Elevar un cociente a una potencia:</p>
+                            <div class="formula">
+                                $$\left(\frac{3}{4}\right)^2 = \frac{3^2}{4^2} = \frac{9}{16}$$
+                                $$\left(\frac{2x}{5}\right)^3 = \frac{(2x)^3}{5^3} = \frac{8x^3}{125}$$
+                            </div>
+                        </div>
+                        
+                        <h3>Aplicaciones</h3>
+                        <ul>
+                            <li>Simplificación de fracciones complejas</li>
+                            <li>Resolución de ecuaciones racionales</li>
+                            <li>Cálculo de probabilidades</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <h3>La Regla</h3>
-                    <p>El exponente se "distribuye" a cada factor dentro del paréntesis.</p>
-                    <div class="formula">
-                        $$(a \cdot b)^n = a^n \cdot b^n$$
-                    </div>
-                    <div class="intuition">
-                        <p><strong>Intuición (Desagrupar y reordenar):</strong></p>
-                        <p>$$(a \cdot b)^3 = (a \cdot b) \cdot (a \cdot b) \cdot (a \cdot b)$$</p>
-                        <p>Como la multiplicación es conmutativa, podemos reordenar todos los factores:</p>
-                        <p>$$ = (a \cdot a \cdot a) \cdot (b \cdot b \cdot b) = a^3 \cdot b^3$$</p>
-                    </div>
-                    <h3>Ejemplo</h3>
-                    <div class="formula">
-                        $$(2x)^4 = 2^4 \cdot x^4 = 16x^4$$
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?team,group,expanding" alt="Imagen de un grupo expandiéndose" class="property-image"> -->
-                </div>
-            </div>
-            
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>6. Potencia de un Cociente</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>La Regla</h3>
-                    <p>El exponente se "distribuye" al numerador y al denominador.</p>
-                    <div class="formula">
-                        $$\left(\frac{a}{b}\right)^n = \frac{a^n}{b^n} \quad (\text{con } b \neq 0)$$
-                    </div>
-                    <div class="intuition">
-                        <p><strong>Intuición (Igual que el producto):</strong></p>
-                        <p>$$\left(\frac{a}{b}\right)^3 = \left(\frac{a}{b}\right) \cdot \left(\frac{a}{b}\right) \cdot \left(\frac{a}{b}\right)$$</p>
-                        <p>Al multiplicar fracciones, multiplicamos los numeradores juntos y los denominadores juntos:</p>
-                        <p>$$ = \frac{a \cdot a \cdot a}{b \cdot b \cdot b} = \frac{a^3}{b^3}$$</p>
-                    </div>
-                    <h3>Ejemplo</h3>
-                    <div class="formula">
-                        $$\left(\frac{x}{5}\right)^2 = \frac{x^2}{5^2} = \frac{x^2}{25}$$
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?splitting,dividing" alt="Imagen de algo dividiéndose" class="property-image"> -->
-                </div>
-            </div>
 
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>7. Caso Especial: Exponente Cero</span>
-                    <span class="indicator">+</span>
+                <!-- Exponente cero -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>6. Exponente cero</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>Cualquier número distinto de cero elevado a la potencia cero es igual a uno.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$a^0 = 1 \quad (a \neq 0)$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Ejemplos de exponente cero:</p>
+                            <div class="formula">
+                                $$5^0 = 1$$
+                                $$(-3)^0 = 1$$
+                                $$(\pi)^0 = 1$$
+                            </div>
+                        </div>
+                        
+                        <div class="warning">
+                            <strong>¡Cuidado!</strong> La expresión $0^0$ es una forma indeterminada en matemáticas.
+                        </div>
+                        
+                        <h3>Demostración</h3>
+                        <p>Usando la propiedad de división de potencias:</p>
+                        <div class="formula">
+                            $$a^0 = a^{n-n} = \frac{a^n}{a^n} = 1$$
+                        </div>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <h3>La Regla</h3>
-                    <p>Cualquier número (distinto de cero) elevado a la potencia de cero es <strong>1</strong>.</p>
-                    <div class="formula">
-                        $$a^0 = 1 \quad (\text{con } a \neq 0)$$
-                    </div>
-                    <div class="intuition">
-                        <p><strong>Intuición (¡Deducción lógica!):</strong></p>
-                        <p>Sabemos que cualquier número dividido por sí mismo es 1. Por ejemplo, $$\frac{a^3}{a^3} = 1$$.</p>
-                        <p>¡Pero también podemos usar la Regla del Cociente (Nº 3) en esa misma expresión!</p>
-                        <p>$$ \frac{a^3}{a^3} = a^{3-3} = a^0 $$</p>
-                        <p>Como $$a^0$$ y $$1$$ son ambos el resultado de $$\frac{a^3}{a^3}$$, ¡deben ser iguales! Por lo tanto, $$a^0 = 1$$.</p>
-                    </div>
-                    <h3>Ejemplo</h3>
-                    <div class="formula">
-                        $$ (5x^2y)^0 = 1 \quad (\text{si } x \neq 0, y \neq 0) $$
-                        $$ 728^0 = 1 $$
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?zero,start line,balance" alt="Imagen del número cero" class="property-image"> -->
-                </div>
-            </div>
-            
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>8. Caso Especial: Exponente Negativo</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>La Regla</h3>
-                    <p>Un exponente negativo significa "tomar el recíproco" (invertir la base). <strong>No hace al número negativo.</strong></p>
-                    <div class="formula">
-                        $$a^{-n} = \frac{1}{a^n} \quad (\text{con } a \neq 0)$$
-                    </div>
-                    <div class="intuition">
-                        <p><strong>Intuición (¡Otra deducción lógica!):</strong></p>
-                        <p>Veamos la expresión $$\frac{a^2}{a^5}$$.</p>
-                        <p><strong>Método 1 (Cancelando):</strong> $$\frac{a \cdot a}{a \cdot a \cdot a \cdot a \cdot a} = \frac{1}{a \cdot a \cdot a} = \frac{1}{a^3}$$</Fp>
-                        <p><strong>Método 2 (Regla del Cociente Nº 3):</strong> $$\frac{a^2}{a^5} = a^{2-5} = a^{-3}$$</p>
-                        <p>Como ambos son el resultado de $$\frac{a^2}{a^5}$$, ¡deben ser iguales! Por lo tanto, $$a^{-3} = \frac{1}{a^3}$$.</p>
-                    </div>
-                    <h3>Ejemplo</h3>
-                    <div class="formula">
-                        $$ x^{-4} = \frac{1}{x^4} $$
-                        $$ 3^{-2} = \frac{1}{3^2} = \frac{1}{9} $$
-                        $$ \left(\frac{x}{y}\right)^{-1} = \frac{y}{x} $$
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?reverse,undo,inverse" alt="Imagen de reversa" class="property-image"> -->
-                </div>
-            </div>
-            
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>9. Avanzado: Exponente Fraccionario (Raíces)</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>La Regla</h3>
-                    <p>Un exponente fraccionario es una forma de escribir una <strong>raíz</strong>. El denominador es el índice de la raíz.</p>
-                    <div class="formula">
-                        $$a^{1/n} = \sqrt[n]{a}$$
-                        $$a^{m/n} = (\sqrt[n]{a})^m = \sqrt[n]{a^m}$$
-                    </div>
-                    <div class="intuition">
-                        <p><strong>Intuición (Usando la Regla Nº 4):</strong></p>
-                        <p>¿Qué significa $$a^{1/2}$$? No lo sabemos, pero llamémoslo $$x$$.</p>
-                        <p>$$ x = a^{1/2} $$</p>
-                        <p>Elevemos ambos lados al cuadrado:</p>
-                        <p>$$ x^2 = (a^{1/2})^2 $$</p>
-                        <p>Por la regla de "Potencia de una Potencia" (Nº 4), multiplicamos los exponentes: $$(1/2) \cdot 2 = 1$$.</p>
-                        <p>$$ x^2 = a^1 = a $$</p>
-                        <p>Entonces, $$x$$ es el número que, al elevarlo al cuadrado, nos da $$a$$. ¡A eso lo llamamos la raíz cuadrada ($$\sqrt{a}$$)! Por lo tanto, $$a^{1/2} = \sqrt{a}$$.</p>
-                    </div>
-                    <h3>Ejemplo</h3>
-                    <div class="formula">
-                        $$ 25^{1/2} = \sqrt{25} = 5 $$
-                        $$ 8^{1/3} = \sqrt[3]{8} = 2 $$
-                        $$ x^{2/3} = \sqrt[3]{x^2} $$
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?tree roots,roots" alt="Imagen de raíces de un árbol" class="property-image"> -->
-                </div>
-            </div>
 
+                <!-- Exponente negativo -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>7. Exponente negativo</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>Un exponente negativo indica el recíproco de la base elevada al valor absoluto del exponente.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$a^{-n} = \frac{1}{a^n} \quad (a \neq 0)$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Convertir exponentes negativos a positivos:</p>
+                            <div class="formula">
+                                $$2^{-3} = \frac{1}{2^3} = \frac{1}{8}$$
+                                $$\left(\frac{3}{4}\right)^{-2} = \left(\frac{4}{3}\right)^2 = \frac{16}{9}$$
+                            </div>
+                        </div>
+                        
+                        <h3>Importancia</h3>
+                        <ul>
+                            <li>Permite trabajar con cantidades muy pequeñas</li>
+                            <li>Fundamental en notación científica</li>
+                            <li>Base para funciones exponenciales decrecientes</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Exponente fraccionario -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>8. Exponente fraccionario (Raíces)</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>Un exponente fraccionario representa una raíz. El denominador de la fracción indica el índice de la raíz.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$a^{\frac{m}{n}} = \sqrt[n]{a^m} = (\sqrt[n]{a})^m$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Convertir exponentes fraccionarios a radicales:</p>
+                            <div class="formula">
+                                $$8^{\frac{2}{3}} = (\sqrt[3]{8})^2 = 2^2 = 4$$
+                                $$x^{\frac{1}{2}} = \sqrt{x}$$
+                            </div>
+                        </div>
+                        
+                        <div class="note">
+                            <strong>Nota:</strong> Cuando el exponente es 1/2, se puede escribir simplemente como raíz cuadrada.
+                        </div>
+                        
+                        <h3>Aplicaciones</h3>
+                        <ul>
+                            <li>Conversión entre notación de exponentes y radicales</li>
+                            <li>Simplificación de expresiones con raíces</li>
+                            <li>Resolución de ecuaciones exponenciales y radicales</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
+        
+                        <!-- Botón de Volver al Inicio al final -->
+                <div class="back-to-home bottom">
+                    <a href="index.html" class="btn-back">
+                        <span class="material-icons-round">home</span>
+                        Volver al Inicio
+                    </a>
+                </div>
+<footer>
+            <p>© JMGV PTEL 2025 Propiedades de las Potencias. Todos los derechos reservados.</p>
+        </footer>
     </div>
 
+    <!-- Scripts JavaScript -->
+    <script src="js/main.js"></script>
+    
+    <!-- Scripts específicos para esta página -->
     <script>
-        function toggleCard(headerElement) {
-            // Encuentra el contenido asociado
-            const content = headerElement.nextElementSibling;
-            // Encuentra el indicador
-            const indicator = headerElement.querySelector('.indicator');
-            
-            // Alterna la clase 'active' en el header
-            headerElement.classList.toggle('active');
-
-            // Alterna la clase 'visible' en el contenido
-            if (content.classList.contains('visible')) {
-                // Si está visible, lo ocultamos
-                content.classList.remove('visible');
-                indicator.textContent = '+';
-            } else {
-                // Si está oculto, lo mostramos
-                content.classList.add('visible');
-                indicator.textContent = '−'; // Usamos un signo 'menos'
+        // Configuración específica de MathJax para esta página
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true
+            },
+            chtml: {
+                scale: 0.9,
+                displayAlign: 'center',
+                displayIndent: '1em'
+            },
+            svg: {
+                fontCache: 'global'
             }
+        };
+        
+        // Función para manejar la impresión
+        function handlePrint() {
+            window.print();
         }
-    </script>
-
-    <script>
-        function toggleSidebar() {
-            document.querySelector('.sidebar').classList.toggle('show');
-            document.querySelector('.content-wrapper').classList.toggle('shifted');
-        }
-
-        // Close sidebar when clicking outside
-        document.addEventListener('click', function(event) {
-            const sidebar = document.querySelector('.sidebar');
-            const toggleBtn = document.querySelector('.toggle-sidebar');
+        
+        // Asegurar que MathJax se renderice correctamente después de cargar el contenido
+        document.addEventListener('DOMContentLoaded', function() {
+            // Forzar actualización de MathJax después de que se muestre el contenido
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
             
-            if (!sidebar.contains(event.target) && event.target !== toggleBtn) {
-                sidebar.classList.remove('show');
-                document.querySelector('.content-wrapper').classList.remove('shifted');
+            // Expandir la primera tarjeta por defecto
+            const firstCard = document.querySelector('.property-card:first-child .card-header');
+            if (firstCard) {
+                firstCard.click();
             }
         });
     </script>

@@ -3,282 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clase Interactiva: Técnicas de Integración</title>
+    <title>Clase Interactiva: Integración por Partes</title>
     
+    <!-- MathJax para fórmulas matemáticas -->
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
-
-    <>
-        /* Sidebar Styles */
-        .sidebar {
-            width: 250px;
-            height: 100%;
-            position: fixed;
-            left: 0;
-            top: 0;
-            background-color: #2c3e50;
-            color: white;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-            z-index: 1000;
-            overflow-y: auto;
-            padding-bottom: 20px;
-        }
-
-        .sidebar.show {
-            transform: translateX(0);
-        }
-
-        .sidebar-header {
-            padding: 20px;
-            background-color: #1a252f;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .sidebar-title {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        .toggle-sidebar {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5em;
-            cursor: pointer;
-            padding: 5px 10px;
-        }
-
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            padding: 15px 0;
-        }
-
-        .sidebar-nav a {
-            color: #ecf0f1;
-            text-decoration: none;
-            padding: 12px 25px;
-            transition: all 0.3s;
-        }
-
-        .sidebar-nav a:hover {
-            background-color: #34495e;
-            padding-left: 30px;
-        }
-
-        .content-wrapper {
-            transition: margin 0.3s;
-            margin-left: 0;
-            padding: 20px;
-        }
-
-        .content-wrapper.shifted {
-            margin-left: 250px;
-        }
-
-        @media (max-width: 768px) {
-            .content-wrapper.shifted {
-                margin-left: 0;
-            }
-        }
-
-        /* Estilo general del cuerpo */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    
+    <!-- Fuente Roboto de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Estilos específicos para esta página -->
+    <style>
+        /* Estilos específicos para esta página */
+        .formula {
+            font-size: 1.3em;
             background-color: #f8f9fa;
-            color: #212529;
-            line-height: 1.7;
-            margin: 0;
-            padding: 20px;
-        }
-
-        /* Contenedor principal de la clase */
-        .class-container {
-            max-width: 900px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
-            overflow: hidden;
-        }
-
-        /* Encabezado */
-        header {
-            background: linear-gradient(135deg, #0d3b66, #0a2540);
-            color: white;
-            padding: 30px 35px;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #e67e22;
+            margin: 15px 0;
+            overflow-x: auto;
             text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.6em;
-            font-weight: 700;
-        }
-
-        /* Área de contenido principal */
-        .content-area {
-            padding: 25px 30px;
-        }
-
-        .instructions {
-            font-size: 1.15em;
-            text-align: center;
-            color: #555;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #0a2540;
-            padding-bottom: 15px;
         }
         
-        /* Divisor de secciones (Pedagógico) */
-        .section-divider {
-            text-align: center;
-            font-size: 1.8em;
-            font-weight: 600;
-            color: #4a148c; /* Púrpura para IBP */
-            margin: 40px 0 20px 0;
-            border-top: 2px solid #e0e0e0;
-            padding-top: 20px;
-        }
-        
-        /* Estilo para la segunda sección (Trig Sub) */
-        .section-divider.trig-sub {
-            color: #155724; /* Verde para Trig Sub */
-        }
-
-        /* Tarjeta de propiedad (Acordeón) */
         .property-card {
-            border: 1px solid #e0e0e0;
+            margin-bottom: 25px;
             border-radius: 8px;
-            margin-bottom: 15px;
-            transition: box-shadow 0.3s ease;
-            overflow: hidden; /* Para contener los bordes de color */
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid #e67e22;
         }
         
         .property-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        /* Encabezado de la tarjeta (el botón clickeable) */
-        .card-header {
-            background-color: #f8f7ff;
-            padding: 18px 25px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.4em;
-            font-weight: 600;
-            color: #4a00a0;
-            border-left: 6px solid #6a11cb; /* Púrpura */
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
-        .indicator {
-            font-size: 1.6em;
-            font-weight: 300;
-            color: #6a11cb;
-            transition: transform 0.3s ease-in-out;
+        .example {
+            background-color: #fef5e7;
+            border-left: 4px solid #f39c12;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
         }
         
-        /* Estilos para la sección Trig Sub */
-        .card-header.trig-sub {
-            background-color: #f7fff8;
-            color: #155724;
-            border-left: 6px solid #28a745; /* Verde */
+        .note {
+            background-color: #fdf2e9;
+            border-left: 4px solid #d35400;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
         }
         
-        .indicator.trig-sub {
-            color: #28a745;
+        .warning {
+            background-color: #fef9e7;
+            border-left: 4px solid #f1c40f;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
         }
         
-        /* Estilo cuando está activo */
-        .card-header.active {
-            background-color: #f0eaff;
-        }
-        .card-header.trig-sub.active {
-            background-color: #eafbee;
-        }
-
-        .card-header.active .indicator {
-            transform: rotate(45deg);
-        }
-
-        /* Contenido colapsable */
-        .card-content {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            padding: 0 25px;
-            transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
-            border-top: 1px solid #e9e9e9;
-        }
-
-        .card-content.visible {
-            max-height: 3000px; /* Suficiente para contenido extenso */
-            opacity: 1;
-            padding: 20px 25px 25px 25px;
-        }
-
-        .card-content h3 {
-            color: #4a00a0; /* Púrpura */
-            margin-top: 0;
-            border-bottom: 1px solid #e0cffc;
-            padding-bottom: 5px;
+        .step {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
         }
         
-        .card-content h3.trig-sub {
-            color: #155724; /* Verde */
-            border-bottom: 1px solid #d4f2db;
-        }
-
-        /* Estilo para las fórmulas de MathJax */
-        .formula {
-            font-size: 1.3em;
-            text-align: center;
-            padding: 20px;
-            background-color: #fdfdfd;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            margin: 20px 0;
-            overflow-x: auto;
+        .step:before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #e67e22;
         }
         
-        .key-concept {
-            background-color: #f0eaff;
-            border-left: 5px solid #6a11cb;
-            padding: 15px 20px;
+        .mnemonic {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 10px 15px;
             margin: 15px 0;
             border-radius: 4px;
-            font-size: 1.1em;
-        }
-        
-        .key-concept.trig-sub {
-            background-color: #eafbee;
-            border-left: 5px solid #28a745;
-        }
-        
-        .liate-box {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.5em;
-            text-align: center;
-            padding: 20px;
-            background-color: #f3f3f3;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
-        
-        .property-image {
-            width: 100%;
-            max-width: 450px;
-            height: auto;
-            border-radius: 8px;
-            margin: 15px auto;
-            display: block;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-style: italic;
         }
     </style>
 </head>
@@ -290,285 +97,268 @@
             <a href="index.html" class="sidebar-title">Matemáticas</a>
         </div>
         <nav class="sidebar-nav">
-            <a href="prop_igualdad.html">Propiedades de Igualdad</a>
-            <a href="prop_suma.html">Propiedades de la Suma</a>
-            <a href="prop_resta.html">Propiedades de la Resta</a>
-            <a href="prop_multiplicacion.html">Propiedades de la Multiplicación</a>
-            <a href="prop_division.html">Propiedades de la División</a>
-            <a href="prop_potencia.html">Propiedades de la Potencia</a>
-            <a href="prop_raices.html">Propiedades de las Raíces</a>
-            <a href="prop_derivada.html">Propiedades de la Derivada</a>
-            <a href="prop_derivadas parciales.html">Propiedades de las Derivadas Parciales</a>
-            <a href="prop_integral.html">Propiedades de la Integral</a>
-            <a href="prop_integracionporpartes.html">Integración por Partes</a>
-            <a href="prop_fourier.html">Transformada de Fourier</a>
-            <a href="prop_fraccparciales.html">Fracciones Parciales</a>
-            <a href="prop_identidadestrigono.html">Identidades Trigonométricas</a>
-            <a href="prop_laplace.html">Transformada de Laplace</a>
-            <a href="prop_teoremas.html">Teoremas Matemáticos</a>
+            <a href="prop_suma.html"><i>+</i> Propiedad de la Suma</a>
+            <a href="prop_resta.html"><i>-</i> Propiedad de la Resta</a>
+            <a href="prop_multiplicacion.html"><i>×</i> Propiedad Multiplicativa</a>
+            <a href="prop_division.html"><i>÷</i> Propiedad de la División</a>
+            <a href="prop_potencia.html"><i>x²</i> Propiedad de la Potencia</a>
+            <a href="prop_raices.html"><i>√</i> Propiedad de la Raíz</a>
+            <a href="prop_igualdad.html"><i>=</i> Propiedad de la Igualdad</a>
+            <a href="prop_teoremas.html"><i>📚</i> Teoremas Fundamentales</a>
+            <a href="prop_derivada.html"><i>d/dx</i> Propiedades de la Derivada</a>
+            <a href="prop_integral.html"><i>∫</i> Propiedades de la Integral</a>
+            <a href="prop_derivadas_parciales.html"><i>∂/∂x</i> Derivadas Parciales</a>
+            <a href="prop_fourier.html"><i>ℱ</i> Series de Fourier</a>
+            <a href="prop_fraccparciales.html"><i>↦</i> Fracciones Parciales</a>
+            <a href="prop_identidadestrigono.html"><i>θ</i> Identidades Trigonométricas</a>
+            <a href="prop_integracionporpartes.html" class="active"><i>∫u dv</i> Integración por Partes</a>
         </nav>
     </div>
+
     <div class="content-wrapper">
-
-    <div class="class-container">
-        <header>
-            <h1>Técnicas Maestras de Integración</h1>
-        </header>
-
-        <div class="content-area">
-            <p class="instructions">
-                Haz clic en cada técnica para revelar su lógica, su fórmula y la estrategia para aplicarla.
-            </p>
-
-            <div class="section-divider">Técnica 1: Integración por Partes</div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>1. El Fundamento: ¿De dónde sale?</span>
-                    <span class="indicator">+</span>
+        <div class="class-container">
+            <header>
+                <h1>Integración por Partes</h1>
+                <div class="back-to-home">
+                    <a href="index.html" class="btn-back">
+                        <span class="material-icons-round">home</span>
+                        Volver al Inicio
+                    </a>
                 </div>
-                <div class="card-content">
-                    <h3 class="ibp">El "Por Qué": La Inversa de la Regla del Producto</h3>
-                    <p>Esta técnica no es magia. Es simplemente la <strong>Regla del Producto de la derivación, leída al revés</strong>.</p>
-                    <p>Recuerda la Regla del Producto:</p>
-                    <div class="formula">
-                        $$ \frac{d}{dx}(u \cdot v) = \frac{du}{dx}v + u\frac{dv}{dx} $$
+            </header>
+
+            <div class="content-area">
+                <p class="instructions">
+                    Aprende la técnica de integración por partes, una herramienta poderosa para integrar productos de funciones.
+                    Haz clic en cada sección para ver ejemplos y estrategias detalladas.
+                </p>
+
+                <!-- Fórmula Básica -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>1. Fórmula de Integración por Partes</span>
+                        <span class="indicator">+</span>
                     </div>
-                    <p>Si integramos ambos lados con respecto a $$x$$, obtenemos:</p>
-                    <div class="formula">
-                        $$ \int \frac{d}{dx}(u \cdot v) \, dx = \int v \, du + \int u \, dv $$
+                    <div class="card-content">
+                        <h3>Fórmula Fundamental</h3>
+                        <div class="formula">
+                            $$\int u \, dv = uv - \int v \, du$$
+                        </div>
+                        
+                        <h3>Demostración</h3>
+                        <p>La fórmula se deriva de la regla del producto para derivadas:</p>
+                        <div class="formula">
+                            $$\frac{d}{dx}(uv) = u \frac{dv}{dx} + v \frac{du}{dx}$$
+                            $$d(uv) = u \, dv + v \, du$$
+                            $$u \, dv = d(uv) - v \, du$$
+                            $$\int u \, dv = uv - \int v \, du$$
+                        </div>
+                        
+                        <div class="mnemonic">
+                            <strong>Regla mnemotécnica:</strong> "Un Día Vi Una Vaca Vestida De Uniforme"
+                            <div>u = u</div>
+                            <div>dv = dv</div>
+                            <div>v = ∫dv</div>
+                            <div>du = du</div>
+                        </div>
                     </div>
-                    <p>La integral de una derivada se cancela:</p>
-                    <div class="formula">
-                        $$ u \cdot v = \int v \, du + \int u \, dv $$
+                </div>
+
+                <!-- Estrategia LIATE -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>2. Estrategia LIATE para Elegir u y dv</span>
+                        <span class="indicator">+</span>
                     </div>
-                    <p>¡Reordena los términos y tendrás la fórmula de Integración por Partes!</p>
+                    <div class="card-content">
+                        <h3>Regla LIATE</h3>
+                        <p>Orden de preferencia para elegir u (de mayor a menor preferencia):</p>
+                        <ol>
+                            <li><strong>L</strong>ogarítmicas (ln x, log x)</li>
+                            <li><strong>I</strong>nversas trigonométricas (arcsin x, arctan x, etc.)</li>
+                            <li><strong>A</strong>lgebraicas (polinomios, potencias de x)</li>
+                            <li><strong>T</strong>rigonométricas (sin x, cos x, etc.)</li>
+                            <li><strong>E</strong>xponenciales (eˣ, aˣ)</li>
+                        </ol>
+                        
+                        <h3>Ejemplo 1</h3>
+                        <div class="example">
+                            <p>Calcular: $$\int x e^x \, dx$$</p>
+                            <div class="step">Según LIATE: u = x (algebraica) y dv = eˣ dx (exponencial)</div>
+                            <div class="formula">
+                                $$u = x \quad \Rightarrow \quad du = dx$$
+                                $$dv = e^x dx \quad \Rightarrow \quad v = e^x$$
+                                $$\int x e^x \, dx = x e^x - \int e^x \, dx = x e^x - e^x + C = e^x(x - 1) + C$$
+                            </div>
+                        </div>
+                        
+                        <h3>Ejemplo 2</h3>
+                        <div class="example">
+                            <p>Calcular: $$\int x^2 \ln x \, dx$$</p>
+                            <div class="step">Según LIATE: u = ln x (logarítmica) y dv = x² dx (algebraica)</div>
+                            <div class="formula">
+                                $$u = \ln x \quad \Rightarrow \quad du = \frac{1}{x} dx$$
+                                $$dv = x^2 dx \quad \Rightarrow \quad v = \frac{x^3}{3}$$
+                                $$\int x^2 \ln x \, dx = \frac{x^3}{3} \ln x - \int \frac{x^3}{3} \cdot \frac{1}{x} dx = \frac{x^3}{3} \ln x - \frac{1}{3} \int x^2 \, dx$$
+                                $$= \frac{x^3}{3} \ln x - \frac{x^3}{9} + C = \frac{x^3}{9} (3 \ln x - 1) + C$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Integración por Partes Múltiple -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>3. Integración por Partes Múltiple</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Cuando aplicar múltiples veces</h3>
+                        <p>Algunas integrales requieren aplicar integración por partes varias veces, especialmente cuando el integrando contiene potencias de x multiplicadas por funciones trigonométricas o exponenciales.</p>
+                        
+                        <h3>Ejemplo: Integral con x²</h3>
+                        <div class="example">
+                            <p>Calcular: $$\int x^2 e^x \, dx$$</p>
+                            <div class="step">Primera aplicación (u = x², dv = eˣ dx):</div>
+                            <div class="formula">
+                                $$u = x^2 \quad \Rightarrow \quad du = 2x \, dx$$
+                                $$dv = e^x dx \quad \Rightarrow \quad v = e^x$$
+                                $$\int x^2 e^x \, dx = x^2 e^x - \int 2x e^x \, dx$$
+                            </div>
+                            <div class="step">Segunda aplicación para la nueva integral (u = 2x, dv = eˣ dx):</div>
+                            <div class="formula">
+                                $$u = 2x \quad \Rightarrow \quad du = 2 \, dx$$
+                                $$dv = e^x dx \quad \Rightarrow \quad v = e^x$$
+                                $$\int 2x e^x \, dx = 2x e^x - \int 2 e^x \, dx = 2x e^x - 2e^x + C$$
+                            </div>
+                            <div class="step">Combinando resultados:</div>
+                            <div class="formula">
+                                $$\int x^2 e^x \, dx = x^2 e^x - (2x e^x - 2e^x) + C = e^x(x^2 - 2x + 2) + C$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Casos Especiales -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>4. Casos Especiales y Trucos</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Integrales Cíclicas</h3>
+                        <p>Algunas integrales, como ∫ eˣ sin x dx, requieren integración por partes dos veces y luego resolver para la integral original.</p>
+                        
+                        <div class="example">
+                            <p>Calcular: $$\int e^x \sin x \, dx$$</p>
+                            <div class="formula">
+                                $$\text{Sea } I = \int e^x \sin x \, dx$$
+                                $$u = \sin x \quad \Rightarrow \quad du = \cos x \, dx$$
+                                $$dv = e^x dx \quad \Rightarrow \quad v = e^x$$
+                                $$I = e^x \sin x - \int e^x \cos x \, dx$$
+                            </div>
+                            <div class="step">Aplicar integración por partes nuevamente a la nueva integral:</div>
+                            <div class="formula">
+                                $$u = \cos x \quad \Rightarrow \quad du = -\sin x \, dx$$
+                                $$dv = e^x dx \quad \Rightarrow \quad v = e^x$$
+                                $$I = e^x \sin x - \left( e^x \cos x + \int e^x \sin x \, dx \right)$$
+                                $$I = e^x (\sin x - \cos x) - I$$
+                                $$2I = e^x (\sin x - \cos x)$$
+                                $$I = \frac{e^x (\sin x - \cos x)}{2} + C$$
+                            </div>
+                        </div>
+                        
+                        <h3>Integrales con ln x</h3>
+                        <div class="example">
+                            <p>Calcular: $$\int \ln x \, dx$$</p>
+                            <div class="formula">
+                                $$u = \ln x \quad \Rightarrow \quad du = \frac{1}{x} dx$$
+                                $$dv = dx \quad \Rightarrow \quad v = x$$
+                                $$\int \ln x \, dx = x \ln x - \int x \cdot \frac{1}{x} dx = x \ln x - x + C = x(\ln x - 1) + C$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aplicaciones -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>5. Aplicaciones Prácticas</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>En Física</h3>
+                        <p>La integración por partes se utiliza en:</p>
+                        <ul>
+                            <li>Cálculo de centros de masa</li>
+                            <li>Momentos de inercia</li>
+                            <li>Solución de ecuaciones diferenciales en mecánica cuántica</li>
+                        </ul>
+                        
+                        <h3>En Probabilidad y Estadística</h3>
+                        <p>Cálculo de valores esperados y momentos de distribuciones de probabilidad.</p>
+                        
+                        <h3>En Ingeniería</h3>
+                        <p>Análisis de señales y sistemas, procesamiento de imágenes, y más.</p>
+                        
+                        <div class="note">
+                            <strong>Consejo:</strong> La práctica constante es clave para dominar la integración por partes. Intenta resolver diversos ejercicios aplicando la regla LIATE y los trucos aprendidos.
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>2. La Fórmula y la Estrategia</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3 class="ibp">La Fórmula (El "Cómo")</h3>
-                    <p>Esta es la fórmula que debes memorizar. La meta es cambiar una integral difícil ($$\int u \, dv$$) por una más fácil ($$\int v \, du$$).</p>
-                    <div class="formula">
-                        $$ \int u \, dv = uv - \int v \, du $$
-                    </div>
-                    <div class="key-concept">
-                        <p><strong>Intuición Pedagógica:</strong> Estás "pasando el problema". Tienes una integral con $$u$$ (que es fácil de derivar) y $$dv$$ (que es fácil de integrar). Al aplicar la fórmula, la "pasas" a una nueva integral donde $$u$$ ya está derivada ($$du$$) y $$v$$ ya está integrada.</p>
-                    </div>
-                </div>
+            <!-- Botón de Volver al Inicio al final -->
+            <div class="back-to-home bottom">
+                <a href="index.html" class="btn-back">
+                    <span class="material-icons-round">home</span>
+                    Volver al Inicio
+                </a>
             </div>
-            
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>3. La Estrategia: ¿Cómo elegir $$u$$? (LIATE)</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3 class="ibp">El "Cuándo": La Regla Mnemotécnica LIATE</h3>
-                    <p>El éxito de la técnica depende 100% de elegir correctamente qué parte es $$u$$ y qué parte es $$dv$$. Usamos la regla <strong>LIATE</strong> (o ILATE).</p>
-                    <p>Al ver tu integral (ej. $$\int x \cdot \ln(x) \, dx$$), identifica qué tipo de funciones tienes y elige $$u$$ como la que aparezca <strong>primero</strong> en esta lista:</p>
-                    <div class="liate-box">
-                        <p><strong>L</strong>: Logarítmicas (ej. $$\ln(x), \log_2(x)$$)</p>
-                        <p><strong>I</strong>: Inversas Trig. (ej. $$\arctan(x), \arcsin(x)$$)</p>
-                        <p><strong>A</strong>: Algebraicas (ej. $$x^2, 5x, 1$$)</p>
-                        <p><strong>T</strong>: Trigonométricas (ej. $$\sin(x), \cos(x)$$)</p>
-                        <p><strong>E</strong>: Exponenciales (ej. $$e^x, 2^x$$)</p>
-                    </div>
-                    <div class="key-concept">
-                        <p><strong>¿Por qué funciona esto?</strong> Las funciones de arriba (L, I) se vuelven <strong>más simples</strong> al derivarlas (ej. $$\frac{d}{dx}(\ln(x)) = \frac{1}{x}$$). Las funciones de abajo (T, E) son <strong>fáciles de integrar</strong> (para encontrar $$v$$) sin volverse más complicadas.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>4. Ejemplo Completo: $$\int x \cos(x) \, dx$$</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3 class="ibp">Ejemplo de Aplicación</h3>
-                    <p>Resolvamos $$\int x \cos(x) \, dx$$.</p>
-                    <p><strong>1. Elegir $$u$$ (LIATE):</strong></p>
-                    <ul>
-                        <li>$$x$$ es <strong>A</strong>lgebraica.</li>
-                        <li>$$\cos(x)$$ es <strong>T</strong>rigonométrica.</li>
-                        <li>'A' viene antes que 'T', entonces...</li>
-                    </ul>
-                    <div class="formula">
-                        $$ u = x \quad | \quad dv = \cos(x) \, dx $$
-                    </div>
-                    <p><strong>2. Calcular $$du$$ y $$v$$:</strong></p>
-                    <p>Derivamos $$u$$ para obtener $$du$$. Integramos $$dv$$ para obtener $$v$$.</p>
-                    <div class="formula">
-                        $$ du = 1 \, dx \quad | \quad v = \int \cos(x) \, dx = \sin(x) $$
-                    </div>
-                    <p><strong>3. Aplicar la Fórmula ($$uv - \int v \, du$$):</strong></p>
-                    <div class="formula">
-                        $$ \int x \cos(x) \, dx = (x)(\sin(x)) - \int (\sin(x)) \, (dx) $$
-                    </div>
-                    <p><strong>4. Resolver la integral más fácil:</strong></p>
-                    <div class="formula">
-                        $$ = x\sin(x) - (-\cos(x)) + C $$
-                        $$ = x\sin(x) + \cos(x) + C $$
-                    </div>
-                </div>
-            </div>
-
-            <div class="section-divider trig-sub">Técnica 2: Sustitución Trigonométrica</div>
-
-            <div class="property-card">
-                <div class="card-header trig-sub" onclick="toggleCard(this)">
-                    <span>1. El Fundamento: ¿Por qué trigonometría?</span>
-                    <span class="indicator trig-sub">+</span>
-                </div>
-                <div class="card-content">
-                    <h3 class="trig-sub">El "Por Qué": Eliminar Raíces Cuadradas</h3>
-                    <p>Esta técnica se usa <strong>exclusivamente</strong> para integrales que contienen expresiones de la forma $$\sqrt{a^2 - x^2}$$, $$\sqrt{a^2 + x^2}$$ o $$\sqrt{x^2 - a^2}$$.</p>
-                    <p>La meta es "cambiarle el disfraz" al problema, sustituyendo $$x$$ por una función trigonométrica. ¿Por qué? Porque las <strong>Identidades Pitagóricas</strong> pueden convertir una suma/resta de dos términos en un solo término al cuadrado, eliminando la raíz.</p>
-                    <div class="formula">
-                        $$ \sin^2\theta + \cos^2\theta = 1 \implies 1 - \sin^2\theta = \cos^2\theta $$
-                        $$ 1 + \tan^2\theta = \sec^2\theta $$
-                        $$ \sec^2\theta - 1 = \tan^2\theta $$
-                    </div>
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header trig-sub" onclick="toggleCard(this)">
-                    <span>2. Caso 1 (Seno): $$\sqrt{a^2 - x^2}$$</span>
-                    <span class="indicator trig-sub">+</span>
-                </div>
-                <div class="card-content">
-                    <h3 class="trig-sub">Caso 1: El Radicando es $$a^2 - x^2$$</h3>
-                    <p>Esto nos recuerda a $$1 - \sin^2\theta = \cos^2\theta$$.</p>
-                    <p><strong>La Sustitución:</strong></p>
-                    <div class="formula">
-                        $$ x = a\sin\theta $$
-                        $$ dx = a\cos\theta \, d\theta $$
-                    </div>
-                    <p><strong>La Transformación:</strong></p>
-                    <div class="formula">
-                        $$ \sqrt{a^2 - x^2} = \sqrt{a^2 - (a\sin\theta)^2} = \sqrt{a^2(1 - \sin^2\theta)} $$
-                        $$ = \sqrt{a^2\cos^2\theta} = a\cos\theta $$
-                    </div>
-                    <p><strong>Triángulo de Referencia (para volver a $$x$$):</strong></p>
-                    <p>De $$x = a\sin\theta$$, tenemos $$\sin\theta = \frac{x}{a}$$ (Cateto Opuesto / Hipotenusa)</p>
-                    <!-- <img src="https://i.imgur.com/8QpYhP7.png" alt="Triángulo para sustitución de seno" class="property-image"> -->
-                </div>
-            </div>
-            
-            <div class="property-card">
-                <div class="card-header trig-sub" onclick="toggleCard(this)">
-                    <span>3. Caso 2 (Tangente): $$\sqrt{a^2 + x^2}$$</span>
-                    <span class="indicator trig-sub">+</span>
-                </div>
-                <div class="card-content">
-                    <h3 class="trig-sub">Caso 2: El Radicando es $$a^2 + x^2$$</h3>
-                    <p>Esto nos recuerda a $$1 + \tan^2\theta = \sec^2\theta$$.</p>
-                    <p><strong>La Sustitución:</strong></p>
-                    <div class="formula">
-                        $$ x = a\tan\theta $$
-                        $$ dx = a\sec^2\theta \, d\theta $$
-                    </div>
-                    <p><strong>La Transformación:</strong></p>
-                    <div class="formula">
-                        $$ \sqrt{a^2 + x^2} = \sqrt{a^2 + (a\tan\theta)^2} = \sqrt{a^2(1 + \tan^2\theta)} $$
-                        $$ = \sqrt{a^2\sec^2\theta} = a\sec\theta $$
-                    </div>
-                    <p><strong>Triángulo de Referencia (para volver a $$x$$):</strong></p>
-                    <p>De $$x = a\tan\theta$$, tenemos $$\tan\theta = \frac{x}{a}$$ (Cateto Opuesto / Cateto Adyacente)</p>
-                    <!-- <!-- <img src="https://i.imgur.com/k9mX4s1.png" alt="Triángulo para sustitución de tangente" class="property-image"> --> -->
-                </div>
-            </div>
-            
-            <div class="property-card">
-                <div class="card-header trig-sub" onclick="toggleCard(this)">
-                    <span>4. Caso 3 (Secante): $$\sqrt{x^2 - a^2}$$</span>
-                    <span class="indicator trig-sub">+</span>
-                </div>
-                <div class="card-content">
-                    <h3 class="trig-sub">Caso 3: El Radicando es $$x^2 - a^2$$</h3>
-                    <p>Esto nos recuerda a $$\sec^2\theta - 1 = \tan^2\theta$$.</p>
-                    <p><strong>La Sustitución:</strong></p>
-                    <div class="formula">
-                        $$ x = a\sec\theta $$
-                        $$ dx = a\sec\theta\tan\theta \, d\theta $$
-                    </div>
-                    <p><strong>La Transformación:</strong></p>
-                    <div class="formula">
-                        $$ \sqrt{x^2 - a^2} = \sqrt{(a\sec\theta)^2 - a^2} = \sqrt{a^2(\sec^2\theta - 1)} $$
-                        $$ = \sqrt{a^2\tan^2\theta} = a\tan\theta $$
-                    </div>
-                    <p><strong>Triángulo de Referencia (para volver a $$x$$):</strong></p>
-                    <p>De $$x = a\sec\theta$$, tenemos $$\sec\theta = \frac{x}{a}$$ (Hipotenusa / Cateto Adyacente)</p>
-                    <!-- <!-- <img src="https://i.imgur.com/C5M1q4N.png" alt="Triángulo para sustitución de secante" class="property-image"> --> -->
-                </div>
-            </div>
-            
-            <div class="property-card">
-                <div class="card-header trig-sub" onclick="toggleCard(this)">
-                    <span>5. El Paso Final: Regresar a $$x$$</span>
-                    <span class="indicator trig-sub">+</span>
-                </div>
-                <div class="card-content">
-                    <h3 class="trig-sub">El "Regreso": Volver al Disfraz Original</h3>
-                    <p>Después de hacer la sustitución, resuelves la integral en términos de $$\theta$$. Obtendrás una respuesta como $$\ln|\sec\theta + \tan\theta| + C$$.</p>
-                    <p><strong>¡No has terminado!</strong> El problema original estaba en $$x$$.</p>
-                    <div class="key-concept trig-sub">
-                        <p><strong>Andragogía:</strong> Debes usar el <strong>Triángulo de Referencia</strong> que dibujaste para "traducir" tu respuesta de vuelta a $$x$$.</p>
-                        <p>Por ejemplo, si usaste el Caso 2 (Tangente) y tu respuesta fue $$\sec\theta$$, miras tu triángulo y ves:</p>
-                        <p>$$\sec\theta = \frac{\text{Hipotenusa}}{\text{Adyacente}} = \frac{\sqrt{a^2 + x^2}}{a}$$</p>
-                        <p>Así que la respuesta final es $$\frac{\sqrt{a^2 + x^2}}{a} + C$$.</p>
-                    </div>
-                </div>
-            </div>
-
-
         </div>
+        
+        <footer>
+            <p>© JMGV PTEL 2025 Integración por Partes. Todos los derechos reservados.</p>
+        </footer>
     </div>
 
+    <!-- Scripts JavaScript -->
+    <script src="js/main.js"></script>
+    
+    <!-- Scripts específicos para esta página -->
     <script>
-        function toggleCard(headerElement) {
-            // Encuentra el contenido asociado
-            const content = headerElement.nextElementSibling;
-            // Encuentra el indicador
-            const indicator = headerElement.querySelector('.indicator');
-            
-            // Alterna la clase 'active' en el header
-            headerElement.classList.toggle('active');
-
-            // Alterna la clase 'visible' en el contenido
-            if (content.classList.contains('visible')) {
-                // Si está visible, lo ocultamos
-                content.classList.remove('visible');
-                indicator.textContent = '+';
-            } else {
-                // Si está oculto, lo mostramos
-                content.classList.add('visible');
-                indicator.textContent = '−'; // Usamos un signo 'menos'
+        // Configuración específica de MathJax para esta página
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true
+            },
+            chtml: {
+                scale: 0.9,
+                displayAlign: 'center',
+                displayIndent: '1em'
+            },
+            svg: {
+                fontCache: 'global'
             }
+        };
+        
+        // Función para manejar la impresión
+        function handlePrint() {
+            window.print();
         }
-    </script>
-
-    <script>
-        function toggleSidebar() {
-            document.querySelector('.sidebar').classList.toggle('show');
-            document.querySelector('.content-wrapper').classList.toggle('shifted');
-        }
-
-        // Close sidebar when clicking outside
-        document.addEventListener('click', function(event) {
-            const sidebar = document.querySelector('.sidebar');
-            const toggleBtn = document.querySelector('.toggle-sidebar');
+        
+        // Asegurar que MathJax se renderice correctamente después de cargar el contenido
+        document.addEventListener('DOMContentLoaded', function() {
+            // Forzar actualización de MathJax después de que se muestre el contenido
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
             
-            if (!sidebar.contains(event.target) && event.target !== toggleBtn) {
-                sidebar.classList.remove('show');
-                document.querySelector('.content-wrapper').classList.remove('shifted');
+            // Expandir la primera tarjeta por defecto
+            const firstCard = document.querySelector('.property-card:first-child .card-header');
+            if (firstCard) {
+                firstCard.click();
             }
         });
     </script>

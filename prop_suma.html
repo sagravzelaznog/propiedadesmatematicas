@@ -1,222 +1,44 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clase Interactiva: Propiedades de la Suma</title>
     
+    <!-- MathJax para fórmulas matemáticas -->
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
-
+    
+    <!-- Fuente Roboto de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Estilos específicos para esta página -->
     <style>
-        /* Sidebar Styles */
-        .sidebar {
-            width: 250px;
-            height: 100%;
-            position: fixed;
-            left: 0;
-            top: 0;
-            background-color: #2c3e50;
-            color: white;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-            z-index: 1000;
-            overflow-y: auto;
-            padding-bottom: 20px;
-        }
-
-        .sidebar.show {
-            transform: translateX(0);
-        }
-
-        .sidebar-header {
-            padding: 20px;
-            background-color: #1a252f;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .sidebar-title {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        .toggle-sidebar {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5em;
-            cursor: pointer;
-            padding: 5px 10px;
-        }
-
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            padding: 15px 0;
-        }
-
-        .sidebar-nav a {
-            color: #ecf0f1;
-            text-decoration: none;
-            padding: 12px 25px;
-            transition: all 0.3s;
-        }
-
-        .sidebar-nav a:hover {
-            background-color: #34495e;
-            padding-left: 30px;
-        }
-
-        .content-wrapper {
-            transition: margin 0.3s;
-            margin-left: 0;
-            padding: 20px;
-        }
-
-        .content-wrapper.shifted {
-            margin-left: 250px;
-        }
-
-        @media (max-width: 768px) {
-            .content-wrapper.shifted {
-                margin-left: 0;
-            }
-        }
-
-        /* Estilo general del cuerpo */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-        }
-
-        /* Contenedor principal de la clase */
-        .class-container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
-            overflow: hidden;
-        }
-
-        /* Encabezado */
-        header {
-            background: linear-gradient(135deg, #007BFF, #0056b3);
-            color: white;
-            padding: 30px;
+        /* Estilos específicos para esta página */
+        .formula {
+            font-size: 1.3em;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #0056b3;
+            margin: 15px 0;
+            overflow-x: auto;
             text-align: center;
         }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-
-        /* Área de contenido principal */
-        .content-area {
-            padding: 25px 30px;
-        }
-
-        .instructions {
-            font-size: 1.1em;
-            text-align: center;
-            color: #555;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #007BFF;
-            padding-bottom: 15px;
-        }
-
-        /* Tarjeta de propiedad (Acordeón) */
+        
         .property-card {
-            border: 1px solid #e0e0e0;
+            margin-bottom: 25px;
             border-radius: 8px;
-            margin-bottom: 15px;
-            transition: box-shadow 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
         .property-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        /* Encabezado de la tarjeta (el botón clickeable) */
-        .card-header {
-            background-color: #f9f9f9;
-            padding: 18px 25px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.5em;
-            font-weight: 600;
-            color: #004a99;
-        }
-        
-        /* Indicador de expandir/colapsar */
-        .indicator {
-            font-size: 1.6em;
-            font-weight: 300;
-            transition: transform 0.3s ease-in-out;
-        }
-        
-        /* Estilo cuando está activo */
-        .card-header.active {
-            background-color: #e6f2ff;
-        }
-
-        .card-header.active .indicator {
-            transform: rotate(45deg);
-        }
-
-        /* Contenido colapsable */
-        .card-content {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            padding: 0 25px;
-            transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        /* Clase 'visible' que se añade con JS */
-        .card-content.visible {
-            max-height: 1500px; /* Suficiente para cualquier contenido */
-            opacity: 1;
-            padding: 20px 25px;
-        }
-
-        .card-content h3 {
-            color: #007BFF;
-            margin-top: 0;
-        }
-
-        /* Estilo para las fórmulas de MathJax */
-        .formula {
-            font-size: 1.3em;
-            text-align: center;
-            padding: 20px;
-            background-color: #fdfdfd;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            margin: 20px 0;
-            overflow-x: auto;
-        }
-        
-        /* Imagen temática */
-        .property-image {
-            width: 100%;
-            max-width: 450px;
-            height: auto;
-            border-radius: 8px;
-            margin: 15px auto;
-            display: block;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -228,203 +50,211 @@
             <a href="index.html" class="sidebar-title">Matemáticas</a>
         </div>
         <nav class="sidebar-nav">
-            <a href="prop_igualdad.html">Propiedades de Igualdad</a>
-            <a href="prop_suma.html">Propiedades de la Suma</a>
-            <a href="prop_resta.html">Propiedades de la Resta</a>
-            <a href="prop_multiplicacion.html">Propiedades de la Multiplicación</a>
-            <a href="prop_division.html">Propiedades de la División</a>
-            <a href="prop_potencia.html">Propiedades de la Potencia</a>
-            <a href="prop_raices.html">Propiedades de las Raíces</a>
-            <a href="prop_derivada.html">Propiedades de la Derivada</a>
-            <a href="prop_derivadas parciales.html">Propiedades de las Derivadas Parciales</a>
-            <a href="prop_integral.html">Propiedades de la Integral</a>
-            <a href="prop_integracionporpartes.html">Integración por Partes</a>
-            <a href="prop_fourier.html">Transformada de Fourier</a>
-            <a href="prop_fraccparciales.html">Fracciones Parciales</a>
-            <a href="prop_identidadestrigono.html">Identidades Trigonométricas</a>
-            <a href="prop_laplace.html">Transformada de Laplace</a>
-            <a href="prop_teoremas.html">Teoremas Matemáticos</a>
+            <a href="prop_suma.html" class="active"><i>+</i> Propiedad de la Suma</a>
+            <a href="prop_resta.html"><i>-</i> Propiedad de la Resta</a>
+            <a href="prop_multiplicacion.html"><i>×</i> Propiedad Multiplicativa</a>
+            <a href="prop_division.html"><i>÷</i> Propiedad de la División</a>
+            <a href="prop_potencia.html"><i>x²</i> Propiedad de la Potencia</a>
+            <a href="prop_raices.html"><i>√</i> Propiedad de la Raíz</a>
+            <a href="prop_igualdad.html"><i>=</i> Propiedad de la Igualdad</a>
+            <a href="prop_teoremas.html"><i>📚</i> Teoremas Fundamentales</a>
+            <a href="prop_derivada.html"><i>d/dx</i> Propiedades de la Derivada</a>
+            <a href="prop_integral.html"><i>∫</i> Propiedades de la Integral</a>
         </nav>
     </div>
+
     <div class="content-wrapper">
-
-    <div class="class-container">
-        <header>
-            <h1>Propiedades de la Suma (Adición)</h1>
-        </header>
-
-        <div class="content-area">
-            <p class="instructions">¡Bienvenido! Haz clic en cada propiedad para descubrir sus secretos.</p>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>Propiedad Conmutativa</span>
-                    <span class="indicator">+</span>
+        <div class="class-container">
+            <header>
+                <h1>Propiedades de la Suma (Adición)</h1>
+                <div class="back-to-home">
+                    <a href="index.html" class="btn-back">
+                        <span class="material-icons-round">home</span>
+                        Volver al Inicio
+                    </a>
                 </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>Esta propiedad nos dice que el orden de los números (sumandos) no cambia el resultado (suma).</p>
-                    
-                    <h3>Analogía</h3>
-                    <p>Es como ponerse los calcetines. No importa si te pones primero el izquierdo y luego el derecho, o viceversa; al final, tendrás ambos calcetines puestos.</p>
-                    
-                    <h3>Fórmula</h3>
-                    <div class="formula">
-                        $$a + b = b + a$$
+            </header>
+
+            <div class="content-area">
+                <p class="instructions">Explora las propiedades fundamentales de la suma. Haz clic en cada propiedad para ver su definición, fórmula y ejemplos.</p>
+
+                <!-- Propiedad Conmutativa -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>1. Propiedad Conmutativa</span>
+                        <span class="indicator">+</span>
                     </div>
-                    
-                    <h3>Ejemplo Numérico</h3>
-                    <p>Si tienes 5 manzanas y te dan 3, tienes 8. Si tienes 3 manzanas y te dan 5, también tienes 8.</p>
-                    <div class="formula">
-                        $$5 + 3 = 8$$
-                        $$3 + 5 = 8$$
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>El orden de los sumandos no altera el resultado de la suma.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$a + b = b + a$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <p>Si sumamos 3 + 5 o 5 + 3, el resultado es el mismo:</p>
+                        <div class="formula">
+                            $$3 + 5 = 8$$
+                            $$5 + 3 = 8$$
+                        </div>
+                        
+                        <h3>Aplicaciones</h3>
+                        <ul>
+                            <li>Reorganización de términos en expresiones algebraicas</li>
+                            <li>Simplificación de cálculos mentales</li>
+                            <li>Demostración de teoremas matemáticos</li>
+                        </ul>
                     </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?swap,commute" alt="Imagen de dos cosas intercambiando" class="property-image"> -->
+                </div>
+
+                <!-- Propiedad Asociativa -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>2. Propiedad Asociativa</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>La forma en que se agrupan los sumandos no altera el resultado de la suma.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$(a + b) + c = a + (b + c)$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <p>Al sumar (2 + 3) + 4 o 2 + (3 + 4), el resultado es el mismo:</p>
+                        <div class="formula">
+                            $$(2 + 3) + 4 = 5 + 4 = 9$$
+                            $$2 + (3 + 4) = 2 + 7 = 9$$
+                        </div>
+                        
+                        <h3>Aplicaciones</h3>
+                        <ul>
+                            <li>Simplificación de expresiones algebraicas</li>
+                            <li>Algoritmos de cálculo numérico</li>
+                            <li>Demostraciones matemáticas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Elemento Neutro -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>3. Elemento Neutro (Identidad Aditiva)</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>Existe un número que, al sumarlo a cualquier otro, no altera su valor. Este número es el cero (0).</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$a + 0 = a$$
+                            $$0 + a = a$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <p>Al sumar cualquier número con cero, el resultado es el mismo número:</p>
+                        <div class="formula">
+                            $$7 + 0 = 7$$
+                            $$0 + (-3) = -3$$
+                        </div>
+                        
+                        <h3>Aplicaciones</h3>
+                        <ul>
+                            <li>Resolución de ecuaciones</li>
+                            <li>Demostraciones algebraicas</li>
+                            <li>Algoritmos de computación</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Inverso Aditivo -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>4. Inverso Aditivo (Opuesto)</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>Para todo número a, existe un número -a tal que su suma es igual a cero (el elemento neutro).</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$a + (-a) = 0$$
+                            $$-a + a = 0$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <p>El opuesto de 5 es -5, y su suma es cero:</p>
+                        <div class="formula">
+                            $$5 + (-5) = 0$$
+                            $$-3 + 3 = 0$$
+                        </div>
+                        
+                        <h3>Aplicaciones</h3>
+                        <ul>
+                            <li>Resolución de ecuaciones lineales</li>
+                            <li>Simplificación de expresiones algebraicas</li>
+                            <li>Definición de la resta como suma del opuesto</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>Propiedad Asociativa</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>Cuando sumamos tres o más números, la forma en que los agrupamos (o "asociamos") no afecta el resultado final.</p>
-                    
-                    <h3>Analogía</h3>
-                    <p>Imagina que tienes tres amigos: Ana, Beto y Carlos. Si Ana y Beto llegan juntos y luego se les une Carlos, es lo mismo que si Ana llega sola y luego se encuentra con Beto y Carlos que venían juntos. El grupo final es el mismo.</p>
-                    
-                    <h3>Fórmula</h3>
-                    <div class="formula">
-                        $$(a + b) + c = a + (b + c)$$
-                    </div>
-                    
-                    <h3>Ejemplo Numérico</h3>
-                    <p>Suma $$(2 + 3) + 4$$. Primero sumas $$(2 + 3) = 5$$, y luego $$(5 + 4) = 9$$.</p>
-                    <p>Ahora suma $$(2 + (3 + 4))$$. Primero sumas $$(3 + 4) = 7$$, y luego $$(2 + 7) = 9$$, el resultado es idéntico.</p>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?group,teamwork" alt="Imagen de un grupo" class="property-image"> -->
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>Propiedad de Identidad (Elemento Neutro)</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>Existe un número especial, el cero (0), que al sumarlo a cualquier otro número, no lo cambia. El número mantiene su "identidad".</p>
-                    
-                    <h3>Analogía</h3>
-                    <p>El cero es como un espejo perfecto. Si un número (como el 7) se "mira" en el espejo del cero (sumándose a él), ve exactamente a sí mismo (sigue siendo 7).</p>
-                    
-                    <h3>Fórmula</h3>
-                    <div class="formula">
-                        $$a + 0 = a$$
-                        $$0 + a = a$$
-                    </div>
-                    
-                    <h3>Ejemplo Numérico</h3>
-                    <p>Si tienes 9 galletas y no te dan ninguna más (te dan 0), sigues teniendo 9 galletas.</p>
-                    <div class="formula">
-                        $$9 + 0 = 9$$
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?zero,mirror" alt="Imagen del número cero o un espejo" class="property-image"> -->
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>Propiedad del Inverso Aditivo (Opuesto)</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>Para cada número, existe un "número opuesto" (su negativo) que, al sumarse, da como resultado cero (el elemento neutro).</p>
-                    
-                    <h3>Analogía</h3>
-                    <p>Es como dar 5 pasos hacia adelante y luego 5 pasos hacia atrás. Los movimientos se "cancelan" mutuamente y terminas exactamente donde empezaste (en la posición 0).</p>
-                    
-                    <h3>Fórmula</h3>
-                    <div class="formula">
-                        $$a + (-a) = 0$$
-                    </div>
-                    
-                    <h3>Ejemplo Numérico</h3>
-                    <p>Si debes 50 pesos ($-50$) y luego recibes 50 pesos ($+50$), tu deuda se cancela y tu balance es 0.</p>
-                    <div class="formula">
-                        $$50 + (-50) = 0$$
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?balance,cancel" alt="Imagen de balance o cancelación" class="property-image"> -->
-                </div>
-            </div>
-            
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>Propiedad de Clausura (Cerradura)</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>Esta propiedad garantiza que si sumas dos números de un mismo "conjunto" (como los números reales, $$\mathbb{R}$$), el resultado siempre será otro número que también pertenece a ese mismo conjunto.</p>
-                    
-                    <h3>Analogía</h3>
-                    <p>Imagina un club exclusivo donde solo hay "números enteros". Si dos miembros (ej. 2 y 3) se juntan (se suman), el resultado (5) también es un miembro del club. La operación no crea un "extraño"; el resultado se mantiene "dentro de casa".</p>
-                    
-                    <h3>Fórmula</h3>
-                    <div class="formula">
-                        Si $$a \in \mathbb{R}$$ y $$b \in \mathbb{R}$$, entonces $$(a + b) \in \mathbb{R}$$
-                        <p style="font-size: 0.8em; margin-top: 10px;">(Donde $$\mathbb{R}$$ significa el conjunto de los números Reales)</p>
-                    </div>
-                    
-                    <h3>Ejemplo Numérico</h3>
-                    <p>El número 4 es un número real. El número $$\pi$$ (3.14159...) es un número real. Su suma, $$4 + \pi$$, es un nuevo número (aprox. 7.14159...) que también es un número real. No se "escapa" del conjunto.</p>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?closed box,container" alt="Imagen de una caja cerrada" class="property-image"> -->
-                </div>
-            </div>
-
         </div>
+        
+                        <!-- Botón de Volver al Inicio al final -->
+                <div class="back-to-home bottom">
+                    <a href="index.html" class="btn-back">
+                        <span class="material-icons-round">home</span>
+                        Volver al Inicio
+                    </a>
+                </div>
+<footer>
+            <p>© JMGV PTEL 2025 Propiedades de la Suma. Todos los derechos reservados.</p>
+        </footer>
     </div>
 
+    <!-- Scripts JavaScript -->
+    <script src="js/main.js"></script>
+    
+    <!-- Scripts específicos para esta página -->
     <script>
-        function toggleCard(headerElement) {
-            // Encuentra el contenido asociado al header
-            const content = headerElement.nextElementSibling;
-            
-            // Encuentra el indicador (+ o -)
-            const indicator = headerElement.querySelector('.indicator');
-            
-            // Alterna la clase 'active' en el header
-            headerElement.classList.toggle('active');
-
-            // Alterna la clase 'visible' en el contenido
-            if (content.classList.contains('visible')) {
-                // Si está visible, lo ocultamos
-                content.classList.remove('visible');
-                indicator.textContent = '+';
-            } else {
-                // Si está oculto, lo mostramos
-                content.classList.add('visible');
-                indicator.textContent = '−'; // Usamos un signo 'menos'
+        // Configuración específica de MathJax para esta página
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true
+            },
+            chtml: {
+                scale: 0.9,
+                displayAlign: 'center',
+                displayIndent: '1em'
+            },
+            svg: {
+                fontCache: 'global'
             }
+        };
+        
+        // Función para manejar la impresión
+        function handlePrint() {
+            window.print();
         }
-    </script>
-
-    <script>
-        function toggleSidebar() {
-            document.querySelector('.sidebar').classList.toggle('show');
-            document.querySelector('.content-wrapper').classList.toggle('shifted');
-        }
-
-        // Close sidebar when clicking outside
-        document.addEventListener('click', function(event) {
-            const sidebar = document.querySelector('.sidebar');
-            const toggleBtn = document.querySelector('.toggle-sidebar');
+        
+        // Asegurar que MathJax se renderice correctamente después de cargar el contenido
+        document.addEventListener('DOMContentLoaded', function() {
+            // Forzar actualización de MathJax después de que se muestre el contenido
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
             
-            if (!sidebar.contains(event.target) && event.target !== toggleBtn) {
-                sidebar.classList.remove('show');
-                document.querySelector('.content-wrapper').classList.remove('shifted');
+            // Expandir la primera tarjeta por defecto
+            const firstCard = document.querySelector('.property-card:first-child .card-header');
+            if (firstCard) {
+                firstCard.click();
             }
         });
     </script>

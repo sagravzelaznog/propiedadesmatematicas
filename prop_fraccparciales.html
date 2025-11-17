@@ -1,243 +1,91 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clase Interactiva: Descomposición en Fracciones Parciales</title>
     
+    <!-- MathJax para fórmulas matemáticas -->
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
-
+    
+    <!-- Fuente Roboto de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Estilos específicos para esta página -->
     <style>
-        /* Sidebar Styles */
-        .sidebar {
-            width: 250px;
-            height: 100%;
-            position: fixed;
-            left: 0;
-            top: 0;
-            background-color: #2c3e50;
-            color: white;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-            z-index: 1000;
-            overflow-y: auto;
-            padding-bottom: 20px;
-        }
-
-        .sidebar.show {
-            transform: translateX(0);
-        }
-
-        .sidebar-header {
-            padding: 20px;
-            background-color: #1a252f;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .sidebar-title {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        .toggle-sidebar {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5em;
-            cursor: pointer;
-            padding: 5px 10px;
-        }
-
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            padding: 15px 0;
-        }
-
-        .sidebar-nav a {
-            color: #ecf0f1;
-            text-decoration: none;
-            padding: 12px 25px;
-            transition: all 0.3s;
-        }
-
-        .sidebar-nav a:hover {
-            background-color: #34495e;
-            padding-left: 30px;
-        }
-
-        .content-wrapper {
-            transition: margin 0.3s;
-            margin-left: 0;
-            padding: 20px;
-        }
-
-        .content-wrapper.shifted {
-            margin-left: 250px;
-        }
-
-        @media (max-width: 768px) {
-            .content-wrapper.shifted {
-                margin-left: 0;
-            }
-        }
-
-        /* Estilo general del cuerpo */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f7f9fa;
-            color: #333;
-            line-height: 1.7;
-            margin: 0;
-            padding: 20px;
-        }
-
-        /* Contenedor principal de la clase */
-        .class-container {
-            max-width: 900px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
-            overflow: hidden;
-        }
-
-        /* Encabezado */
-        header {
-            /* Un color azul académico y profundo */
-            background: linear-gradient(135deg, #005A9C, #003D6A);
-            color: white;
-            padding: 30px 35px;
+        /* Estilos específicos para esta página */
+        .formula {
+            font-size: 1.3em;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #1a5276;
+            margin: 15px 0;
+            overflow-x: auto;
             text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.6em;
-            font-weight: 700;
-        }
-
-        /* Área de contenido principal */
-        .content-area {
-            padding: 25px 30px;
-        }
-
-        .instructions {
-            font-size: 1.15em;
-            text-align: center;
-            color: #555;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #005A9C;
-            padding-bottom: 15px;
         }
         
-        /* Divisor de secciones (Pedagógico) */
-        .section-divider {
-            text-align: center;
-            font-size: 1.8em;
-            font-weight: 600;
-            color: #003D6A;
-            margin: 40px 0 20px 0;
-            border-top: 2px solid #e0e0e0;
-            padding-top: 20px;
-        }
-
-        /* Tarjeta de propiedad (Acordeón) */
         .property-card {
-            border: 1px solid #e0e0e0;
+            margin-bottom: 25px;
             border-radius: 8px;
-            margin-bottom: 15px;
-            transition: box-shadow 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid #1a5276;
         }
         
         .property-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-
-        /* Encabezado de la tarjeta (el botón clickeable) */
-        .card-header {
-            background-color: #f7faff;
-            padding: 18px 25px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.4em;
+        
+        .example {
+            background-color: #eaf2f8;
+            border-left: 4px solid #3498db;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        
+        .note {
+            background-color: #ebf5fb;
+            border-left: 4px solid #2980b9;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        
+        .warning {
+            background-color: #fef9e7;
+            border-left: 4px solid #f1c40f;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        
+        .case-header {
+            background-color: #f2f7fd;
+            padding: 10px 15px;
+            margin: 15px 0 10px;
+            border-left: 4px solid #5d9cec;
             font-weight: 600;
-            color: #005A9C;
+            color: #2c3e50;
         }
         
-        .indicator {
-            font-size: 1.6em;
-            font-weight: 300;
-            color: #007BFF;
-            transition: transform 0.3s ease-in-out;
+        .step {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
         }
         
-        /* Estilo cuando está activo */
-        .card-header.active {
-            background-color: #e6f2ff;
-        }
-
-        .card-header.active .indicator {
-            transform: rotate(45deg);
-        }
-
-        /* Contenido colapsable */
-        .card-content {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            padding: 0 25px;
-            transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
-            border-top: 1px solid #e9e9e9;
-        }
-
-        .card-content.visible {
-            max-height: 2500px; /* Suficiente para contenido extenso */
-            opacity: 1;
-            padding: 20px 25px 25px 25px;
-        }
-
-        .card-content h3 {
-            color: #003D6A;
-            margin-top: 0;
-            border-bottom: 1px solid #cce5ff;
-            padding-bottom: 5px;
-        }
-
-        /* Estilo para las fórmulas de MathJax */
-        .formula {
-            font-size: 1.3em;
-            text-align: center;
-            padding: 20px;
-            background-color: #fdfdfd;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            margin: 20px 0;
-            overflow-x: auto;
-        }
-        
-        .key-concept {
-            background-color: #e6f2ff;
-            border-left: 5px solid #005A9C;
-            padding: 15px 20px;
-            margin: 15px 0;
-            border-radius: 4px;
-            font-size: 1.1em;
-        }
-        
-        .alert-warning {
-            background-color: #fffaf0;
-            border-left: 4px solid #f9a600;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
-            font-weight: 500;
+        .step:before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #3498db;
         }
     </style>
 </head>
@@ -249,259 +97,238 @@
             <a href="index.html" class="sidebar-title">Matemáticas</a>
         </div>
         <nav class="sidebar-nav">
-            <a href="prop_igualdad.html">Propiedades de Igualdad</a>
-            <a href="prop_suma.html">Propiedades de la Suma</a>
-            <a href="prop_resta.html">Propiedades de la Resta</a>
-            <a href="prop_multiplicacion.html">Propiedades de la Multiplicación</a>
-            <a href="prop_division.html">Propiedades de la División</a>
-            <a href="prop_potencia.html">Propiedades de la Potencia</a>
-            <a href="prop_raices.html">Propiedades de las Raíces</a>
-            <a href="prop_derivada.html">Propiedades de la Derivada</a>
-            <a href="prop_derivadas parciales.html">Propiedades de las Derivadas Parciales</a>
-            <a href="prop_integral.html">Propiedades de la Integral</a>
-            <a href="prop_integracionporpartes.html">Integración por Partes</a>
-            <a href="prop_fourier.html">Transformada de Fourier</a>
-            <a href="prop_fraccparciales.html">Fracciones Parciales</a>
-            <a href="prop_identidadestrigono.html">Identidades Trigonométricas</a>
-            <a href="prop_laplace.html">Transformada de Laplace</a>
-            <a href="prop_teoremas.html">Teoremas Matemáticos</a>
+            <a href="prop_suma.html"><i>+</i> Propiedad de la Suma</a>
+            <a href="prop_resta.html"><i>-</i> Propiedad de la Resta</a>
+            <a href="prop_multiplicacion.html"><i>×</i> Propiedad Multiplicativa</a>
+            <a href="prop_division.html"><i>÷</i> Propiedad de la División</a>
+            <a href="prop_potencia.html"><i>x²</i> Propiedad de la Potencia</a>
+            <a href="prop_raices.html"><i>√</i> Propiedad de la Raíz</a>
+            <a href="prop_igualdad.html"><i>=</i> Propiedad de la Igualdad</a>
+            <a href="prop_teoremas.html"><i>📚</i> Teoremas Fundamentales</a>
+            <a href="prop_derivada.html"><i>d/dx</i> Propiedades de la Derivada</a>
+            <a href="prop_integral.html"><i>∫</i> Propiedades de la Integral</a>
+            <a href="prop_derivadas_parciales.html"><i>∂/∂x</i> Derivadas Parciales</a>
+            <a href="prop_fourier.html"><i>ℱ</i> Series de Fourier</a>
+            <a href="prop_fraccparciales.html" class="active"><i>↦</i> Fracciones Parciales</a>
         </nav>
     </div>
+
     <div class="content-wrapper">
-
-    <div class="class-container">
-        <header>
-            <h1>Maestría en Fracciones Parciales</h1>
-        </header>
-
-        <div class="content-area">
-            <p class="instructions">
-                Haz clic en cada sección para revelar la estrategia y los casos de esta poderosa técnica de integración.
-            </p>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>1. La Motivación: ¿Por qué "De-construir"?</span>
-                    <span class="indicator">+</span>
+        <div class="class-container">
+            <header>
+                <h1>Descomposición en Fracciones Parciales</h1>
+                <div class="back-to-home">
+                    <a href="index.html" class="btn-back">
+                        <span class="material-icons-round">home</span>
+                        Volver al Inicio
+                    </a>
                 </div>
-                <div class="card-content">
-                    <h3>El "Por Qué" Pedagógico</h3>
-                    <p>La descomposición en fracciones parciales es un método algebraico para tomar una función racional compleja y "romperla" en una suma de fracciones más simples.</p>
-                    <p><strong>El problema:</strong> Integrar esto es (casi) imposible:</p>
-                    <div class="formula">
-                        $$ \int \frac{1}{x^2 - 1} \, dx $$
+            </header>
+
+            <div class="content-area">
+                <p class="instructions">
+                    Aprende a descomponer funciones racionales en fracciones más simples para facilitar su integración. 
+                    Haz clic en cada caso para ver ejemplos y procedimientos detallados.
+                </p>
+
+                <!-- Introducción a las Fracciones Parciales -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>1. Introducción a las Fracciones Parciales</span>
+                        <span class="indicator">+</span>
                     </div>
-                    <p><strong>La Solución:</strong> "De-construimos" la fracción primero:</p>
-                    <div class="formula">
-                        $$ \frac{1}{x^2 - 1} = \frac{1}{(x-1)(x+1)} = \frac{A}{x-1} + \frac{B}{x+1} $$
+                    <div class="card-content">
+                        <h3>¿Qué son las fracciones parciales?</h3>
+                        <p>La descomposición en fracciones parciales es una técnica que permite expresar una función racional como la suma de fracciones más simples, facilitando su integración o manipulación algebraica.</p>
+                        
+                        <h3>Forma general</h3>
+                        <div class="formula">
+                            $$\frac{P(x)}{Q(x)} = \text{Suma de fracciones más simples}$$
+                        </div>
+                        
+                        <h3>Condiciones iniciales</h3>
+                        <ul>
+                            <li>El grado del numerador P(x) debe ser menor que el del denominador Q(x). Si no es así, primero se debe realizar la división polinómica.</li>
+                            <li>Q(x) debe poder factorizarse en factores lineales y/o cuadráticos irreducibles.</li>
+                        </ul>
+                        
+                        <div class="note">
+                            <strong>Importante:</strong> Esta técnica es especialmente útil para integrar funciones racionales.
+                        </div>
                     </div>
-                    <p>Resolviendo para A y B (en este caso $$A=1/2, B=-1/2$$), convertimos el problema en:</p>
-                    <div class="formula">
-                        $$ \int \left( \frac{1/2}{x-1} - \frac{1/2}{x+1} \right) \, dx $$
+                </div>
+
+                <!-- Caso 1: Factores Lineales Distintos -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>2. Caso 1: Factores Lineales Distintos</span>
+                        <span class="indicator">+</span>
                     </div>
-                    <p>¡Y esto es <strong>trivial</strong> de integrar! El resultado es $$ \frac{1}{2}\ln|x-1| - \frac{1}{2}\ln|x+1| + C $$.</p>
-                    <div class="key-concept">
-                        <p><strong>Principio Andragógico:</strong> No aprendemos esta técnica por diversión. La aprendemos porque es la <strong>llave</strong> que desbloquea la integración de funciones racionales.</p>
+                    <div class="card-content">
+                        <h3>Forma general</h3>
+                        <div class="formula">
+                            $$\frac{P(x)}{(x-a_1)(x-a_2)\cdots(x-a_n)} = \frac{A_1}{x-a_1} + \frac{A_2}{x-a_2} + \cdots + \frac{A_n}{x-a_n}$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Descomponer: $$\frac{3x+5}{(x-1)(x+2)}$$</p>
+                            <div class="step">Paso 1: Establecer la forma de la descomposición</div>
+                            <div class="formula">
+                                $$\frac{3x+5}{(x-1)(x+2)} = \frac{A}{x-1} + \frac{B}{x+2}$$
+                            </div>
+                            <div class="step">Paso 2: Multiplicar ambos lados por el denominador común</div>
+                            <div class="formula">
+                                $$3x + 5 = A(x+2) + B(x-1)$$
+                            </div>
+                            <div class="step">Paso 3: Resolver para A y B (usando valores estratégicos de x)</div>
+                            <div class="formula">
+                                $$\text{Si } x = -2: 3(-2) + 5 = B(-2-1) \Rightarrow -1 = -3B \Rightarrow B = \frac{1}{3}$$
+                                $$\text{Si } x = 1: 3(1) + 5 = A(1+2) \Rightarrow 8 = 3A \Rightarrow A = \frac{8}{3}$$
+                            </div>
+                            <div class="step">Paso 4: Escribir la descomposición final</div>
+                            <div class="formula">
+                                $$\frac{3x+5}{(x-1)(x+2)} = \frac{8/3}{x-1} + \frac{1/3}{x+2}$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Caso 2: Factores Lineales Repetidos -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>3. Caso 2: Factores Lineales Repetidos</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Forma general</h3>
+                        <div class="formula">
+                            $$\frac{P(x)}{(x-a)^n} = \frac{A_1}{x-a} + \frac{A_2}{(x-a)^2} + \cdots + \frac{A_n}{(x-a)^n}$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Descomponer: $$\frac{x^2 + 2x - 1}{(x+1)^3}$$</p>
+                            <div class="formula">
+                                $$\frac{x^2 + 2x - 1}{(x+1)^3} = \frac{A}{x+1} + \frac{B}{(x+1)^2} + \frac{C}{(x+1)^3}$$
+                            </div>
+                            <div class="step">Solución: A = 1, B = 0, C = -2</div>
+                            <div class="formula">
+                                $$= \frac{1}{x+1} - \frac{2}{(x+1)^3}$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Caso 3: Factores Cuadráticos Irreducibles -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>4. Caso 3: Factores Cuadráticos Irreducibles</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Forma general</h3>
+                        <div class="formula">
+                            $$\frac{P(x)}{(ax^2 + bx + c)Q(x)} = \frac{Ax + B}{ax^2 + bx + c} + \text{otros términos}$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Descomponer: $$\frac{2x^2 - x + 4}{(x^2 + 1)(x - 2)}$$</p>
+                            <div class="formula">
+                                $$= \frac{Ax + B}{x^2 + 1} + \frac{C}{x - 2}$$
+                            </div>
+                            <div class="step">Solución: A = -1, B = 0, C = 2</div>
+                            <div class="formula">
+                                $$= \frac{-x}{x^2 + 1} + \frac{2}{x - 2}$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aplicaciones en Integración -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>5. Aplicaciones en Integración</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Integración de funciones racionales</h3>
+                        <p>La descomposición en fracciones parciales simplifica enormemente la integración de funciones racionales.</p>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Calcular: $$\int \frac{3x+5}{(x-1)(x+2)} dx$$</p>
+                            <div class="step">Paso 1: Descomponer en fracciones parciales (visto en el Caso 1)</div>
+                            <div class="formula">
+                                $$= \int \left(\frac{8/3}{x-1} + \frac{1/3}{x+2}\right) dx$$
+                            </div>
+                            <div class="step">Paso 2: Integrar cada término por separado</div>
+                            <div class="formula">
+                                $$= \frac{8}{3} \ln|x-1| + \frac{1}{3} \ln|x+2| + C$$
+                            </div>
+                        </div>
+                        
+                        <h3>Consejos para la integración</h3>
+                        <ul>
+                            <li>Siempre verifica si el grado del numerador es menor que el del denominador.</li>
+                            <li>Para factores cuadráticos en el denominador, completa el cuadrado si es necesario.</li>
+                            <li>Recuerda que $\int \frac{1}{x^2 + a^2} dx = \frac{1}{a} \arctan\left(\frac{x}{a}\right) + C$</li>
+                        </ul>
                     </div>
                 </div>
             </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>2. El Prerrequisito: ¿Es la Fracción "Propia"?</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>La Regla de Oro</h3>
-                    <p>Solo puedes aplicar fracciones parciales a una <strong>fracción propia</strong>, es decir, donde el grado del numerador es <strong>menor</strong> que el grado del denominador.</p>
-                    <div class="alert-warning">
-                        <p><strong>¡Atención!</strong> Si la fracción es <strong>impropia</strong> ($$\deg(N) \ge \deg(D)$$), tu <strong>primer paso obligatorio</strong> es usar la <strong>División Larga de Polinomios</strong>.</p>
-                    </div>
-                    <h3>Ejemplo (Impropia)</h3>
-                    <p>No puedes usar fracciones parciales en $$ \frac{x^3 + x}{x^2 - 1} $$ directamente.</p>
-                    <p>1. Primero, divide:</p>
-                    <div class="formula">
-                        $$ (x^3 + x) \div (x^2 - 1) = x + \frac{2x}{x^2 - 1} $$
-                    </div>
-                    <p>2. Ahora, integra el resultado:</p>
-                    <div class="formula">
-                        $$ \int \left( x + \frac{2x}{x^2 - 1} \right) \, dx $$
-                    </div>
-                    <p>La parte del $$x$$ es fácil. A la segunda parte, $$ \frac{2x}{x^2 - 1} $$, AHORA SÍ puedes aplicarle fracciones parciales (o una simple sustitución en $$u$$).</p>
-                </div>
-            </div>
-
-            <div class="section-divider">Los 4 Casos Tácticos</div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>Caso 1: Factores Lineales Distintos</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>El Caso Más Sencillo</h3>
-                    <p>El denominador se factoriza en términos lineales (como $$ax+b$$) que no se repiten.</p>
-                    <h3>La Forma</h3>
-                    <div class="formula">
-                        $$ \frac{P(x)}{(x-r_1)(x-r_2)...(x-r_n)} $$
-                    </div>
-                    <h3>La Descomposición</h3>
-                    <p>Cada factor lineal obtiene su propia fracción con un numerador constante $$A, B, C...$$</p>
-                    <div class="formula">
-                        $$ \frac{A}{x-r_1} + \frac{B}{x-r_2} + \dots + \frac{N}{x-r_n} $$
-                    </div>
-                    <h3>Ejemplo</h3>
-                    <div class="formula">
-                        $$ \frac{7x+1}{(x-3)(x+2)} = \frac{A}{x-3} + \frac{B}{x+2} $$
-                    </div>
-                    <div class="key-concept">
-                        <p><strong>Táctica Rápida (Heaviside Cover-Up):</strong> Para encontrar $$A$$, "tapa" el $$(x-3)$$ en la izquierda y sustituye $$x=3$$ en lo que queda: $$A = \frac{7(3)+1}{(3+2)} = \frac{22}{5}$$.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>Caso 2: Factores Lineales Repetidos</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>El Caso de la "Escalera"</h3>
-                    <p>El denominador tiene un factor lineal elevado a una potencia $$n$$.</p>
-                    <h3>La Forma</h3>
-                    <div class="formula">
-                        $$ \frac{P(x)}{(x-r)^n} $$
-                    </div>
-                    <h3>La Descomposición</h3>
-                    <p>Debes crear una "escalera" de fracciones para <strong>cada potencia</strong> desde 1 hasta $$n$$.</p>
-                    <div class="formula">
-                        $$ \frac{A_1}{x-r} + \frac{A_2}{(x-r)^2} + \dots + \frac{A_n}{(x-r)^n} $$
-                    </div>
-                    <h3>Ejemplo</h3>
-                    <div class="formula">
-                        $$ \frac{x^2+1}{(x+4)(x-1)^3} = \frac{A}{x+4} + \frac{B}{x-1} + \frac{C}{(x-1)^2} + \frac{D}{(x-1)^3} $$
-                    </div>
-                    <p>(Nota: Se incluye el Caso 1 junto con el 2)</p>
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>Caso 3: Factores Cuadráticos Irreducibles</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>El Caso que No se Factoriza</h3>
-                    <p>El denominador contiene un factor cuadrático (como $$ax^2+bx+c$$) que no se puede factorizar más (es "irreducible", es decir, $$b^2-4ac < 0$$).</p>
-                    <h3>La Forma</h3>
-                    <div class="formula">
-                        $$ \frac{P(x)}{(ax^2+bx+c)...} $$
-                    </div>
-                    <h3>La Descomposición</h3>
-                    <p>El numerador para un factor cuadrático debe ser un término <strong>lineal</strong>, es decir, $$Ax+B$$.</p>
-                    <div class="formula">
-                        $$ \frac{Ax+B}{ax^2+bx+c} + \dots $$
-                    </div>
-                    <h3>Ejemplo</h3>
-                    <div class="formula">
-                        $$ \frac{4x^2-3x+1}{(x-5)(x^2+x+1)} = \frac{A}{x-5} + \frac{Bx+C}{x^2+x+1} $$
-                    </div>
-                    <div class="key-concept">
-                        <p><strong>Principio Pedagógico:</strong> El grado del numerador debe ser <strong>uno menos</strong> que el grado del factor en el denominador. Para un factor lineal (grado 1), el numerador es constante (grado 0). Para un factor cuadrático (grado 2), el numerador es lineal (grado 1).</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>Caso 4: Factores Cuadráticos Repetidos</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>El Caso "Monstruo"</h3>
-                    <p>El denominador tiene un factor cuadrático irreducible elevado a una potencia $$n$$.</s/p>
-                    <h3>La Forma</h3>
-                    <div class="formula">
-                        $$ \frac{P(x)}{(ax^2+bx+c)^n} $$
-                    </div>
-                    <h3>La Descomposición</h3>
-                    <p>Se combina la lógica del Caso 2 (escalera) y el Caso 3 (numerador lineal).</p>
-                    <div class="formula">
-                        $$ \frac{A_1x+B_1}{ax^2+bx+c} + \frac{A_2x+B_2}{(ax^2+bx+c)^2} + \dots + \frac{A_nx+B_n}{(ax^2+bx+c)^n} $$
-                    </div>
-                    <h3>Ejemplo</h3>
-                    <div class="formula">
-                        $$ \frac{x^3}{(x^2+9)^2} = \frac{Ax+B}{x^2+9} + \frac{Cx+D}{(x^2+9)^2} $$
-                    </div>
-                </div>
-            </div>
-            
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>5. El Paso Final: Cómo encontrar A, B, C...</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>El "Cómo" Algebraico</h3>
-                    <p>Una vez que tienes la forma de la descomposición, ¿cómo resuelves para las constantes? Hay dos métodos principales que se pueden combinar.</p>
-                    
-                    <h3>Método 1: Sistema de Ecuaciones (El "Bruto")</h3>
-                    <p>1. Multiplica ambos lados por el denominador original para "limpiar" las fracciones.</p>
-                    <p>2. Expande y agrupa todos los términos por potencias de $$x$$ (ej. todos los términos $$x^2$$, todos los términos $$x$$, etc.).</p>
-                    <p>3. Iguala los coeficientes de cada potencia de $$x$$ del lado izquierdo con los del lado derecho. Esto crea un sistema de ecuaciones lineales.</p>
-                    <p>4. Resuelve el sistema para $$A, B, C...$$</p>
-                    
-                    <h3>Método 2: Sustituir Valores "Inteligentes" (El "Astuto")</h3>
-                    <p>1. Después de "limpiar" las fracciones (Paso 1 de arriba), en lugar de expandir, sustituye valores "inteligentes" para $$x$$.</p>
-                    <p>2. Los valores "inteligentes" son las raíces de tu denominador (ej. si tienes $$(x-3)$$, sustituye $$x=3$$). Esto hará que muchos términos se cancelen (sean 0) instantáneamente, permitiéndote despejar una constante.</p>
-                    
-                    <div class="key-concept">
-                        <p><strong>Estrategia de Genio:</strong> ¡Usa ambos! Usa el Método 2 (Astuto) para encontrar tantas constantes fáciles como puedas. Luego, usa el Método 1 (Bruto) o sustituye valores fáciles (como $$x=0$$ o $$x=1$$) para encontrar las constantes restantes.</p>
-                    </div>
-                </div>
-            </div>
-
-
         </div>
+        
+                        <!-- Botón de Volver al Inicio al final -->
+                <div class="back-to-home bottom">
+                    <a href="index.html" class="btn-back">
+                        <span class="material-icons-round">home</span>
+                        Volver al Inicio
+                    </a>
+                </div>
+<footer>
+            <p>© JMGV PTEL 2025 Fracciones Parciales. Todos los derechos reservados.</p>
+        </footer>
     </div>
 
+    <!-- Scripts JavaScript -->
+    <script src="js/main.js"></script>
+    
+    <!-- Scripts específicos para esta página -->
     <script>
-        function toggleCard(headerElement) {
-            // Encuentra el contenido asociado
-            const content = headerElement.nextElementSibling;
-            // Encuentra el indicador
-            const indicator = headerElement.querySelector('.indicator');
-            
-            // Alterna la clase 'active' en el header
-            headerElement.classList.toggle('active');
-
-            // Alterna la clase 'visible' en el contenido
-            if (content.classList.contains('visible')) {
-                // Si está visible, lo ocultamos
-                content.classList.remove('visible');
-                indicator.textContent = '+';
-            } else {
-                // Si está oculto, lo mostramos
-                content.classList.add('visible');
-                indicator.textContent = '−'; // Usamos un signo 'menos'
+        // Configuración específica de MathJax para esta página
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true
+            },
+            chtml: {
+                scale: 0.9,
+                displayAlign: 'center',
+                displayIndent: '1em'
+            },
+            svg: {
+                fontCache: 'global'
             }
+        };
+        
+        // Función para manejar la impresión
+        function handlePrint() {
+            window.print();
         }
-    </script>
-
-    <script>
-        function toggleSidebar() {
-            document.querySelector('.sidebar').classList.toggle('show');
-            document.querySelector('.content-wrapper').classList.toggle('shifted');
-        }
-
-        // Close sidebar when clicking outside
-        document.addEventListener('click', function(event) {
-            const sidebar = document.querySelector('.sidebar');
-            const toggleBtn = document.querySelector('.toggle-sidebar');
+        
+        // Asegurar que MathJax se renderice correctamente después de cargar el contenido
+        document.addEventListener('DOMContentLoaded', function() {
+            // Forzar actualización de MathJax después de que se muestre el contenido
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
             
-            if (!sidebar.contains(event.target) && event.target !== toggleBtn) {
-                sidebar.classList.remove('show');
-                document.querySelector('.content-wrapper').classList.remove('shifted');
+            // Expandir la primera tarjeta por defecto
+            const firstCard = document.querySelector('.property-card:first-child .card-header');
+            if (firstCard) {
+                firstCard.click();
             }
         });
     </script>

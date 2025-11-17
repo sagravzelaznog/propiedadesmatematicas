@@ -1,268 +1,76 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clase Interactiva: La Verdad de la División</title>
+    <title>Clase Interactiva: Propiedades de la División</title>
     
+    <!-- MathJax para fórmulas matemáticas -->
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
-
+    
+    <!-- Fuente Roboto de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Estilos específicos para esta página -->
     <style>
-        /* Sidebar Styles */
-        .sidebar {
-            width: 250px;
-            height: 100%;
-            position: fixed;
-            left: 0;
-            top: 0;
-            background-color: #2c3e50;
-            color: white;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-            z-index: 1000;
-            overflow-y: auto;
-            padding-bottom: 20px;
-        }
-
-        .sidebar.show {
-            transform: translateX(0);
-        }
-
-        .sidebar-header {
-            padding: 20px;
-            background-color: #1a252f;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .sidebar-title {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        .toggle-sidebar {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5em;
-            cursor: pointer;
-            padding: 5px 10px;
-        }
-
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            padding: 15px 0;
-        }
-
-        .sidebar-nav a {
-            color: #ecf0f1;
-            text-decoration: none;
-            padding: 12px 25px;
-            transition: all 0.3s;
-        }
-
-        .sidebar-nav a:hover {
-            background-color: #34495e;
-            padding-left: 30px;
-        }
-
-        .content-wrapper {
-            transition: margin 0.3s;
-            margin-left: 0;
-            padding: 20px;
-        }
-
-        .content-wrapper.shifted {
-            margin-left: 250px;
-        }
-
-        @media (max-width: 768px) {
-            .content-wrapper.shifted {
-                margin-left: 0;
-            }
-        }
-
-        /* Estilo general del cuerpo */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        /* Estilos específicos para esta página */
+        .formula {
+            font-size: 1.3em;
             background-color: #f8f9fa;
-            color: #212529;
-            line-height: 1.7;
-            margin: 0;
-            padding: 20px;
-        }
-
-        /* Contenedor principal de la clase */
-        .class-container {
-            max-width: 850px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-        }
-
-        /* Encabezado */
-        header {
-            background: linear-gradient(135deg, #6a00f4, #4800a5);
-            color: white;
-            padding: 30px;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #6f42c1;
+            margin: 15px 0;
+            overflow-x: auto;
             text-align: center;
         }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.6em;
-            font-weight: 700;
-        }
-
-        /* Área de contenido principal */
-        .content-area {
-            padding: 25px 30px;
-        }
-
-        .instructions {
-            font-size: 1.15em;
-            text-align: center;
-            color: #495057;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #e9ecef;
-            padding-bottom: 15px;
-        }
-
-        /* Tarjeta de propiedad (Acordeón) */
+        
         .property-card {
-            border: 1px solid #e0e0e0;
+            margin-bottom: 25px;
             border-radius: 8px;
-            margin-bottom: 15px;
-            transition: box-shadow 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
         .property-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        /* Encabezado de la tarjeta (el botón clickeable) */
-        .card-header {
-            padding: 18px 25px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.4em;
-            font-weight: 600;
-            border-left: 5px solid transparent; /* Para el indicador de estado */
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
-        /* Indicador de expandir/colapsar */
-        .indicator {
-            font-size: 1.6em;
-            font-weight: 300;
-            color: #6c757d;
-            transition: transform 0.3s ease-in-out;
+        .status-true {
+            border-left: 4px solid #28a745;
         }
         
-        /* Estilos de estado (Pedagogía clave) */
-        .status-fail { 
-            border-left-color: #d90429; /* Rojo: Falla */
-            color: #8d0801; 
-        }
-        .status-pass { 
-            border-left-color: #2a9d8f; /* Verde: Pasa */
-            color: #195c55; 
-        }
-        .status-partial { 
-            border-left-color: #fca311; /* Naranja: Parcial */
-            color: #a16405; 
-        }
-        .status-master { 
-            border-left-color: #4800a5; /* Azul: Concepto Clave */
-            color: #4800a5;
-            font-size: 1.5em;
-        }
-        .status-danger {
-            border-left-color: #c1121f; /* Rojo oscuro */
-            color: #780000;
-            font-size: 1.5em;
-        }
-
-        /* Estilo cuando está activo */
-        .card-header.active .indicator {
-            transform: rotate(45deg);
-        }
-
-        /* Contenido colapsable */
-        .card-content {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            padding: 0 25px;
-            transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
-            border-top: 1px solid #e9ecef;
-        }
-
-        .card-content.visible {
-            max-height: 1500px;
-            opacity: 1;
-            padding: 20px 25px 25px 25px;
-        }
-
-        .card-content h3 {
-            color: #343a40;
-            margin-top: 0;
-            border-bottom: 2px solid #fca311;
-            padding-bottom: 5px;
-            display: inline-block;
-        }
-
-        /* Estilo para las fórmulas de MathJax */
-        .formula {
-            font-size: 1.3em;
-            text-align: center;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            margin: 20px 0;
-            overflow-x: auto;
+        .status-false {
+            border-left: 4px solid #dc3545;
         }
         
-        .conclusion {
-            font-size: 1.2em;
-            font-weight: 600;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        .conclusion.fail {
-            background-color: #fff5f5;
-            color: #d90429;
-            border: 1px solid #ffe0e0;
-        }
-        .conclusion.pass {
-            background-color: #f4fcfb;
-            color: #2a9d8f;
-            border: 1px solid #d4f2ef;
-        }
-        .conclusion.danger {
-            background-color: #fff5f5;
-            color: #780000;
-            border: 1px solid #f5c6cb;
-            font-size: 1.3em;
+        .status-partial {
+            border-left: 4px solid #ffc107;
         }
         
-        .property-image {
-            width: 100%;
-            max-width: 400px;
-            height: auto;
-            border-radius: 8px;
-            margin: 15px auto;
-            display: block;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        .status-master {
+            border-left: 4px solid #6f42c1;
+        }
+        
+        .example {
+            background-color: #f5f0ff;
+            border-left: 4px solid #6f42c1;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        
+        .warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -274,259 +82,300 @@
             <a href="index.html" class="sidebar-title">Matemáticas</a>
         </div>
         <nav class="sidebar-nav">
-            <a href="prop_igualdad.html">Propiedades de Igualdad</a>
-            <a href="prop_suma.html">Propiedades de la Suma</a>
-            <a href="prop_resta.html">Propiedades de la Resta</a>
-            <a href="prop_multiplicacion.html">Propiedades de la Multiplicación</a>
-            <a href="prop_division.html">Propiedades de la División</a>
-            <a href="prop_potencia.html">Propiedades de la Potencia</a>
-            <a href="prop_raices.html">Propiedades de las Raíces</a>
-            <a href="prop_derivada.html">Propiedades de la Derivada</a>
-            <a href="prop_derivadas parciales.html">Propiedades de las Derivadas Parciales</a>
-            <a href="prop_integral.html">Propiedades de la Integral</a>
-            <a href="prop_integracionporpartes.html">Integración por Partes</a>
-            <a href="prop_fourier.html">Transformada de Fourier</a>
-            <a href="prop_fraccparciales.html">Fracciones Parciales</a>
-            <a href="prop_identidadestrigono.html">Identidades Trigonométricas</a>
-            <a href="prop_laplace.html">Transformada de Laplace</a>
-            <a href="prop_teoremas.html">Teoremas Matemáticos</a>
+            <a href="prop_suma.html"><i>+</i> Propiedad de la Suma</a>
+            <a href="prop_resta.html"><i>-</i> Propiedad de la Resta</a>
+            <a href="prop_multiplicacion.html"><i>×</i> Propiedad Multiplicativa</a>
+            <a href="prop_division.html" class="active"><i>÷</i> Propiedad de la División</a>
+            <a href="prop_potencia.html"><i>x²</i> Propiedad de la Potencia</a>
+            <a href="prop_raices.html"><i>√</i> Propiedad de la Raíz</a>
+            <a href="prop_igualdad.html"><i>=</i> Propiedad de la Igualdad</a>
+            <a href="prop_teoremas.html"><i>📚</i> Teoremas Fundamentales</a>
+            <a href="prop_derivada.html"><i>d/dx</i> Propiedades de la Derivada</a>
+            <a href="prop_integral.html"><i>∫</i> Propiedades de la Integral</a>
         </nav>
     </div>
+
     <div class="content-wrapper">
-
-    <div class="class-container">
-        <header>
-            <h1>Investigando las "Propiedades" de la División</h1>
-        </header>
-
-        <div class="content-area">
-            <p class="instructions">
-                La división es una operación poderosa, pero... ¿es tan "ordenada" como la suma o la multiplicación?<br>
-                Haz clic en cada panel para investigar si las propiedades se cumplen.
-            </p>
-
-            <div class="property-card">
-                <div class="card-header status-fail" onclick="toggleCard(this)">
-                    <span>Investigación: ¿Es Conmutativa?</span>
-                    <span class="indicator">+</span>
+        <div class="class-container">
+            <header>
+                <h1>Propiedades de la División</h1>
+                <div class="back-to-home">
+                    <a href="index.html" class="btn-back">
+                        <span class="material-icons-round">home</span>
+                        Volver al Inicio
+                    </a>
                 </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>Si fuera conmutativa, el orden no importaría. ¿Es $$a \div b$$ igual a $$b \div a$$?</p>
-                    
-                    <h3>Analogía</h3>
-                    <p>Repartir 10 pizzas entre 2 personas ($$10 \div 2$$) da 5 pizzas por persona. Repartir 2 pizzas entre 10 personas ($$2 \div 10$$) da un trozo (0.2) por persona. Claramente, el orden importa.</p>
-                    
-                    <h3>Prueba (Contraejemplo)</h3>
-                    <div class="formula">
-                        $$10 \div 2 = 5$$
-                        $$2 \div 10 = 0.2$$
+            </header>
+
+            <div class="content-area">
+                <p class="instructions">
+                    La división es una operación poderosa con características únicas.
+                    Explora sus propiedades y limitaciones a continuación.
+                </p>
+                
+                <div class="warning">
+                    <strong>¡Atención!</strong> La división tiene restricciones importantes, 
+                    especialmente en relación con el número cero.
+                </div>
+
+                <!-- No Conmutativa -->
+                <div class="property-card status-false">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>1. No Conmutativa</span>
+                        <span class="indicator">+</span>
                     </div>
-                    
-                    <p class="conclusion fail">
-                        <strong>Veredicto:</strong> Como $$5 \neq 0.2$$, la división <strong>NO ES CONMUTATIVA</strong>.
-                    </p>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?wrong way,chaos" alt="Imagen de direcciones opuestas" class="property-image"> -->
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>El orden de los términos en la división afecta el resultado.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$a \div b \neq b \div a$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>El resultado cambia al invertir los términos:</p>
+                            <div class="formula">
+                                $$8 \div 4 = 2$$
+                                $$4 \div 8 = 0.5$$
+                                $$2 \neq 0.5$$
+                            </div>
+                        </div>
+                        
+                        <h3>Consecuencias</h3>
+                        <ul>
+                            <li>El orden de los términos es crucial</li>
+                            <li>No se puede reordenar libremente como la multiplicación</li>
+                            <li>Importante en ecuaciones y fracciones</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- No Asociativa -->
+                <div class="property-card status-false">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>2. No Asociativa</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>La forma de agrupar las divisiones afecta el resultado.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$(a \div b) \div c \neq a \div (b \div c)$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>El resultado cambia según cómo se agrupen las operaciones:</p>
+                            <div class="formula">
+                                $$(16 \div 4) \div 2 = 4 \div 2 = 2$$
+                                $$16 \div (4 \div 2) = 16 \div 2 = 8$$
+                                $$2 \neq 8$$
+                            </div>
+                        </div>
+                        
+                        <h3>Consecuencias</h3>
+                        <ul>
+                            <li>Se deben usar paréntesis con precaución</li>
+                            <li>El orden de las operaciones es fundamental</li>
+                            <li>Diferente comportamiento que la multiplicación</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- División por Cero -->
+                <div class="property-card status-master">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>3. División por Cero</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>La división por cero no está definida en las matemáticas estándar.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$a \div 0 \quad \text{no está definido}$$
+                        </div>
+                        
+                        <h3>Explicación</h3>
+                        <div class="warning">
+                            <p>Intentar dividir cualquier número por cero conduce a una operación indefinida.</p>
+                            <p>En términos matemáticos, no existe ningún número que multiplicado por cero dé como resultado un número distinto de cero.</p>
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="formula">
+                            $$5 \div 0 = \text{Indefinido}$$
+                            $$-3 \div 0 = \text{Indefinido}$$
+                            $$0 \div 0 = \text{Indeterminado}$$
+                        </div>
+                        
+                        <h3>Importancia</h3>
+                        <ul>
+                            <li>Fundamental en el álgebra y el cálculo</li>
+                            <li>Base para entender asíntotas verticales</li>
+                            <li>Crítico en programación para evitar errores</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Elemento Neutro -->
+                <div class="property-card status-true">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>4. Elemento Neutro (Derecho)</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>Dividir un número por uno no lo altera.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$a \div 1 = a$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Dividir cualquier número por 1 da como resultado el mismo número:</p>
+                            <div class="formula">
+                                $$7 \div 1 = 7$$
+                                $$-4 \div 1 = -4$$
+                            </div>
+                        </div>
+                        
+                        <h3>Importancia</h3>
+                        <ul>
+                            <li>Fundamental en simplificaciones algebraicas</li>
+                            <li>Base para entender fracciones equivalentes</li>
+                            <li>Importante en la resolución de ecuaciones</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- División de Cero -->
+                <div class="property-card status-true">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>5. División de Cero</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>Cero dividido por cualquier número distinto de cero es cero.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$0 \div a = 0 \quad \text{para} \quad a \neq 0$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Cero dividido por cualquier número (excepto cero) es cero:</p>
+                            <div class="formula">
+                                $$0 \div 5 = 0$$
+                                $$0 \div (-2) = 0$$
+                            </div>
+                        </div>
+                        
+                        <div class="warning">
+                            <strong>Recuerda:</strong> $$0 \div 0$$ es una forma indeterminada, no está definida.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- División como Multiplicación por el Inverso -->
+                <div class="property-card status-master">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>6. División como Multiplicación por el Inverso</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>Dividir es equivalente a multiplicar por el recíproco del divisor.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$a \div b = a \times \frac{1}{b} \quad \text{para} \quad b \neq 0$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Convertir división en multiplicación por el recíproco:</p>
+                            <div class="formula">
+                                $$10 \div 2 = 10 \times \frac{1}{2} = 5$$
+                                $$\frac{3}{4} \div \frac{1}{2} = \frac{3}{4} \times \frac{2}{1} = \frac{6}{4} = \frac{3}{2}$$
+                            </div>
+                        </div>
+                        
+                        <h3>Aplicaciones</h3>
+                        <ul>
+                            <li>Simplificación de fracciones complejas</li>
+                            <li>Resolución de ecuaciones con fracciones</li>
+                            <li>Demostraciones algebraicas</li>
+                        </ul>
+                        
+                        <div class="alert alert-info">
+                            <strong>Consejo:</strong> Esta propiedad es fundamental para entender 
+                            cómo se relacionan la multiplicación y la división, permitiendo convertir 
+                            cualquier división en una multiplicación por el inverso multiplicativo.
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="property-card">
-                <div class="card-header status-fail" onclick="toggleCard(this)">
-                    <span>Investigación: ¿Es Asociativa?</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>Si fuera asociativa, podríamos agrupar como quisiéramos. ¿Es $$(a \div b) \div c$$ igual a $$a \div (b \div c)$$?</p>
-                    
-                    <h3>Prueba (Contraejemplo)</h3>
-                    <p>Usemos $$100 \div 10 \div 2$$:</p>
-                    <div class="formula">
-                        $$ (100 \div 10) \div 2 = 10 \div 2 = 5 $$
-                        $$ 100 \div (10 \div 2) = 100 \div 5 = 20 $$
-                    </div>
-                    
-                    <p class="conclusion fail">
-                        <strong>Veredicto:</strong> Como $$5 \neq 20$$, la división <strong>NO ES ASOCIATIVA</strong>.
-                    </p>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?broken chain,domino effect" alt="Imagen de una cadena rota" class="property-image"> -->
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header status-partial" onclick="toggleCard(this)">
-                    <span>Investigación: Elemento Neutro</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>Buscamos un número que, al dividir, no altere al número original. El candidato obvio es el $$1$$.</p>
-                    
-                    <h3>Prueba (Dos partes)</h3>
-                    <p><strong>Parte 1 (El $$1$$ como divisor):</strong></p>
-                    <div class="formula">
-                        $$a \div 1 = a$$
-                        $$8 \div 1 = 8$$
-                    </div>
-                    <p>¡Funciona! Dividir por 1 no cambia el número.</p>
-                    
-                    <p><strong>Parte 2 (El $$1$$ como dividendo):</strong></p>
-                    <div class="formula">
-                        $$1 \div a = \frac{1}{a}$$
-                        $$1 \div 8 = 0.125$$
-                    </div>
-                    <p>¡Aquí falla! El resultado no es $$a$$, sino su recíproco.</p>
-                    
-                    <p class="conclusion">
-                        <strong>Veredicto:</strong> El $$1$$ es solo un <strong>Elemento Neutro por la Derecha</strong>. No es un neutro completo.
-                    </p>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?one way street,identity" alt="Imagen de una calle de un solo sentido" class="property-image"> -->
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header status-pass" onclick="toggleCard(this)">
-                    <span>Propiedad del Cero (Cero como Dividendo)</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>¿Qué pasa si el $$0$$ es el número que se está repartiendo (dividendo)?</p>
-                    
-                    <h3>Analogía</h3>
-                    <p>Si tienes $$0$$ galletas y las quieres repartir entre $$5$$ amigos, ¿cuántas galletas recibe cada uno? Obviamente, $$0$$.</p>
-                    
-                    <h3>Fórmula</h3>
-                    <div class="formula">
-                        $$0 \div a = 0$$
-                        $$(\text{Siempre que } a \neq 0)$$
-                    </div>
-                    
-                    <p class="conclusion pass">
-                        <strong>Veredicto:</strong> Cero dividido por cualquier otro número (no cero) es siempre <strong>CERO</strong>.
-                    </p>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?zero,empty box" alt="Imagen de una caja vacía" class="property-image"> -->
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header status-master" onclick="toggleCard(this)">
-                    <span>El Concepto Clave: El Secreto de la División</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>El "Aha!" Pedagógico</h3>
-                    <p>Hemos visto que la división "falla" en casi todas las propiedades elegantes. Esto es porque la división es, en realidad, una <strong>MULTIPLICACIÓN DISFRAZADA</strong>.</p>
-                    <p>Dividir por un número es exactamente lo mismo que <strong>multiplicar por su recíproco (o inverso multiplicativo)</strong>.</p>
-                    
-                    <h3>La Verdadera Fórmula</h3>
-                    <div class="formula">
-                        $$a \div b = a \cdot \left(\frac{1}{b}\right)$$
-                    </div>
-                    
-                    <h3>Por qué falla todo</h3>
-                    <p>Ahora, las fallas anteriores tienen sentido. La "Propiedad Conmutativa" falló porque:</p>
-                    <p>$$a \div b$$ es $$a \cdot \left(\frac{1}{b}\right)$$</p>
-                    <p>$$b \div a$$ es $$b \cdot \left(\frac{1}{a}\right)$$</p>
-                    <p>¡Y es obvio que esas dos expresiones no son iguales!</p>
-                    
-                    <p><strong>Conclusión Maestra:</strong> La división no tiene sus propias propiedades complejas. Simplemente <strong>hereda las propiedades de la multiplicación</strong> una vez que la "traduces" a su forma verdadera.</p>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?key,lightbulb,truth" alt="Imagen de una llave" class="property-image"> -->
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header status-partial" onclick="toggleCard(this)">
-                    <span>Investigación: ¿Es Distributiva?</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>¿Se "reparte" la división sobre la suma? Gracias a nuestro "Concepto Clave", podemos probarlo.</p>
-                    
-                    <h3>Prueba (Dos partes)</h3>
-                    <p><strong>Parte 1 (Distributiva por la DERECHA):</strong></p>
-                    <div class="formula">
-                        $$ (a + b) \div c = (a \div c) + (b \div c) $$
-                    </div>
-                    <p><strong>Prueba:</strong> El lado izquierdo es $$(a+b) \cdot \frac{1}{c}$$. Por la propiedad distributiva de la multiplicación, esto es $$a \cdot \frac{1}{c} + b \cdot \frac{1}{c}$$, que es $$(a \div c) + (b \div c)$$. <strong>¡Funciona!</strong></p>
-                    
-                    <p><strong>Parte 2 (Distributiva por la IZQUIERDA):</strong></p>
-                    <div class="formula">
-                        $$ a \div (b + c) \neq (a \div b) + (a \div c) $$
-                    </div>
-                    <p><strong>Prueba:</strong> $$100 \div (10 + 10) = 100 \div 20 = 5$$. PERO $$(100 \div 10) + (100 \div 10) = 10 + 10 = 20$$. <strong>¡Falla!</strong></p>
-                    
-                    <p class="conclusion">
-                        <strong>Veredicto:</strong> La división es <strong>DISTRIBUTIVA SÓLO POR LA DERECHA</strong>.
-                    </p>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?distribution,splitting" alt="Imagen de distribución" class="property-image"> -->
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header status-danger" onclick="toggleCard(this)">
-                    <span>Regla Maestra: ¡Prohibido Dividir por Cero!</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>La operación $$a \div 0$$ no está permitida en matemáticas. Se dice que está <strong>indefinida</strong> o <strong>indeterminada</strong>.</p>
-                    
-                    <h3>¿Por qué? Razón Lógica</h3>
-                    <p>Recordemos que la división es lo opuesto a la multiplicación. Si decimos que $$10 \div 0 = x$$, esto implicaría que $$x \cdot 0 = 10$$.</p>
-                    <p>Pero sabemos que <strong>cualquier número multiplicado por 0 es 0</strong>, nunca 10. Por lo tanto, no existe ningún número $$x$$ que pueda ser la respuesta.</p>
-                    
-                    <h3>¿Y qué pasa con $$0 \div 0$$?</h3>
-                    <p>Si decimos $$0 \div 0 = x$$, esto implicaría que $$x \cdot 0 = 0$$. ¿Cuál es el problema? ¡Que $$x$$ podría ser CUALQUIER NÚMERO! (5, 8, -100... todos funcionan). Como no hay una respuesta *única*, se le llama una <strong>indeterminación</strong>.</p>
-                    
-                    <p class="conclusion danger">
-                        <strong>Veredicto:</strong> Nunca, bajo ninguna circunstancia, se divide por cero. Es el "rompe-reglas" fundamental de la aritmética.
-                    </p>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?error,warning,black hole" alt="Imagen de error o agujero negro" class="property-image"> -->
-                </div>
-            </div>
-
         </div>
+        
+                        <!-- Botón de Volver al Inicio al final -->
+                <div class="back-to-home bottom">
+                    <a href="index.html" class="btn-back">
+                        <span class="material-icons-round">home</span>
+                        Volver al Inicio
+                    </a>
+                </div>
+<footer>
+            <p>© JMGV PTEL 2025 Propiedades de la División. Todos los derechos reservados.</p>
+        </footer>
     </div>
 
+    <!-- Scripts JavaScript -->
+    <script src="js/main.js"></script>
+    
+    <!-- Scripts específicos para esta página -->
     <script>
-        function toggleCard(headerElement) {
-            // Encuentra el contenido asociado
-            const content = headerElement.nextElementSibling;
-            // Encuentra el indicador
-            const indicator = headerElement.querySelector('.indicator');
-            
-            // Alterna la clase 'active' en el header
-            headerElement.classList.toggle('active');
-
-            // Alterna la clase 'visible' en el contenido
-            if (content.classList.contains('visible')) {
-                // Si está visible, lo ocultamos
-                content.classList.remove('visible');
-                indicator.textContent = '+';
-            } else {
-                // Si está oculto, lo mostramos
-                content.classList.add('visible');
-                indicator.textContent = '−'; // Usamos un signo 'menos'
+        // Configuración específica de MathJax para esta página
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true
+            },
+            chtml: {
+                scale: 0.9,
+                displayAlign: 'center',
+                displayIndent: '1em'
+            },
+            svg: {
+                fontCache: 'global'
             }
+        };
+        
+        // Función para manejar la impresión
+        function handlePrint() {
+            window.print();
         }
-    </script>
-
-    <script>
-        function toggleSidebar() {
-            document.querySelector('.sidebar').classList.toggle('show');
-            document.querySelector('.content-wrapper').classList.toggle('shifted');
-        }
-
-        // Close sidebar when clicking outside
-        document.addEventListener('click', function(event) {
-            const sidebar = document.querySelector('.sidebar');
-            const toggleBtn = document.querySelector('.toggle-sidebar');
+        
+        // Asegurar que MathJax se renderice correctamente después de cargar el contenido
+        document.addEventListener('DOMContentLoaded', function() {
+            // Forzar actualización de MathJax después de que se muestre el contenido
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
             
-            if (!sidebar.contains(event.target) && event.target !== toggleBtn) {
-                sidebar.classList.remove('show');
-                document.querySelector('.content-wrapper').classList.remove('shifted');
+            // Expandir la primera tarjeta por defecto
+            const firstCard = document.querySelector('.property-card:first-child .card-header');
+            if (firstCard) {
+                firstCard.click();
             }
         });
     </script>

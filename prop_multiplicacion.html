@@ -1,227 +1,60 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clase Interactiva: Propiedades de la Multiplicación</title>
     
+    <!-- MathJax para fórmulas matemáticas -->
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
-
-    <style >
-        /* Sidebar Styles */
-        .sidebar {
-            width: 250px;
-            height: 100%;
-            position: fixed;
-            left: 0;
-            top: 0;
-            background-color: #2c3e50;
-            color: white;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-            z-index: 1000;
-            overflow-y: auto;
-            padding-bottom: 20px;
-        }
-
-        .sidebar.show {
-            transform: translateX(0);
-        }
-
-        .sidebar-header {
-            padding: 20px;
-            background-color: #1a252f;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .sidebar-title {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        .toggle-sidebar {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5em;
-            cursor: pointer;
-            padding: 5px 10px;
-        }
-
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            padding: 15px 0;
-        }
-
-        .sidebar-nav a {
-            color: #ecf0f1;
-            text-decoration: none;
-            padding: 12px 25px;
-            transition: all 0.3s;
-        }
-
-        .sidebar-nav a:hover {
-            background-color: #34495e;
-            padding-left: 30px;
-        }
-
-        .content-wrapper {
-            transition: margin 0.3s;
-            margin-left: 0;
-            padding: 20px;
-        }
-
-        .content-wrapper.shifted {
-            margin-left: 250px;
-        }
-
-        @media (max-width: 768px) {
-            .content-wrapper.shifted {
-                margin-left: 0;
-            }
-        }
-
-        /* Estilo general del cuerpo */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f7f9f9;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-        }
-
-        /* Contenedor principal de la clase */
-        .class-container {
-            max-width: 850px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-        }
-
-        /* Encabezado */
-        header {
-            background: linear-gradient(135deg, #006442, #00875a);
-            color: white;
-            padding: 30px;
+    
+    <!-- Fuente Roboto de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Estilos específicos para esta página -->
+    <style>
+        /* Estilos específicos para esta página */
+        .formula {
+            font-size: 1.3em;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #28a745;
+            margin: 15px 0;
+            overflow-x: auto;
             text-align: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-
-        /* Área de contenido principal */
-        .content-area {
-            padding: 25px 30px;
-        }
-
-        .instructions {
-            font-size: 1.1em;
-            text-align: center;
-            color: #444;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #007a53;
-            padding-bottom: 15px;
         }
         
-        .instructions strong {
-            color: #004d33;
-        }
-
-        /* Tarjeta de propiedad (Acordeón) */
         .property-card {
-            border: 1px solid #e0e0e0;
+            margin-bottom: 25px;
             border-radius: 8px;
-            margin-bottom: 15px;
-            transition: box-shadow 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid #28a745;
         }
         
         .property-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        /* Encabezado de la tarjeta (el botón clickeable) */
-        .card-header {
-            background-color: #fcfcfc;
-            padding: 18px 25px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.5em;
-            font-weight: 600;
-            color: #004d33;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
-        /* Indicador de expandir/colapsar */
-        .indicator {
-            font-size: 1.6em;
-            font-weight: 300;
-            color: #00875a;
-            transition: transform 0.3s ease-in-out;
+        .example {
+            background-color: #e9f7ef;
+            border-left: 4px solid #28a745;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
         }
         
-        /* Estilo cuando está activo */
-        .card-header.active {
-            background-color: #f0fafa;
-        }
-
-        .card-header.active .indicator {
-            transform: rotate(45deg);
-        }
-
-        /* Contenido colapsable */
-        .card-content {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            padding: 0 25px;
-            transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
-            border-top: 1px solid #e9e9e9;
-        }
-
-        /* Clase 'visible' que se añade con JS */
-        .card-content.visible {
-            max-height: 1500px; /* Suficiente para cualquier contenido */
-            opacity: 1;
-            padding: 20px 25px;
-        }
-
-        .card-content h3 {
-            color: #006442;
-            margin-top: 0;
-        }
-
-        /* Estilo para las fórmulas de MathJax */
-        .formula {
-            font-size: 1.3em;
-            text-align: center;
-            padding: 20px;
-            background-color: #fdfdfd;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            margin: 20px 0;
-            overflow-x: auto;
-        }
-        
-        /* Imagen temática */
-        .property-image {
-            width: 100%;
-            max-width: 450px;
-            height: auto;
-            border-radius: 8px;
-            margin: 15px auto;
-            display: block;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -233,259 +66,261 @@
             <a href="index.html" class="sidebar-title">Matemáticas</a>
         </div>
         <nav class="sidebar-nav">
-            <a href="prop_igualdad.html">Propiedades de Igualdad</a>
-            <a href="prop_suma.html">Propiedades de la Suma</a>
-            <a href="prop_resta.html">Propiedades de la Resta</a>
-            <a href="prop_multiplicacion.html">Propiedades de la Multiplicación</a>
-            <a href="prop_division.html">Propiedades de la División</a>
-            <a href="prop_potencia.html">Propiedades de la Potencia</a>
-            <a href="prop_raices.html">Propiedades de las Raíces</a>
-            <a href="prop_derivada.html">Propiedades de la Derivada</a>
-            <a href="prop_derivadas parciales.html">Propiedades de las Derivadas Parciales</a>
-            <a href="prop_integral.html">Propiedades de la Integral</a>
-            <a href="prop_integracionporpartes.html">Integración por Partes</a>
-            <a href="prop_fourier.html">Transformada de Fourier</a>
-            <a href="prop_fraccparciales.html">Fracciones Parciales</a>
-            <a href="prop_identidadestrigono.html">Identidades Trigonométricas</a>
-            <a href="prop_laplace.html">Transformada de Laplace</a>
-            <a href="prop_teoremas.html">Teoremas Matemáticos</a>
+            <a href="prop_suma.html"><i>+</i> Propiedad de la Suma</a>
+            <a href="prop_resta.html"><i>-</i> Propiedad de la Resta</a>
+            <a href="prop_multiplicacion.html" class="active"><i>×</i> Propiedad Multiplicativa</a>
+            <a href="prop_division.html"><i>÷</i> Propiedad de la División</a>
+            <a href="prop_potencia.html"><i>x²</i> Propiedad de la Potencia</a>
+            <a href="prop_raices.html"><i>√</i> Propiedad de la Raíz</a>
+            <a href="prop_igualdad.html"><i>=</i> Propiedad de la Igualdad</a>
+            <a href="prop_teoremas.html"><i>📚</i> Teoremas Fundamentales</a>
+            <a href="prop_derivada.html"><i>d/dx</i> Propiedades de la Derivada</a>
+            <a href="prop_integral.html"><i>∫</i> Propiedades de la Integral</a>
         </nav>
     </div>
+
     <div class="content-wrapper">
-
-    <div class="class-container">
-        <header>
-            <h1>Propiedades de la Multiplicación</h1>
-        </header>
-
-        <div class="content-area">
-            <p class="instructions">
-                Haz clic en cada propiedad para explorar. Estas no son solo "reglas",<br>
-                son las <strong>herramientas</strong> que hacen funcionar todo el Álgebra.
-            </p>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>Propiedad Conmutativa</span>
-                    <span class="indicator">+</span>
+        <div class="class-container">
+            <header>
+                <h1>Propiedades de la Multiplicación</h1>
+                <div class="back-to-home">
+                    <a href="index.html" class="btn-back">
+                        <span class="material-icons-round">home</span>
+                        Volver al Inicio
+                    </a>
                 </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>Nos dice que el orden de los números (factores) no cambia el resultado (producto).</p>
-                    
-                    <h3>Analogía (El Área)</h3>
-                    <p>El área de un rectángulo de $$5 \times 3$$ es la misma que la de un rectángulo de $$3 \times 5$$. Simplemente lo has girado, pero el área total es idéntica.</p>
-                    
-                    <h3>Fórmula</h3>
-                    <div class="formula">
-                        $$a \cdot b = b \cdot a$$
+            </header>
+
+            <div class="content-area">
+                <p class="instructions">
+                    Explora las propiedades fundamentales de la multiplicación. 
+                    Estas no son solo "reglas", son las <span class="highlight">herramientas esenciales</span> 
+                    que hacen funcionar todo el Álgebra.
+                </p>
+
+                <!-- Propiedad Conmutativa -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>1. Propiedad Conmutativa</span>
+                        <span class="indicator">+</span>
                     </div>
-                    
-                    <h3>Ejemplo Numérico</h3>
-                    <div class="formula">
-                        $$7 \cdot 3 = 21$$
-                        $$3 \cdot 7 = 21$$
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>El orden de los factores no altera el producto.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$a \times b = b \times a$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Multiplicar 4 × 3 o 3 × 4 da el mismo resultado:</p>
+                            <div class="formula">
+                                $$4 \times 3 = 12$$
+                                $$3 \times 4 = 12$$
+                            </div>
+                        </div>
+                        
+                        <h3>Aplicaciones</h3>
+                        <ul>
+                            <li>Simplificación de expresiones algebraicas</li>
+                            <li>Cálculos mentales rápidos</li>
+                            <li>Demostraciones matemáticas</li>
+                        </ul>
                     </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?rectangle,area" alt="Imagen de un rectángulo" class="property-image"> -->
+                </div>
+
+                <!-- Propiedad Asociativa -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>2. Propiedad Asociativa</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>La forma en que se agrupan los factores no altera el producto.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$(a \times b) \times c = a \times (b \times c)$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Multiplicar (2 × 3) × 4 o 2 × (3 × 4) da el mismo resultado:</p>
+                            <div class="formula">
+                                $$(2 \times 3) \times 4 = 6 \times 4 = 24$$
+                                $$2 \times (3 \times 4) = 2 \times 12 = 24$$
+                            </div>
+                        </div>
+                        
+                        <h3>Aplicaciones</h3>
+                        <ul>
+                            <li>Simplificación de expresiones complejas</li>
+                            <li>Algoritmos de multiplicación eficientes</li>
+                            <li>Demostraciones en teoría de números</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Elemento Neutro -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>3. Elemento Neutro (Identidad Multiplicativa)</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>Existe un número que, al multiplicarlo por cualquier otro, no altera su valor. Este número es el uno (1).</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$a \times 1 = a$$
+                            $$1 \times a = a$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Multiplicar cualquier número por 1 da como resultado el mismo número:</p>
+                            <div class="formula">
+                                $$7 \times 1 = 7$$
+                                $$1 \times (-5) = -5$$
+                            </div>
+                        </div>
+                        
+                        <h3>Importancia</h3>
+                        <ul>
+                            <li>Fundamental en la definición de estructuras algebraicas</li>
+                            <li>Base para la definición de la división</li>
+                            <li>Importante en la resolución de ecuaciones</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Propiedad Distributiva -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>4. Propiedad Distributiva</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>La multiplicación se distribuye sobre la suma y la resta.</p>
+                        
+                        <h3>Fórmulas</h3>
+                        <div class="formula">
+                            $$a \times (b + c) = (a \times b) + (a \times c)$$
+                            $$a \times (b - c) = (a \times b) - (a \times c)$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>Distribuir la multiplicación sobre la suma:</p>
+                            <div class="formula">
+                                $$3 \times (4 + 5) = (3 \times 4) + (3 \times 5) = 12 + 15 = 27$$
+                                $$2 \times (7 - 3) = (2 \times 7) - (2 \times 3) = 14 - 6 = 8$$
+                            </div>
+                        </div>
+                        
+                        <h3>Aplicaciones</h3>
+                        <ul>
+                            <li>Factorización de expresiones algebraicas</li>
+                            <li>Multiplicación de binomios</li>
+                            <li>Algoritmos de cálculo mental</li>
+                        </ul>
+                        
+                        <div class="alert alert-info">
+                            <strong>Consejo:</strong> La propiedad distributiva es fundamental para entender 
+                            cómo se relacionan la suma y la multiplicación en el álgebra.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inverso Multiplicativo (Recíproco) -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>5. Inverso Multiplicativo (Recíproco)</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>Para todo número distinto de cero, existe un número que al multiplicarlo por él da como resultado 1.</p>
+                        
+                        <h3>Fórmula</h3>
+                        <div class="formula">
+                            $$a \times \frac{1}{a} = 1 \quad \text{para} \quad a \neq 0$$
+                        </div>
+                        
+                        <h3>Ejemplo</h3>
+                        <div class="example">
+                            <p>El recíproco de un número multiplicado por el número da 1:</p>
+                            <div class="formula">
+                                $$5 \times \frac{1}{5} = 1$$
+                                $$-\frac{2}{3} \times \left(-\frac{3}{2}\right) = 1$$
+                            </div>
+                        </div>
+                        
+                        <h3>Importancia</h3>
+                        <ul>
+                            <li>Base para la división de números</li>
+                            <li>Fundamental en la resolución de ecuaciones</li>
+                            <li>Importante en álgebra lineal y cálculo</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>Propiedad Asociativa</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>Cuando multiplicamos tres o más números, la forma en que los agrupamos (o "asociamos") no afecta el resultado final.</p>
-                    
-                    <h3>Analogía (El Volumen)</h3>
-                    <p>Para calcular el volumen de una caja ($$largo \times ancho \times alto$$), no importa si primero multiplicas $$(largo \times ancho)$$ y luego por el $$alto$$, o si multiplicas $$largo \times (ancho \times alto)$$. El volumen total es el mismo.</p>
-                    
-                    <h3>Fórmula</h3>
-                    <div class="formula">
-                        $$(a \cdot b) \cdot c = a \cdot (b \cdot c)$$
-                    </div>
-                    
-                    <h3>Ejemplo Numérico</h3>
-                    <p>Calcula $$(2 \cdot 3) \cdot 4$$. Primero $$2 \cdot 3 = 6$$, y luego $$6 \cdot 4 = 24$$.</p>
-                    <p>Ahora calcula $$2 \cdot (3 \cdot 4)$$. Primero $$3 \cdot 4 = 12$$, y luego $$2 \cdot 12 = 24$$. ¡Mismo resultado!</p>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?box,volume,cubes" alt="Imagen de cubos o volumen" class="property-image"> -->
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>Propiedad Distributiva</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>Esta es la propiedad clave que <strong>conecta la multiplicación con la suma</strong>. Nos dice cómo la multiplicación "se reparte" o "distribuye" sobre una suma (o resta).</p>
-                    
-                    <h3>Analogía (El Pedido Grupal)</h3>
-                    <p>Imagina que $$4$$ amigos piden lo mismo: $$(1 \text{ refresco} + 2 \text{ tacos})$$. Tienes dos formas de calcular el total:</p>
-                    <ol>
-                        <li>Sumar el pedido de 1 persona: $$(1+2) = 3$$ cosas. Luego multiplicar por los $$4$$ amigos: $$4 \cdot 3 = 12$$ cosas.</li>
-                        <li>"Distribuir" el pedido: $$4 \text{ refrescos} + 4 \cdot 2 \text{ tacos} = 4 + 8 = 12$$ cosas.</li>
-                    </ol>
-                    <p>El resultado es el mismo. ¡Esto es la base de "factorizar" y "expandir" en álgebra!</p>
-                    
-                    <h3>Fórmula</h3>
-                    <div class="formula">
-                        $$a \cdot (b + c) = (a \cdot b) + (a \cdot c)$$
-                    </div>
-                    
-                    <h3>Ejemplo Numérico</h3>
-                    <p>Prueba $$5 \cdot (10 + 2)$$.</p>
-                    <p>Forma 1: $$5 \cdot (12) = 60$$</p>
-                    <p>Forma 2 (Distributiva): $$(5 \cdot 10) + (5 \cdot 2) = 50 + 10 = 60$$</p>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?distribution,groups,team" alt="Imagen de grupos" class="property-image"> -->
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>Propiedad de Identidad (Elemento Neutro)</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>Existe un número especial, el <strong>Uno (1)</strong>, que al multiplicarlo por cualquier otro número, no lo cambia. El número mantiene su "identidad".</p>
-                    
-                    <h3>Analogía</h3>
-                    <p>El $$1$$ es el "multiplicador invisible". Es como decir una palabra "una vez". No la altera.</p>
-                    
-                    <h3>Fórmula</h3>
-                    <div class="formula">
-                        $$a \cdot 1 = a$$
-                        $$1 \cdot a = a$$
-                    </div>
-                    
-                    <h3>Ejemplo Numérico</h3>
-                    <div class="formula">
-                        $$-58 \cdot 1 = -58$$
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?number one,identity" alt="Imagen del número uno" class="property-image"> -->
-                </div>
-            </div>
-            
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>Propiedad del Cero (Aniquilador)</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>Cualquier número multiplicado por cero da como resultado <strong>cero</strong>. El cero "absorbe" o "aniquila" a todos los demás números en la multiplicación.</p>
-                    
-                    <h3>Analogía</h3>
-                    <p>Si tienes $$5$$ bolsas, pero cada bolsa tiene $$0$$ manzanas, ¿cuántas manzanas tienes? Cero. Si tienes $$0$$ bolsas, pero cada una tendría $$5$$ manzanas, ¿cuántas manzanas tienes? Cero.</p>
-                    
-                    <h3>Fórmula</h3>
-                    <div class="formula">
-                        $$a \cdot 0 = 0$$
-                        $$0 \cdot a = 0$$
-                    </div>
-                    
-                    <h3>Ejemplo Numérico</h3>
-                    <div class="formula">
-                        $$1,250,000 \cdot 0 = 0$$
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?zero,empty" alt="Imagen del número cero o algo vacío" class="property-image"> -->
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>Inverso Multiplicativo (Recíproco)</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>Para cada número $$a$$ (excepto el 0), existe un "número opuesto" (su recíproco) que, al multiplicarse, da como resultado $$1$$ (el elemento neutro).</p>
-                    
-                    <h3>Analogía</h3>
-                    <p>Es el "antídoto" de un número. Si multiplicaste por $$5$$, ¿cómo "deshaces" esa operación? Multiplicando por su inverso, $$\frac{1}{5}$$. Te regresa al punto de partida (al $$1$$). Esto es la base de la <strong>división</strong>.</p>
-                    
-                    <h3>Fórmula</h3>
-                    <div class="formula">
-                        $$a \cdot \left(\frac{1}{a}\right) = 1 \quad (\text{para } a \neq 0)$$
-                    </div>
-                    
-                    <h3>Ejemplo Numérico</h3>
-                    <p>El inverso de $$8$$ es $$\frac{1}{8}$$.</p>
-                    <div class="formula">
-                        $$8 \cdot \left(\frac{1}{8}\right) = \frac{8}{8} = 1$$
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?undo,reverse,one" alt="Imagen de deshacer o revertir" class="property-image"> -->
-                </div>
-            </div>
-            
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>Propiedad de Clausura (Cerradura)</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>Definición</h3>
-                    <p>Esta propiedad (un poco más abstracta) garantiza que si multiplicas dos números de un mismo "conjunto" (como los números reales, $$\mathbb{R}$$), el resultado siempre será otro número que también pertenece a ese mismo conjunto.</p>
-                    
-                    <h3>Analogía</h3>
-                    <p>Es el "Club de los Números Reales". Si dos miembros (ej. $$\pi$$ y $$7$$) se multiplican, el resultado ($$7\pi$$) sigue siendo un miembro del club. La operación no crea un "extraño"; el resultado se mantiene "dentro de casa".</p>
-                    
-                    <h3>Fórmula</h3>
-                    <div class="formula">
-                        Si $$a \in \mathbb{R}$$ y $$b \in \mathbb{R}$$, entonces $$(a \cdot b) \in \mathbb{R}$$
-                    </div>
-                    
-                    <h3>Ejemplo Numérico</h3>
-                    <p>El número $$2$$ es un número Real. El número $$\sqrt{3}$$ es un número Real. Su producto, $$2\sqrt{3}$$, también es un número Real.</p>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?closed box,club,exclusive" alt="Imagen de una caja cerrada o un club" class="property-image"> -->
-                </div>
-            </div>
-
         </div>
+        
+                        <!-- Botón de Volver al Inicio al final -->
+                <div class="back-to-home bottom">
+                    <a href="index.html" class="btn-back">
+                        <span class="material-icons-round">home</span>
+                        Volver al Inicio
+                    </a>
+                </div>
+<footer>
+            <p>© JMGV PTEL 2025 Propiedades de la Multiplicación. Todos los derechos reservados.</p>
+        </footer>
     </div>
 
+    <!-- Scripts JavaScript -->
+    <script src="js/main.js"></script>
+    
+    <!-- Scripts específicos para esta página -->
     <script>
-        function toggleCard(headerElement) {
-            // Encuentra el contenido asociado al header
-            const content = headerElement.nextElementSibling;
-            
-            // Encuentra el indicador (+ o -)
-            const indicator = headerElement.querySelector('.indicator');
-            
-            // Alterna la clase 'active' en el header
-            headerElement.classList.toggle('active');
-
-            // Alterna la clase 'visible' en el contenido
-            if (content.classList.contains('visible')) {
-                // Si está visible, lo ocultamos
-                content.classList.remove('visible');
-                indicator.textContent = '+';
-            } else {
-                // Si está oculto, lo mostramos
-                content.classList.add('visible');
-                indicator.textContent = '−'; // Usamos un signo 'menos'
+        // Configuración específica de MathJax para esta página
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true
+            },
+            chtml: {
+                scale: 0.9,
+                displayAlign: 'center',
+                displayIndent: '1em'
+            },
+            svg: {
+                fontCache: 'global'
             }
+        };
+        
+        // Función para manejar la impresión
+        function handlePrint() {
+            window.print();
         }
-    </script>
-
-    <script>
-        function toggleSidebar() {
-            document.querySelector('.sidebar').classList.toggle('show');
-            document.querySelector('.content-wrapper').classList.toggle('shifted');
-        }
-
-        // Close sidebar when clicking outside
-        document.addEventListener('click', function(event) {
-            const sidebar = document.querySelector('.sidebar');
-            const toggleBtn = document.querySelector('.toggle-sidebar');
+        
+        // Asegurar que MathJax se renderice correctamente después de cargar el contenido
+        document.addEventListener('DOMContentLoaded', function() {
+            // Forzar actualización de MathJax después de que se muestre el contenido
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
             
-            if (!sidebar.contains(event.target) && event.target !== toggleBtn) {
-                sidebar.classList.remove('show');
-                document.querySelector('.content-wrapper').classList.remove('shifted');
+            // Expandir la primera tarjeta por defecto
+            const firstCard = document.querySelector('.property-card:first-child .card-header');
+            if (firstCard) {
+                firstCard.click();
             }
         });
     </script>

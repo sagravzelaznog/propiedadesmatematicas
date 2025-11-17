@@ -3,232 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clase Interactiva: La Transformada de Laplace</title>
+    <title>Clase Interactiva: Transformada de Laplace</title>
     
+    <!-- MathJax para fórmulas matemáticas -->
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
-
-    <>
-        /* Sidebar Styles */
-        .sidebar {
-            width: 250px;
-            height: 100%;
-            position: fixed;
-            left: 0;
-            top: 0;
-            background-color: #2c3e50;
-            color: white;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-            z-index: 1000;
-            overflow-y: auto;
-            padding-bottom: 20px;
-        }
-
-        .sidebar.show {
-            transform: translateX(0);
-        }
-
-        .sidebar-header {
-            padding: 20px;
-            background-color: #1a252f;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .sidebar-title {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        .toggle-sidebar {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5em;
-            cursor: pointer;
-            padding: 5px 10px;
-        }
-
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            padding: 15px 0;
-        }
-
-        .sidebar-nav a {
-            color: #ecf0f1;
-            text-decoration: none;
-            padding: 12px 25px;
-            transition: all 0.3s;
-        }
-
-        .sidebar-nav a:hover {
-            background-color: #34495e;
-            padding-left: 30px;
-        }
-
-        .content-wrapper {
-            transition: margin 0.3s;
-            margin-left: 0;
-            padding: 20px;
-        }
-
-        .content-wrapper.shifted {
-            margin-left: 250px;
-        }
-
-        @media (max-width: 768px) {
-            .content-wrapper.shifted {
-                margin-left: 0;
-            }
-        }
-
-        /* Estilo general del cuerpo */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            line-height: 1.7;
-            margin: 0;
-            padding: 20px;
-        }
-
-        /* Contenedor principal de la clase */
-        .class-container {
-            max-width: 900px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
-            overflow: hidden;
-        }
-
-        /* Encabezado */
-        header {
-            /* Un color naranja/dorado, que representa "transformación", "energía" */
-            background: linear-gradient(135deg, #e65c00, #f9d423);
-            color: white;
-            padding: 30px 35px;
+    
+    <!-- Fuente Roboto de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Estilos específicos para esta página -->
+    <style>
+        /* Estilos específicos para esta página */
+        .formula {
+            font-size: 1.3em;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #8e44ad;
+            margin: 15px 0;
+            overflow-x: auto;
             text-align: center;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.6em;
-            font-weight: 700;
-        }
-
-        /* Área de contenido principal */
-        .content-area {
-            padding: 25px 30px;
-        }
-
-        .instructions {
-            font-size: 1.15em;
-            text-align: center;
-            color: #555;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #e65c00;
-            padding-bottom: 15px;
-        }
-
-        /* Tarjeta de propiedad (Acordeón) */
+        
         .property-card {
-            border: 1px solid #e0e0e0;
+            margin-bottom: 25px;
             border-radius: 8px;
-            margin-bottom: 15px;
-            transition: box-shadow 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid #8e44ad;
         }
         
         .property-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        /* Encabezado de la tarjeta (el botón clickeable) */
-        .card-header {
-            background-color: #fffaf5;
-            padding: 18px 25px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.4em;
-            font-weight: 600;
-            color: #c34e00;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
-        .indicator {
-            font-size: 1.6em;
-            font-weight: 300;
-            color: #e65c00;
-            transition: transform 0.3s ease-in-out;
+        .example {
+            background-color: #f5eef8;
+            border-left: 4px solid #9b59b6;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
         }
         
-        /* Estilo cuando está activo */
-        .card-header.active {
-            background-color: #fff0e6;
-        }
-
-        .card-header.active .indicator {
-            transform: rotate(45deg);
-        }
-
-        /* Contenido colapsable */
-        .card-content {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            padding: 0 25px;
-            transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
-            border-top: 1px solid #e9e9e9;
-        }
-
-        .card-content.visible {
-            max-height: 3000px; /* Suficiente para contenido extenso */
-            opacity: 1;
-            padding: 20px 25px 25px 25px;
-        }
-
-        .card-content h3 {
-            color: #c34e00;
-            margin-top: 0;
-            border-bottom: 1px solid #ffe0cc;
-            padding-bottom: 5px;
-        }
-
-        /* Estilo para las fórmulas de MathJax */
-        .formula {
-            font-size: 1.3em;
-            text-align: center;
-            padding: 20px;
-            background-color: #fdfdfd;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            margin: 20px 0;
-            overflow-x: auto;
+        .note {
+            background-color: #f0e6f9;
+            border-left: 4px solid #8e44ad;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
         }
         
-        .key-concept {
-            background-color: #fffaf5;
-            border-left: 5px solid #e65c00;
-            padding: 15px 20px;
+        .warning {
+            background-color: #f9ebea;
+            border-left: 4px solid #e74c3c;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        
+        .step {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .step:before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #8e44ad;
+        }
+        
+        .theorem {
+            background-color: #eaf2f8;
+            border-left: 4px solid #3498db;
+            padding: 10px 15px;
             margin: 15px 0;
             border-radius: 4px;
-            font-size: 1.1em;
         }
         
-        .property-image {
-            width: 100%;
-            max-width: 450px;
-            height: auto;
-            border-radius: 8px;
-            margin: 15px auto;
-            display: block;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        .definition {
+            background-color: #e8f8f5;
+            border-left: 4px solid #1abc9c;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -240,262 +104,339 @@
             <a href="index.html" class="sidebar-title">Matemáticas</a>
         </div>
         <nav class="sidebar-nav">
-            <a href="prop_igualdad.html">Propiedades de Igualdad</a>
-            <a href="prop_suma.html">Propiedades de la Suma</a>
-            <a href="prop_resta.html">Propiedades de la Resta</a>
-            <a href="prop_multiplicacion.html">Propiedades de la Multiplicación</a>
-            <a href="prop_division.html">Propiedades de la División</a>
-            <a href="prop_potencia.html">Propiedades de la Potencia</a>
-            <a href="prop_raices.html">Propiedades de las Raíces</a>
-            <a href="prop_derivada.html">Propiedades de la Derivada</a>
-            <a href="prop_derivadas parciales.html">Propiedades de las Derivadas Parciales</a>
-            <a href="prop_integral.html">Propiedades de la Integral</a>
-            <a href="prop_integracionporpartes.html">Integración por Partes</a>
-            <a href="prop_fourier.html">Transformada de Fourier</a>
-            <a href="prop_fraccparciales.html">Fracciones Parciales</a>
-            <a href="prop_identidadestrigono.html">Identidades Trigonométricas</a>
-            <a href="prop_laplace.html">Transformada de Laplace</a>
-            <a href="prop_teoremas.html">Teoremas Matemáticos</a>
+            <a href="prop_suma.html"><i>+</i> Propiedad de la Suma</a>
+            <a href="prop_resta.html"><i>-</i> Propiedad de la Resta</a>
+            <a href="prop_multiplicacion.html"><i>×</i> Propiedad Multiplicativa</a>
+            <a href="prop_division.html"><i>÷</i> Propiedad de la División</a>
+            <a href="prop_potencia.html"><i>x²</i> Propiedad de la Potencia</a>
+            <a href="prop_raices.html"><i>√</i> Propiedad de la Raíz</a>
+            <a href="prop_igualdad.html"><i>=</i> Propiedad de la Igualdad</a>
+            <a href="prop_teoremas.html"><i>📚</i> Teoremas Fundamentales</a>
+            <a href="prop_derivada.html"><i>d/dx</i> Propiedades de la Derivada</a>
+            <a href="prop_integral.html"><i>∫</i> Propiedades de la Integral</a>
+            <a href="prop_derivadas_parciales.html"><i>∂/∂x</i> Derivadas Parciales</a>
+            <a href="prop_fourier.html"><i>ℱ</i> Series de Fourier</a>
+            <a href="prop_fraccparciales.html"><i>↦</i> Fracciones Parciales</a>
+            <a href="prop_identidadestrigono.html"><i>θ</i> Identidades Trigonométricas</a>
+            <a href="prop_integracionporpartes.html"><i>∫u dv</i> Integración por Partes</a>
+            <a href="prop_laplace.html" class="active"><i>ℒ</i> Transformada de Laplace</a>
         </nav>
     </div>
+
     <div class="content-wrapper">
-
-    <div class="class-container">
-        <header>
-            <h1>Dominando la Transformada de Laplace</h1>
-        </header>
-
-        <div class="content-area">
-            <p class="instructions">
-                Haz clic en cada propiedad para revelar la intuición, la fórmula y su aplicación estratégica.
-            </p>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>1. El Fundamento: ¿Qué es y Por Qué?</span>
-                    <span class="indicator">+</span>
+        <div class="class-container">
+            <header>
+                <h1>Transformada de Laplace</h1>
+                <div class="back-to-home">
+                    <a href="index.html" class="btn-back">
+                        <span class="material-icons-round">home</span>
+                        Volver al Inicio
+                    </a>
                 </div>
-                <div class="card-content">
-                    <h3>¿Qué es? (La Definición)</h3>
-                    <p>La Transformada de Laplace es una <strong>integral</strong> que "transforma" una función $$f(t)$$ (donde $$t$$ suele ser el tiempo) en una nueva función $$F(s)$$ (donde $$s$$ es la frecuencia compleja).</p>
-                    <div class="formula">
-                        $$ \mathcal{L}\{f(t)\} = F(s) = \int_0^\infty e^{-st} f(t) \, dt $$
+            </header>
+
+            <div class="content-area">
+                <p class="instructions">
+                    Explora las propiedades y aplicaciones de la Transformada de Laplace, una herramienta poderosa para resolver ecuaciones diferenciales y analizar sistemas lineales.
+                </p>
+
+                <!-- Definición y Conceptos Básicos -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>1. Definición y Conceptos Básicos</span>
+                        <span class="indicator">+</span>
                     </div>
-                    
-                    <h3>¿Por Qué Usarla? (La Motivación)</h3>
-                    <div class="key-concept">
-                        <p><strong>Intuición Pedagógica (El Puente Mágico):</strong></p>
-                        <p>Imagina que tienes una <strong>Ecuación Diferencial</strong> en el "Mundo del Tiempo" (el $$t$$-dominio). Es un problema de Cálculo, con derivadas e integrales (¡difícil!).</p>
-                        <p>La Transformada de Laplace es un <strong>puente mágico</strong> que te lleva al "Mundo de la Frecuencia" (el $$s$$-dominio).</p>
-                        <p>¿Qué pasa en este nuevo mundo? ¡La magia! <strong>El Cálculo se convierte en Álgebra.</strong></p>
-                        <ul>
-                            <li>Las <strong>derivadas</strong> $$\frac{df}{dt}$$ se convierten en <strong>multiplicación</strong> por $$s$$.</li>
-                            <li>Las <strong>integrales</strong> $$\int f(t) \, dt$$ se convierten en <strong>división</strong> por $$s$$.</li>
-                            <li>Las <strong>convoluciones</strong> (integrales horribles) se convierten en <strong>multiplicación simple</strong>.</li>
-                        </ul>
-                        <p>Tú resuelves el problema de Álgebra (fácil), y luego usas la <strong>Transformada Inversa</strong> ($$\mathcal{L}^{-1}$$) para cruzar el puente de regreso y obtener la solución $$f(t)$$ en el mundo real.</p>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>La Transformada de Laplace de una función f(t) definida para t ≥ 0 es la función F(s) definida por:</p>
+                        <div class="formula">
+                            $$\mathcal{L}\{f(t)\} = F(s) = \int_{0}^{\infty} e^{-st} f(t) \, dt$$
+                        </div>
+                        
+                        <div class="definition">
+                            <h4>Condiciones de Existencia</h4>
+                            <p>La Transformada de Laplace existe si la integral converge. Condiciones suficientes:</p>
+                            <ol>
+                                <li>f(t) es continua por partes en [0, ∞)</li>
+                                <li>Existen constantes M > 0 y a ≥ 0 tales que |f(t)| ≤ Me^{at} para todo t ≥ 0</li>
+                            </ol>
+                        </div>
+                        
+                        <h3>Ejemplo Básico</h3>
+                        <div class="example">
+                            <p>Calcular la Transformada de Laplace de f(t) = 1:</p>
+                            <div class="formula">
+                                $$\mathcal{L}\{1\} = \int_{0}^{\infty} e^{-st} \cdot 1 \, dt = \left[ -\frac{1}{s} e^{-st} \right]_{0}^{\infty} = \frac{1}{s} \quad \text{para } s > 0$$
+                            </div>
+                        </div>
                     </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?bridge, magic portal" alt="Imagen de un puente" class="property-image"> -->
+                </div>
+
+                <!-- Propiedades Fundamentales -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>2. Propiedades Fundamentales</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Linealidad</h3>
+                        <div class="formula">
+                            $$\mathcal{L}\{a f(t) + b g(t)\} = a \mathcal{L}\{f(t)\} + b \mathcal{L}\{g(t)\}$$
+                        </div>
+                        
+                        <h3>Primer Teorema de Traslación</h3>
+                        <div class="formula">
+                            $$\mathcal{L}\{e^{at} f(t)\} = F(s - a)$$
+                        </div>
+                        
+                        <h3>Segundo Teorema de Traslación (Función Escalón)</h3>
+                        <div class="formula">
+                            $$\mathcal{L}\{u(t-a)f(t-a)\} = e^{-as}F(s)$$
+                            $$\text{donde } u(t-a) = \begin{cases} 0, & t < a \\ 1, & t \geq a \end{cases}$$
+                        </div>
+                        
+                        <h3>Derivada en el Dominio del Tiempo</h3>
+                        <div class="formula">
+                            $$\mathcal{L}\{f'(t)\} = sF(s) - f(0)$$
+                            $$\mathcal{L}\{f''(t)\} = s^2F(s) - sf(0) - f'(0)$$
+                        </div>
+                        
+                        <h3>Integral en el Dominio del Tiempo</h3>
+                        <div class="formula">
+                            $$\mathcal{L}\left\{ \int_{0}^{t} f(\tau) \, d\tau \right\} = \frac{F(s)}{s}$$
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transformadas de Funciones Comunes -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>3. Transformadas de Funciones Comunes</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="table-responsive">
+                            <table class="transform-table">
+                                <thead>
+                                    <tr>
+                                        <th>f(t)</th>
+                                        <th>F(s) = ℒ{f(t)}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>1/s</td>
+                                    </tr>
+                                    <tr>
+                                        <td>t^n (n entero positivo)</td>
+                                        <td>n!/s^(n+1)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>e^(at)</td>
+                                        <td>1/(s-a)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sin(at)</td>
+                                        <td>a/(s² + a²)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cos(at)</td>
+                                        <td>s/(s² + a²)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sinh(at)</td>
+                                        <td>a/(s² - a²)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>cosh(at)</td>
+                                        <td>s/(s² - a²)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>t^n e^(at)</td>
+                                        <td>n!/(s-a)^(n+1)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>e^(at) sin(bt)</td>
+                                        <td>b/((s-a)² + b²)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>e^(at) cos(bt)</td>
+                                        <td>(s-a)/((s-a)² + b²)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teoremas Adicionales -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>4. Teoremas Adicionales</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Teorema de la Convolución</h3>
+                        <div class="formula">
+                            $$\mathcal{L}\{f * g\} = \mathcal{L}\{f(t)\} \cdot \mathcal{L}\{g(t)\} = F(s) \cdot G(s)$$
+                            $$\text{donde } (f * g)(t) = \int_{0}^{t} f(\tau)g(t-\tau) \, d\tau$$
+                        </div>
+                        
+                        <h3>Teorema del Valor Inicial</h3>
+                        <div class="formula">
+                            $$\lim_{t \to 0^+} f(t) = \lim_{s \to \infty} sF(s)$$
+                        </div>
+                        
+                        <h3>Teorema del Valor Final</h3>
+                        <div class="formula">
+                            $$\lim_{t \to \infty} f(t) = \lim_{s \to 0^+} sF(s)$$
+                            <p>Válido si todos los polos de sF(s) están en el semiplano izquierdo del plano complejo.</p>
+                        </div>
+                        
+                        <h3>Derivada en el Dominio de s</h3>
+                        <div class="formula">
+                            $$\mathcal{L}\{t^n f(t)\} = (-1)^n \frac{d^n}{ds^n} F(s)$$
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aplicaciones -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>5. Aplicaciones Prácticas</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Solución de Ecuaciones Diferenciales</h3>
+                        <p>La Transformada de Laplace convierte ecuaciones diferenciales en ecuaciones algebraicas, que son más fáciles de resolver.</p>
+                        
+                        <div class="example">
+                            <p>Resolver la ecuación diferencial: y'' + 3y' + 2y = 0, con y(0) = 1, y'(0) = 0</p>
+                            <div class="step">Aplicamos la Transformada de Laplace a ambos lados:</div>
+                            <div class="formula">
+                                $$s^2Y(s) - sy(0) - y'(0) + 3[sY(s) - y(0)] + 2Y(s) = 0$$
+                                $$(s^2 + 3s + 2)Y(s) - s - 3 = 0$$
+                                $$Y(s) = \frac{s + 3}{s^2 + 3s + 2} = \frac{s + 3}{(s + 1)(s + 2)}$$
+                            </div>
+                            <div class="step">Aplicamos fracciones parciales:</div>
+                            <div class="formula">
+                                $$Y(s) = \frac{2}{s + 1} - \frac{1}{s + 2}$$
+                            </div>
+                            <div class="step">Aplicamos la Transformada Inversa de Laplace:</div>
+                            <div class="formula">
+                                $$y(t) = 2e^{-t} - e^{-2t}$$
+                            </div>
+                        </div>
+                        
+                        <h3>Análisis de Circuitos Eléctricos</h3>
+                        <p>La Transformada de Laplace se utiliza para analizar circuitos RLC y sistemas de control.</p>
+                        
+                        <h3>Mecánica y Vibraciones</h3>
+                        <p>Análisis de sistemas masa-resorte-amortiguador y otros sistemas mecánicos.</p>
+                        
+                        <div class="note">
+                            <strong>Consejo:</strong> Para dominar la Transformada de Laplace, es fundamental practicar con diversos ejemplos y aplicaciones. Comienza con funciones simples y avanza gradualmente a problemas más complejos.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Transformada Inversa de Laplace -->
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>6. Transformada Inversa de Laplace</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Definición</h3>
+                        <p>Dada F(s), la Transformada Inversa de Laplace f(t) se define como:</p>
+                        <div class="formula">
+                            $$\mathcal{L}^{-1}\{F(s)\} = f(t) = \frac{1}{2\pi i} \lim_{T \to \infty} \int_{\gamma - iT}^{\gamma + iT} e^{st} F(s) \, ds$$
+                        </div>
+                        <p>Donde γ es un número real mayor que la parte real de todas las singularidades de F(s).</p>
+                        
+                        <h3>Métodos para Calcular la Inversa</h3>
+                        <ol>
+                            <li><strong>Uso de Tablas:</strong> Identificar F(s) en tablas de transformadas conocidas.</li>
+                            <li><strong>Fracciones Parciales:</strong> Descomponer F(s) en fracciones más simples.</li>
+                            <li><strong>Teorema de Convolución:</strong> Para productos de transformadas.</li>
+                            <li><strong>Teorema de los Residuos:</strong> Para funciones con polos aislados.</li>
+                        </ol>
+                        
+                        <h3>Ejemplo de Cálculo</h3>
+                        <div class="example">
+                            <p>Calcular la transformada inversa de: $$F(s) = \frac{2s + 5}{s^2 + 5s + 6}$$</p>
+                            <div class="step">Factorizamos el denominador:</div>
+                            <div class="formula">
+                                $$F(s) = \frac{2s + 5}{(s + 2)(s + 3)}$$
+                            </div>
+                            <div class="step">Aplicamos fracciones parciales:</div>
+                            <div class="formula">
+                                $$\frac{2s + 5}{(s + 2)(s + 3)} = \frac{A}{s + 2} + \frac{B}{s + 3}$$
+                                $$2s + 5 = A(s + 3) + B(s + 2)$$
+                                $$\text{Resolviendo: } A = 1, B = 1$$
+                                $$F(s) = \frac{1}{s + 2} + \frac{1}{s + 3}$$
+                            </div>
+                            <div class="step">Aplicamos la transformada inversa:</div>
+                            <div class="formula">
+                                $$f(t) = \mathcal{L}^{-1}\left\{\frac{1}{s + 2}\right\} + \mathcal{L}^{-1}\left\{\frac{1}{s + 3}\right\} = e^{-2t} + e^{-3t}$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Botón de Volver al Inicio al final -->
+                <div class="back-to-home bottom">
+                    <a href="index.html" class="btn-back">
+                        <span class="material-icons-round">home</span>
+                        Volver al Inicio
+                    </a>
                 </div>
             </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>2. Propiedad de Linealidad</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>La Regla</h3>
-                    <p>La transformada de una suma es la suma de las transformadas. Las constantes "salen" de la transformada. (Esto es porque la integral es un operador lineal).</p>
-                    <div class="formula">
-                        $$ \mathcal{L}\{a f(t) + b g(t)\} = a \mathcal{L}\{f(t)\} + b \mathcal{L}\{g(t)\} $$
-                        $$ = a F(s) + b G(s) $$
-                    </div>
-                    <div class="key-concept">
-                        <p><strong>Estrategia:</strong> Esta es la propiedad que nos permite "desarmar" un problema complejo en sus partes más simples, transformarlas una por una y luego volver a sumarlas.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>3. ¡El Superpoder! Derivada en el $$t$$-dominio</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>La Regla (La Joya de la Corona)</h3>
-                    <p><strong>Esta es la propiedad más importante.</strong> Así es como "matamos" las derivadas y las convertimos en álgebra.</p>
-                    <p>La transformada de la <strong>primera derivada</strong>:</p>
-                    <div class="formula">
-                        $$ \mathcal{L}\{f'(t)\} = sF(s) - f(0) $$
-                    </div>
-                    <p>La transformada de la <strong>segunda derivada</strong>:</p>
-                    <div class="formula">
-                        $$ \mathcal{L}\{f''(t)\} = s^2F(s) - sf(0) - f'(0) $$
-                    </div>
-                    <p>Y así sucesivamente. (Nota: $$f(0)$$ y $$f'(0)$$ son las <strong>condiciones iniciales</strong>).</p>
-                    
-                    <h3>Ejemplo de Estrategia</h3>
-                    <p>Mira cómo transforma una Ecuación Diferencial:</p>
-                    <p>$$y'' + 5y' + 6y = 0$$</p>
-                    <p>Aplicamos $$\mathcal{L}\{\}$$ a todo:</p>
-                    <p>$$\mathcal{L}\{y''\} + 5\mathcal{L}\{y'\} + 6\mathcal{L}\{y\} = 0$$</p>
-                    <p>Usamos la regla (asumiendo $$Y(s) = \mathcal{L}\{y\}$$):</p>
-                    <p>$$[s^2Y(s) - sf(0) - f'(0)] + 5[sY(s) - f(0)] + 6[Y(s)] = 0$$</p>
-                    <div class="key-concept">
-                        <p>¡Mira! Ya no hay derivadas. Es una ecuación de Álgebra. Solo necesitas agrupar los términos $$Y(s)$$ y despejarlo. ¡Magia!</p>
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?magic wand, gearbox" alt="Imagen de una varita mágica" class="property-image"> -->
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>4. Propiedad: Integral en el $$t$$-dominio</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>La Regla</h3>
-                    <p>La integración en el $$t$$-dominio se convierte en <strong>división</strong> por $$s$$ en el $$s$$-dominio.</p>
-                    <div class="formula">
-                        $$ \mathcal{L}\left\{\int_0^t f(\tau) \, d\tau\right\} = \frac{F(s)}{s} $$
-                    </div>
-                    <div class="key-concept">
-                        <p><strong>Estrategia:</strong> Útil para resolver "ecuaciones integro-diferenciales" que tienen tanto derivadas como integrales en la misma ecuación.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>5. 1er Teorema de Traslación (Traslación en $$s$$)</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>La Regla</h3>
-                    <p>Multiplicar tu función $$f(t)$$ por una exponencial $$e^{at}$$ en el $$t$$-dominio, simplemente "traslada" tu función $$F(s)$$ en el $$s$$-dominio.</p>
-                    <div class="formula">
-                        $$ \mathcal{L}\{e^{at} f(t)\} = F(s-a) $$
-                    </div>
-                    <div class="key-concept">
-                        <p><strong>Estrategia:</strong> Si sabes que $$\mathcal{L}\{\cos(bt)\} = \frac{s}{s^2+b^2}$$, puedes encontrar instantáneamente la transformada de un "coseno amortiguado".</p>
-                        <p>$$\mathcal{L}\{e^{-at}\cos(bt)\}$$ es solo $$F(s-(-a)) = F(s+a)$$.</p>
-                        <p>Simplemente reemplaza cada $$s$$ en la fórmula original por $$(s+a)$$:</p>
-                        <p>$$ F(s+a) = \frac{(s+a)}{(s+a)^2 + b^2} $$</p>
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?shifting gears, slider" alt="Imagen de un deslizador" class="property-image"> -->
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>6. 2do Teorema de Traslación (Traslación en $$t$$)</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>La Regla</h3>
-                    <p>Esta es la regla para funciones que están "apagadas" y de repente se "encienden" en un tiempo $$a$$. Usa la <strong>función escalón unitario</strong> $$u(t-a)$$.</p>
-                    <div class="formula">
-                        $$ \mathcal{L}\{f(t-a)u(t-a)\} = e^{-as}F(s) $$
-                    </div>
-                    <div class="key-concept">
-                        <p><strong>Intuición:</strong> $$f(t-a)u(t-a)$$ es la función $$f(t)$$ que ha sido "retrasada" en el tiempo por $$a$$ segundos.</p>
-                        <p><strong>Estrategia:</strong> El término $$e^{-as}$$ es el "indicador de retraso". Cuando veas un $$e^{-as}$$ multiplicando en el $$s$$-dominio, sabes que en el $$t$$-dominio, la función no empieza en $$t=0$$, sino en $$t=a$$. Es la herramienta clave para funciones a trozos.</p>
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?light switch, time delay" alt="Imagen de un interruptor" class="property-image"> -->
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>7. Propiedad: Derivada en el $$s$$-dominio</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>La Regla</h3>
-                    <p>Multiplicar por $$t$$ en el $$t$$-dominio es equivalente a tomar una <strong>derivada (y un negativo)</strong> en el $$s$$-dominio.</p>
-                    <div class="formula">
-                        $$ \mathcal{L}\{t \cdot f(t)\} = -F'(s) = -\frac{d}{ds}F(s) $$
-                    </div>
-                    <p>Para potencias de $$t$$:</p>
-                    <div class="formula">
-                        $$ \mathcal{L}\{t^n f(t)\} = (-1)^n \frac{d^n}{ds^n}F(s) $$
-                    </div>
-                    <div class="key-concept">
-                        <p><strong>Estrategia:</strong> ¿Necesitas encontrar $$\mathcal{L}\{t \sin(t)\}$$? ¡Es fácil!</p>
-                        <p>1. Empieza con $$F(s) = \mathcal{L}\{\sin(t)\} = \frac{1}{s^2+1}$$.</p>
-                        <p>2. Aplica la regla: $$\mathcal{L}\{t \sin(t)\} = - \frac{d}{ds}\left[ \frac{1}{s^2+1} \right]$$.</p>
-                        <p>3. Resuelve esa derivada (usando la regla del cociente) para obtener la respuesta.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="property-card">
-                <div class="card-header" onclick="toggleCard(this)">
-                    <span>8. Teorema de la Convolución (El 2do Superpoder)</span>
-                    <span class="indicator">+</span>
-                </div>
-                <div class="card-content">
-                    <h3>La Regla</h3>
-                    <p>La "convolución" de dos funciones, $$f(t) * g(t)$$, es una integral muy complicada. Pero en el $$s$$-dominio, su transformada es increíblemente simple.</p>
-                    <p>La <strong>convolución</strong> en el $$t$$-dominio se convierte en <strong>multiplicación simple</strong> en el $$s$$-dominio.</p>
-                    <div class="formula">
-                        $$ \mathcal{L}\{(f * g)(t)\} = \mathcal{L}\{f(t)\} \cdot \mathcal{L}\{g(t)\} = F(s)G(s) $$
-                    </div>
-                    <p>Donde $$(f * g)(t) = \int_0^t f(\tau)g(t-\tau) \, d\tau$$.</p>
-                    
-                    <div class="key-concept">
-                        <p><strong>Estrategia (La Inversa):</strong> Esta regla es más poderosa al revés.</p>
-                        <p>¿Qué pasa si tienes que encontrar la transformada inversa de $$H(s) = \frac{1}{(s-1)(s^2+1)}$$? Podrías usar fracciones parciales... O...</p>
-                        <p>Puedes verlo como $$H(s) = F(s)G(s)$$, donde $$F(s) = \frac{1}{s-1}$$ y $$G(s) = \frac{1}{s^2+1}$$.</p>
-                        <p>Sabemos que $$\mathcal{L}^{-1}\{F(s)\} = e^t$$ y $$\mathcal{L}^{-1}\{G(s)\} = \sin(t)$$.</p>
-                        <p>Por lo tanto, la respuesta es la convolución de esas dos: $$h(t) = e^t * \sin(t)$$.</GET>
-                    </div>
-                    <!-- <img src="https://source.unsplash.com/random/600x300/?entangled wires, simple path" alt="Imagen de cables enredados" class="property-image"> -->
-                </div>
-            </div>
-
-
         </div>
+        
+        <footer>
+            <p>© JMGV PTEL 2025 Transformada de Laplace. Todos los derechos reservados.</p>
+        </footer>
     </div>
 
+    <!-- Scripts JavaScript -->
+    <script src="js/main.js"></script>
+    
+    <!-- Scripts específicos para esta página -->
     <script>
-        function toggleCard(headerElement) {
-            // Encuentra el contenido asociado
-            const content = headerElement.nextElementSibling;
-            // Encuentra el indicador
-            const indicator = headerElement.querySelector('.indicator');
-            
-            // Alterna la clase 'active' en el header
-            headerElement.classList.toggle('active');
-
-            // Alterna la clase 'visible' en el contenido
-            if (content.classList.contains('visible')) {
-                // Si está visible, lo ocultamos
-                content.classList.remove('visible');
-                indicator.textContent = '+';
-            } else {
-                // Si está oculto, lo mostramos
-                content.classList.add('visible');
-                indicator.textContent = '−'; // Usamos un signo 'menos'
+        // Configuración específica de MathJax para esta página
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true
+            },
+            chtml: {
+                scale: 0.9,
+                displayAlign: 'center',
+                displayIndent: '1em'
+            },
+            svg: {
+                fontCache: 'global'
             }
+        };
+        
+        // Función para manejar la impresión
+        function handlePrint() {
+            window.print();
         }
-    </script>
-
-    <script>
-        function toggleSidebar() {
-            document.querySelector('.sidebar').classList.toggle('show');
-            document.querySelector('.content-wrapper').classList.toggle('shifted');
-        }
-
-        // Close sidebar when clicking outside
-        document.addEventListener('click', function(event) {
-            const sidebar = document.querySelector('.sidebar');
-            const toggleBtn = document.querySelector('.toggle-sidebar');
+        
+        // Asegurar que MathJax se renderice correctamente después de cargar el contenido
+        document.addEventListener('DOMContentLoaded', function() {
+            // Forzar actualización de MathJax después de que se muestre el contenido
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
             
-            if (!sidebar.contains(event.target) && event.target !== toggleBtn) {
-                sidebar.classList.remove('show');
-                document.querySelector('.content-wrapper').classList.remove('shifted');
+            // Expandir la primera tarjeta por defecto
+            const firstCard = document.querySelector('.property-card:first-child .card-header');
+            if (firstCard) {
+                firstCard.click();
             }
         });
     </script>
