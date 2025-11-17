@@ -301,7 +301,7 @@ header h1 {
 
 /* Fórmulas matemáticas */
 .formula {
-    font-size: 1.2em;
+    font-size: 1em;
     text-align: center;
     padding: 15px;
     margin: 15px 0;
@@ -433,13 +433,13 @@ footer {
     }
     
     .content-wrapper, .content-area {
-        padding: 20px;
+        padding: 5px;
     }
 }
 
 @media (max-width: 768px) {
     body {
-        padding: 10px;
+        padding: 2px;
     }
     
     .sidebar {
@@ -480,34 +480,34 @@ footer {
     }
     
     header {
-        padding: 20px 15px;
+        padding: 10px 5px;
         border-radius: 0;
     }
     
     header h1 {
-        font-size: 1.6em;
+        font-size: 1.2em;
     }
     
     .content-wrapper, .content-area {
-        padding: 15px;
+        padding: 5px;
     }
     
     .sidebar {
-        width: 85%;
+        width: 80%;
         max-width: 300px;
     }
     
     .content-wrapper.shifted {
-        transform: translateX(85%);
+        transform: translateX(80%);
     }
     
     .formula {
-        font-size: 1em;
-        padding: 10px;
+        font-size: 0.8em;
+        padding: 5px;
     }
     
     .instructions {
-        font-size: 1em;
+        font-size: 0.8em;
     }
 }
 
