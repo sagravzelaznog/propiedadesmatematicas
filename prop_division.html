@@ -8,6 +8,84 @@
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
 
     <style>
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: #2c3e50;
+            color: white;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        .sidebar.show {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background-color: #1a252f;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar-title {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .toggle-sidebar {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            padding: 15px 0;
+        }
+
+        .sidebar-nav a {
+            color: #ecf0f1;
+            text-decoration: none;
+            padding: 12px 25px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-nav a:hover {
+            background-color: #34495e;
+            padding-left: 30px;
+        }
+
+        .content-wrapper {
+            transition: margin 0.3s;
+            margin-left: 0;
+            padding: 20px;
+        }
+
+        .content-wrapper.shifted {
+            margin-left: 250px;
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper.shifted {
+                margin-left: 0;
+            }
+        }
+    </style>
         /* Estilo general del cuerpo */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -189,6 +267,32 @@
     </style>
 </head>
 <body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+            <a href="index.html" class="sidebar-title">Matemáticas</a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="prop_igualdad.html">Propiedades de Igualdad</a>
+            <a href="prop_suma.html">Propiedades de la Suma</a>
+            <a href="prop_resta.html">Propiedades de la Resta</a>
+            <a href="prop_multiplicacion.html">Propiedades de la Multiplicación</a>
+            <a href="prop_division.html">Propiedades de la División</a>
+            <a href="prop_potencia.html">Propiedades de la Potencia</a>
+            <a href="prop_raices.html">Propiedades de las Raíces</a>
+            <a href="prop_derivada.html">Propiedades de la Derivada</a>
+            <a href="prop_derivadas parciales.html">Propiedades de las Derivadas Parciales</a>
+            <a href="prop_integral.html">Propiedades de la Integral</a>
+            <a href="prop_integracionporpartes.html">Integración por Partes</a>
+            <a href="prop_fourier.html">Transformada de Fourier</a>
+            <a href="prop_fraccparciales.html">Fracciones Parciales</a>
+            <a href="prop_identidadestrigono.html">Identidades Trigonométricas</a>
+            <a href="prop_laplace.html">Transformada de Laplace</a>
+            <a href="prop_teoremas.html">Teoremas Matemáticos</a>
+        </nav>
+    </div>
+    <div class="content-wrapper">
 
     <div class="class-container">
         <header>
@@ -409,5 +513,22 @@
         }
     </script>
 
+    <script>
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('show');
+            document.querySelector('.content-wrapper').classList.toggle('shifted');
+        }
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', function(event) {
+            const sidebar = document.querySelector('.sidebar');
+            const toggleBtn = document.querySelector('.toggle-sidebar');
+            
+            if (!sidebar.contains(event.target) && event.target !== toggleBtn) {
+                sidebar.classList.remove('show');
+                document.querySelector('.content-wrapper').classList.remove('shifted');
+            }
+        });
+    </script>
 </body>
 </html>
