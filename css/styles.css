@@ -508,11 +508,13 @@ footer {
         font-size: 0.7em;
         padding: 2px;
         display: flex;
+        overflow: auto;
     }
     
     .instructions {
         font-size: 0.7em;
         display: flex;
+        overflow: auto;
     }
 }
 
