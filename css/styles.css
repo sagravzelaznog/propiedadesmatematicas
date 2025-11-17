@@ -302,10 +302,10 @@ header h1 {
 /* Fórmulas matemáticas */
 .formula {
     font-size: .8em;
-    text-align: center;
+    text-align: left;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items: left;
     padding: 2px;
     margin: 2px 0;
     background-color: #f8f9fa;
