@@ -311,7 +311,7 @@ header h1 {
     background-color: #f8f9fa;
     border-left: 4px solid var(--accent-color);
     border-radius: 0 4px 4px 0;
-    overflow-x: auto;
+    overflow: auto;
 }
 
 /* Ejemplos y demostraciones */
