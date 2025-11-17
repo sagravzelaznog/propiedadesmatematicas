@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase Interactiva: Propiedades de la Integral</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+    <style>
+        /* Estilo general del cuerpo */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f3f9;
+            color: #333;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Contenedor principal de la clase */
+        .class-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+
+        /* Encabezado */
+        header {
+            /* Un verde profundo, que representa "acumulación", "crecimiento" */
+            background: linear-gradient(135deg, #184e77, #1e6091);
+            color: white;
+            padding: 30px 35px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.6em;
+            font-weight: 700;
+        }
+
+        /* Área de contenido principal */
+        .content-area {
+            padding: 25px 30px;
+        }
+
+        .instructions {
+            font-size: 1.15em;
+            text-align: center;
+            color: #555;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #1e6091;
+            padding-bottom: 15px;
+        }
+
+        /* Tarjeta de propiedad (Acordeón) */
+        .property-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .property-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* Encabezado de la tarjeta (el botón clickeable) */
+        .card-header {
+            background-color: #f7f9ff;
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #184e77;
+        }
+        
+        /* Indicador de expandir/colapsar */
+        .indicator {
+            font-size: 1.6em;
+            font-weight: 300;
+            color: #1e6091;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        /* Estilo cuando está activo */
+        .card-header.active {
+            background-color: #e8f0f6;
+        }
+
+        .card-header.active .indicator {
+            transform: rotate(45deg);
+        }
+
+        /* Contenido colapsable */
+        .card-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 25px;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
+            border-top: 1px solid #e9e9e9;
+        }
+
+        .card-content.visible {
+            max-height: 2000px; /* Suficiente para contenido extenso */
+            opacity: 1;
+            padding: 20px 25px 25px 25px;
+        }
+
+        .card-content h3 {
+            color: #184e77;
+            margin-top: 0;
+            border-bottom: 1px solid #d4e0e9;
+            padding-bottom: 5px;
+        }
+
+        /* Estilo para las fórmulas de MathJax */
+        .formula {
+            font-size: 1.3em;
+            text-align: center;
+            padding: 20px;
+            background-color: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .intuition {
+            background-color: #f7f9ff;
+            border-left: 4px solid #1e6091;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .alert-warning {
+            background-color: #fffaf0;
+            border-left: 4px solid #f9a600;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .property-image {
+            width: 100%;
+            max-width: 450px;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px auto;
+            display: block;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="class-container">
+        <header>
+            <h1>Dominando las Propiedades de la Integral</h1>
+        </header>
+
+        <div class="content-area">
+            <p class="instructions">
+                Haz clic en cada regla para revelar su fórmula, su intuición pedagógica y un ejemplo.
+            </p>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>1. El Fundamento: ¿Qué es una Integral?</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Definición (La Integral Definida)</h3>
+                    <p>La integral definida $$\int_a^b f(x) \, dx$$ representa el <strong>área neta</strong> acumulada bajo la curva $$f(x)$$ desde el punto $$x=a$$ hasta $$x=b$$.</p>
+                    <div class="formula">
+                        $$ \int_a^b f(x) \, dx $$
+                    </div>
+                    <div class="intuition">
+                        <p><strong>Intuición Pedagógica:</strong> Es una "Suma de Riemann". Imagina que divides el área en un número infinito de rectángulos infinitamente delgados (con ancho $$dx$$) y sumas el área de todos ellos. El símbolo $$\int$$ es una 'S' alargada, que significa "suma".</p>
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?graph, area under curve" alt="Imagen de área bajo la curva" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>2. El Teorema Fundamental del Cálculo (La Gran Conexión)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>¡Esta es la propiedad más importante de todo el cálculo! Conecta las dos grandes ideas: Derivadas (pendientes) e Integrales (áreas). Nos dice que para calcular un área, solo necesitamos encontrar la <strong>antiderivada</strong> $$F(x)$$ (la función cuya derivada es $$f(x)$$) y evaluarla en los límites.</p>
+                    <div class="formula">
+                        $$ \int_a^b f(x) \, dx = F(b) - F(a) \quad \text{donde } F'(x) = f(x) $$
+                    </div>
+                    <div class="intuition">
+                        <p><strong>Intuición:</strong> El área total acumulada ($$ \int $$) es la diferencia neta en la función de "acumulación total" ($$F$$) entre el inicio y el final. La derivada "deshace" la integral y viceversa.</p>
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ \int_0^2 x^2 \, dx $$
+                        <p>La antiderivada de $$f(x)=x^2$$ es $$F(x) = \frac{x^3}{3}$$.</p>
+                        $$ = F(2) - F(0) = \left(\frac{2^3}{3}\right) - \left(\frac{0^3}{3}\right) = \frac{8}{3} - 0 = \frac{8}{3} $$
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?bridge, connecting two sides" alt="Imagen de un puente conectando" class="property-image"> -->
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>3. La Integral Indefinida (La Antiderivada + C)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Una integral *sin límites* ($$a$$ y $$b$$) se llama integral indefinida. No representa un área, sino la <strong>familia de todas las posibles antiderivadas</strong>.</p>
+                    <div class="formula">
+                        $$ \int f(x) \, dx = F(x) + C $$
+                    </div>
+                    <div class="intuition">
+                        <p><strong>¿Por qué la "+ C"?</strong> La "C" es la <strong>Constante de Integración</strong>. Recuerda que la derivada de una constante es 0. Por lo tanto:</p>
+                        <p>$$\frac{d}{dx}(\frac{x^3}{3}) = x^2$$</p>
+                        <p>$$\frac{d}{dx}(\frac{x^3}{3} + 5) = x^2$$</p>
+                        <p>$$\frac{d}{dx}(\frac{x^3}{3} - 100) = x^2$$</p>
+                        <p>Hay *infinitas* antiderivadas, y todas difieren solo por una constante. La "+ C" las representa a todas.</p>
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ \int x^2 \, dx = \frac{x^3}{3} + C $$
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?family, collection" alt="Imagen de una colección de objetos" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>4. Propiedad: Múltiplo Constante</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Las constantes que multiplican "salen" de la integral. Esto se conoce como <strong>linealidad</strong>.</p>
+                    <div class="formula">
+                        $$ \int c \cdot f(x) \, dx = c \cdot \int f(x) \, dx $$
+                    </div>
+                    <div class="intuition">
+                        <p><strong>Intuición:</strong> Si estiras una curva verticalmente por un factor $$c$$ (haciéndola $$c$$ veces más alta), el área bajo ella también se vuelve $$c$$ veces más grande.</p>
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ \int 5x^2 \, dx = 5 \int x^2 \, dx = 5 \left( \frac{x^3}{3} \right) + C = \frac{5x^3}{3} + C $$
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?stretch, magnify" alt="Imagen de algo estirándose" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>5. Propiedad: Suma y Resta</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>La integral de una suma (o resta) es la suma (o resta) de las integrales. Esta es la segunda parte de la <strong>linealidad</strong>.</p>
+                    <div class="formula">
+                        $$ \int (f(x) \pm g(x)) \, dx = \int f(x) \, dx \pm \int g(x) \, dx $$
+                    </div>
+                    <div class="intuition">
+                        <p><strong>Intuición:</strong> El área total bajo dos curvas apiladas ($$f(x) + g(x)$$) es simplemente el área bajo $$f(x)$$ sumada al área bajo $$g(x)$$.</p>
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ \int (x^2 + \cos(x)) \, dx = \int x^2 \, dx + \int \cos(x) \, dx $$
+                        $$ = \left(\frac{x^3}{3}\right) + (\sin(x)) + C $$
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?stacking blocks, layers" alt="Imagen de bloques apilados" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>6. Propiedad de Límites: Aditividad</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Puedes "partir" una integral en dos (o más) en cualquier punto $$c$$ dentro del intervalo.</p>
+                    <div class="formula">
+                        $$ \int_a^b f(x) \, dx = \int_a^c f(x) \, dx + \int_c^b f(x) \, dx $$
+                    </div>
+                    <div class="intuition">
+                        <p><strong>Intuición:</strong> El área total desde $$a$$ hasta $$b$$ es igual al área de $$a$$ a $$c$$ más el área de $$c$$ a $$b$$. Es como sumar segmentos de un viaje.</p>
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ \int_0^5 f(x) \, dx = \int_0^2 f(x) \, dx + \int_2^5 f(x) \, dx $$
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?puzzle pieces, connect" alt="Imagen de piezas de rompecabezas" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>7. Propiedad de Límites: Intervalo Cero</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Si los límites de integración son idénticos, la integral es cero.</p>
+                    <div class="formula">
+                        $$ \int_a^a f(x) \, dx = 0 $$
+                    </div>
+                    <div class="intuition">
+                        <p><strong>Intuición:</strong> Estás calculando el "área" de una región que no tiene ancho. El área de una línea es cero.</p>
+                        <p><strong>Prueba (con FTC):</strong> $$F(a) - F(a) = 0$$.</p>
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ \int_5^5 x^3 \, dx = 0 $$
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?thin line, zero" alt="Imagen de una línea delgada" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>8. Propiedad de Límites: Inversión</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Si inviertes los límites de integración, el signo de la integral se invierte.</p>
+                    <div class="formula">
+                        $$ \int_a^b f(x) \, dx = - \int_b^a f(x) \, dx $$
+                    </div>
+                    <div class="intuition">
+                        <p><strong>Intuición:</strong> Si un área "normal" se calcula de izquierda a derecha (crecimiento positivo en $$x$$), un área "inversa" se calcula de derecha a izquierda, lo que niega el resultado.</p>
+                        <p><strong>Prueba (con FTC):</strong> $$F(b) - F(a) = - (F(a) - F(b))$$.</p>
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ \int_0^2 x \, dx = 2 \quad \implies \quad \int_2^0 x \, dx = -2 $$
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?reverse, arrow" alt="Imagen de una flecha en reversa" class="property-image"> -->
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>9. ¡El Error Común! (Producto y Cociente)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>¡Cuidado!</h3>
+                    <p>A diferencia de la derivada, la integral <strong>NO se distribuye</strong> sobre la multiplicación o la división.</p>
+                    <div class="alert-warning">
+                        <p><strong>¡ERROR GRAVE!</strong></p>
+                        <div class="formula">
+                            $$ \int f(x)g(x) \, dx \neq \left(\int f(x) \, dx\right) \cdot \left(\int g(x) \, dx\right) $$
+                        </div>
+                    </div>
+                    <div class="intuition">
+                        <p><strong>Pedagogía:</strong> La razón por la que esto falla es que la derivada (la operación inversa) usa la Regla del Producto. Por lo tanto, ¡la integral también debe usar una regla especial!</p>
+                        <p>Para resolver la integral de un producto, necesitas técnicas avanzadas como:</p>
+                        <ul>
+                            <li><strong>Integración por Partes</strong> (la inversa de la Regla del Producto).</li>
+                            <li><strong>Sustitución Trigonométrica</strong> o <strong>Fracciones Parciales</strong>.</li>
+                        </ul>
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <p>Para $$\int x \cos(x) \, dx$$, DEBES usar Integración por Partes. No puedes simplemente integrar $$x$$ y $$\cos(x)$$ por separado y multiplicarlos.</p>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?warning sign, error" alt="Imagen de una señal de advertencia" class="property-image"> -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleCard(headerElement) {
+            // Encuentra el contenido asociado
+            const content = headerElement.nextElementSibling;
+            // Encuentra el indicador
+            const indicator = headerElement.querySelector('.indicator');
+            
+            // Alterna la clase 'active' en el header
+            headerElement.classList.toggle('active');
+
+            // Alterna la clase 'visible' en el contenido
+            if (content.classList.contains('visible')) {
+                // Si está visible, lo ocultamos
+                content.classList.remove('visible');
+                indicator.textContent = '+';
+            } else {
+                // Si está oculto, lo mostramos
+                content.classList.add('visible');
+                indicator.textContent = '−'; // Usamos un signo 'menos'
+            }
+        }
+    </script>
+
+</body>
+</html>

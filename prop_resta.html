@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase Interactiva: Propiedades de la Resta</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+    <style>
+        /* Estilo general del cuerpo */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Contenedor principal de la clase */
+        .class-container {
+            max-width: 850px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        /* Encabezado */
+        header {
+            background: linear-gradient(135deg, #d90429, #8d0801);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.6em;
+            font-weight: 700;
+        }
+
+        /* Área de contenido principal */
+        .content-area {
+            padding: 25px 30px;
+        }
+
+        .instructions {
+            font-size: 1.15em;
+            text-align: center;
+            color: #495057;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 15px;
+        }
+
+        /* Tarjeta de propiedad (Acordeón) */
+        .property-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .property-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* Encabezado de la tarjeta (el botón clickeable) */
+        .card-header {
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.4em;
+            font-weight: 600;
+            border-left: 5px solid transparent; /* Para el indicador de estado */
+        }
+        
+        /* Indicador de expandir/colapsar */
+        .indicator {
+            font-size: 1.6em;
+            font-weight: 300;
+            color: #6c757d;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        /* Estilos de estado (Pedagogía clave) */
+        .status-fail { 
+            border-left-color: #d90429; /* Rojo: Falla */
+            color: #8d0801; 
+        }
+        .status-pass { 
+            border-left-color: #2a9d8f; /* Verde: Pasa */
+            color: #195c55; 
+        }
+        .status-partial { 
+            border-left-color: #fca311; /* Naranja: Parcial */
+            color: #a16405; 
+        }
+        .status-master { 
+            border-left-color: #0077b6; /* Azul: Concepto Clave */
+            color: #004d74;
+            font-size: 1.5em; /* Más grande */
+        }
+
+        /* Estilo cuando está activo */
+        .card-header.active .indicator {
+            transform: rotate(45deg);
+        }
+
+        /* Contenido colapsable */
+        .card-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 25px;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .card-content.visible {
+            max-height: 1500px;
+            opacity: 1;
+            padding: 20px 25px 25px 25px;
+        }
+
+        .card-content h3 {
+            color: #343a40;
+            margin-top: 0;
+            border-bottom: 2px solid #fca311;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        /* Estilo para las fórmulas de MathJax */
+        .formula {
+            font-size: 1.3em;
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .conclusion {
+            font-size: 1.2em;
+            font-weight: 600;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .conclusion.fail {
+            background-color: #fff5f5;
+            color: #d90429;
+            border: 1px solid #ffe0e0;
+        }
+        .conclusion.pass {
+            background-color: #f4fcfb;
+            color: #2a9d8f;
+            border: 1px solid #d4f2ef;
+        }
+
+        /* Imagen temática */
+        .property-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px auto;
+            display: block;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="class-container">
+        <header>
+            <h1>Investigando la Resta</h1>
+        </header>
+
+        <div class="content-area">
+            <p class="instructions">
+                A diferencia de la suma, la resta se comporta de forma... "rebelde".<br>
+                Haz clic en cada propiedad para investigar si se cumple o no.
+            </p>
+
+            <div class="property-card">
+                <div class="card-header status-fail" onclick="toggleCard(this)">
+                    <span>Investigación: ¿Es Conmutativa?</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Definición</h3>
+                    <p>La propiedad conmutativa diría que el orden de los números no importa. Es decir, ¿$$a - b$$ es igual a $$b - a$$?</p>
+                    
+                    <h3>Analogía</h3>
+                    <p>Si tienes $10 y gastas $3, te quedan $7. Eso NO es lo mismo que tener $3 y "gastar" $10 (quedarías debiendo $7). El orden es crucial.</p>
+                    
+                    <h3>Prueba (Contraejemplo)</h3>
+                    <div class="formula">
+                        $$5 - 3 = 2$$
+                        $$3 - 5 = -2$$
+                    </div>
+                    
+                    <p class="conclusion fail">
+                        <strong>Veredicto:</strong> Como $$2 \neq -2$$, la resta <strong>NO ES CONMUTATIVA</strong>.
+                    </p>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?wrong way,opposite" alt="Imagen de direcciones opuestas" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header status-fail" onclick="toggleCard(this)">
+                    <span>Investigación: ¿Es Asociativa?</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Definición</h3>
+                    <p>La propiedad asociativa diría que podemos agrupar los números como queramos. Es decir, ¿$$(a - b) - c$$ es igual a $$a - (b - c)$$?</p>
+                    
+                    <h3>Analogía</h3>
+                    <p>Imagina una cuenta de $20. Si primero gastas $10 y luego $5, te quedan $5. ¿Es lo mismo que empezar con $20 y restar (la diferencia entre $10 y $5)? Veamos...</p>
+                    
+                    <h3>Prueba (Contraejemplo)</h3>
+                    <div class="formula">
+                        $$ (20 - 10) - 5 = 10 - 5 = 5 $$
+                        $$ 20 - (10 - 5) = 20 - 5 = 15 $$
+                    </div>
+                    
+                    <p class="conclusion fail">
+                        <strong>Veredicto:</strong> Como $$5 \neq 15$$, la resta <strong>NO ES ASOCIATIVA</strong>.
+                    </p>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?broken chain,confusion" alt="Imagen de una cadena rota" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header status-pass" onclick="toggleCard(this)">
+                    <span>Propiedad de Clausura (Cerradura)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Definición</h3>
+                    <p>Esta propiedad dice que si restas dos números de un mismo conjunto (como los números Reales, $$\mathbb{R}$$), el resultado siempre será otro número de ese mismo conjunto.</p>
+                    
+                    <h3>Analogía</h3>
+                    <p>Es como un "club" exclusivo. Si dos miembros del "Club de los Números Reales" (ej. 7 y 2) operan (se restan), el resultado (5) sigue siendo un miembro del club. La operación no crea un "extraño".</p>
+                    
+                    <h3>Fórmula</h3>
+                    <div class="formula">
+                        Si $$a \in \mathbb{R}$$ y $$b \in \mathbb{R}$$, entonces $$(a - b) \in \mathbb{R}$$
+                    </div>
+                    
+                    <p class="conclusion pass">
+                        <strong>Veredicto:</strong> La resta <strong>SÍ ES CERRADA</strong> en los números Reales (y también en Enteros y Racionales).
+                    </p>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?closed box,container" alt="Imagen de una caja cerrada" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header status-partial" onclick="toggleCard(this)">
+                    <span>Investigación: Elemento Neutro</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Definición</h3>
+                    <p>Buscamos un número que, al restarlo, no altere al número original. El candidato obvio es el $$0$$.</p>
+                    
+                    <h3>Prueba (Dos partes)</h3>
+                    <p><strong>Parte 1 (Restar el $$0$$):</strong></p>
+                    <div class="formula">
+                        $$a - 0 = a$$
+                        $$7 - 0 = 7$$
+                    </div>
+                    <p>¡Funciona! Restar 0 no cambia el número (es un elemento neutro por la derecha).</p>
+                    
+                    <p><strong>Parte 2 (El 0 como minuendo):</strong></p>
+                    <div class="formula">
+                        $$0 - a = -a$$
+                        $$0 - 7 = -7$$
+                    </div>
+                    <p>¡Aquí falla! El resultado no es $$a$$, sino su opuesto $$-a$$.</p>
+                    
+                    <p class="conclusion">
+                        <strong>Veredicto:</strong> El $$0$$ es solo un <strong>Elemento Neutro por la Derecha</strong>. No es un elemento neutro completo como en la suma.
+                    </p>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?one way street,zero" alt="Imagen de una calle de un solo sentido" class="property-image"> -->
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header status-pass" onclick="toggleCard(this)">
+                    <span>Propiedad Distributiva (respecto a la multiplicación)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Definición</h3>
+                    <p>Esta propiedad describe cómo la multiplicación "se reparte" sobre una resta. ¿Funciona igual que con la suma?</p>
+                    
+                    <h3>Fórmula</h3>
+                    <div class="formula">
+                        $$c \cdot (a - b) = (c \cdot a) - (c \cdot b)$$
+                    </div>
+                    
+                    <h3>Ejemplo Numérico</h3>
+                    <p>Probemos con $$5 \cdot (10 - 4)$$:</p>
+                    <p><strong>Lado izquierdo:</strong> $$5 \cdot (10 - 4) = 5 \cdot (6) = 30$$</p>
+                    <p><strong>Lado derecho:</strong> $$(5 \cdot 10) - (5 \cdot 4) = 50 - 20 = 30$$</p>
+                    
+                    <p class="conclusion pass">
+                        <strong>Veredicto:</strong> ¡Los resultados son idénticos! La multiplicación <strong>SÍ SE DISTRIBUYE</strong> sobre la resta.
+                    </p>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?distribution,handing out" alt="Imagen de distribución" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header status-master" onclick="toggleCard(this)">
+                    <span>El Concepto Clave: El Secreto de la Resta</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>El "Aha!" Pedagógico</h3>
+                    <p>Hemos visto que la resta falla en las propiedades Conmutativa y Asociativa. ¿Por qué? Porque la resta no es una operación fundamental. Es, en realidad, una <strong>SUMA DISFRAZADA</strong>.</p>
+                    <p>Restar un número es exactamente lo mismo que <strong>sumar su opuesto (inverso aditivo)</strong>.</p>
+                    
+                    <h3>La Verdadera Fórmula</h3>
+                    <div class="formula">
+                        $$a - b = a + (-b)$$
+                    </div>
+                    
+                    <h3>Por qué falla todo</h3>
+                    <p>Ahora, veamos por qué la conmutatividad falla usando esta nueva definición:</p>
+                    <p><strong>$$a - b$$</strong> es $$a + (-b)$$,</p>
+                    <p><strong>$$b - a$$</strong> es $$b + (-a)$$</p>
+                    <p>¡Es obvio que $$a + (-b)$$ no es lo mismo que $$b + (-a)$$!</p>
+                    
+                    <h3>Conclusión Maestra</h3>
+                    <p>La resta no tiene propiedades "propias" complejas. Simplemente <strong>hereda las propiedades de la suma y la multiplicación</strong> una vez que la reescribes como la "suma del opuesto". Todo su comportamiento "extraño" se explica por esta simple definición.</p>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?key,lock,truth" alt="Imagen de una llave" class="property-image"> -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleCard(headerElement) {
+            // Encuentra el contenido asociado
+            const content = headerElement.nextElementSibling;
+            // Encuentra el indicador
+            const indicator = headerElement.querySelector('.indicator');
+            
+            // Alterna la clase 'active' en el header
+            headerElement.classList.toggle('active');
+
+            // Alterna la clase 'visible' en el contenido
+            if (content.classList.contains('visible')) {
+                // Si está visible, lo ocultamos
+                content.classList.remove('visible');
+                indicator.textContent = '+';
+            } else {
+                // Si está oculto, lo mostramos
+                content.classList.add('visible');
+                indicator.textContent = '−'; // Usamos un signo 'menos'
+            }
+        }
+    </script>
+
+</body>
+</html>

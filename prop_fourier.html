@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase Interactiva: Propiedades de la Serie de Fourier</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+    <style>
+        /* Estilo general del cuerpo */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Contenedor principal de la clase */
+        .class-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+
+        /* Encabezado */
+        header {
+            /* Un color verde "señal" */
+            background: linear-gradient(135deg, #005f73, #0a9396);
+            color: white;
+            padding: 30px 35px;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.6em;
+            font-weight: 700;
+        }
+
+        /* Área de contenido principal */
+        .content-area {
+            padding: 25px 30px;
+        }
+
+        .instructions {
+            font-size: 1.15em;
+            text-align: center;
+            color: #555;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #005f73;
+            padding-bottom: 15px;
+        }
+        
+        /* Divisor de secciones (Pedagógico) */
+        .section-divider {
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #005f73;
+            margin: 40px 0 20px 0;
+            border-top: 2px solid #e0e0e0;
+            padding-top: 20px;
+        }
+
+        /* Tarjeta de propiedad (Acordeón) */
+        .property-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .property-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* Encabezado de la tarjeta (el botón clickeable) */
+        .card-header {
+            background-color: #f7feff;
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #005f73;
+        }
+        
+        .indicator {
+            font-size: 1.6em;
+            font-weight: 300;
+            color: #0a9396;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        /* Estilo cuando está activo */
+        .card-header.active {
+            background-color: #e6f7f7;
+        }
+
+        .card-header.active .indicator {
+            transform: rotate(45deg);
+        }
+
+        /* Contenido colapsable */
+        .card-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 25px;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
+            border-top: 1px solid #e9e9e9;
+        }
+
+        .card-content.visible {
+            max-height: 3000px; /* Suficiente para contenido extenso */
+            opacity: 1;
+            padding: 20px 25px 25px 25px;
+        }
+
+        .card-content h3 {
+            color: #005f73;
+            margin-top: 0;
+            border-bottom: 1px solid #cceeee;
+            padding-bottom: 5px;
+        }
+
+        /* Estilo para las fórmulas de MathJax */
+        .formula {
+            font-size: 1.3em;
+            text-align: center;
+            padding: 20px;
+            background-color: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .key-concept {
+            background-color: #f7feff;
+            border-left: 5px solid #0a9396;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 1.1em;
+        }
+        
+        .property-image {
+            width: 100%;
+            max-width: 450px;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px auto;
+            display: block;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="class-container">
+        <header>
+            <h1>Dominando la Serie de Fourier</h1>
+        </header>
+
+        <div class="content-area">
+            <p class="instructions">
+                Haz clic en cada sección para revelar la intuición, las fórmulas y las propiedades estratégicas de la Serie de Fourier.
+            </p>
+            
+            <div class="section-divider">La Definición</div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>1. El Fundamento: ¿Qué es una Serie de Fourier?</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La "Receta" de la Señal</h3>
+                    <p>Una función periódica $$f(t)$$ con período $$T$$ se puede escribir como una suma de senos y cosenos de diferentes frecuencias (armónicos). La frecuencia fundamental es $$\omega_0 = 2\pi/T$$.</p>
+                    <div class="formula">
+                        $$ f(t) = a_0 + \sum_{n=1}^\infty \left( a_n \cos(n\omega_0 t) + b_n \sin(n\omega_0 t) \right) $$
+                    </div>
+                    
+                    <h3>Los Coeficientes (La Receta)</h3>
+                    <p><strong>$$a_0$$ (El Nivel Promedio):</strong> Es el valor DC o el promedio de la señal.</p>
+                    <div class="formula">
+                        $$ a_0 = \frac{1}{T} \int_T f(t) \, dt $$
+                    </div>
+                    <p><strong>$$a_n$$ (Los Cosenos):</strong> Mide "cuánto" de la onda $$\cos(n\omega_0 t)$$ hay en la señal.</p>
+                    <div class="formula">
+                        $$ a_n = \frac{2}{T} \int_T f(t) \cos(n\omega_0 t) \, dt $$
+                    </div>
+                    <p><strong>$$b_n$$ (Los Senos):</strong> Mide "cuánto" de la onda $$\sin(n\omega_0 t)$$ hay en la señal.</p>
+                    <div class="formula">
+                        $$ b_n = \frac{2}{T} \int_T f(t) \sin(n\omega_0 t) \, dt $$
+                    </div>
+                    
+                    <div class="key-concept">
+                        <p><strong>Analogía del Prisma:</strong> Piensa en $$f(t)$$ como un rayo de luz blanca (compleja). Las fórmulas de $$a_n$$ y $$b_n$$ actúan como un <strong>prisma</strong>, descomponiendo la luz y mostrándote exactamente cuánto "rojo", "verde", "azul", etc. (cuánto de cada armónico) la compone.</p>
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?light prism, soundwave" alt="Imagen de un prisma descomponiendo luz" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>2. La Forma "Elegante": Exponencial Compleja</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Síntesis</h3>
+                    <p>Usando la identidad de Euler ($$e^{j\theta} = \cos\theta + j\sin\theta$$), podemos reescribir la serie de una forma mucho más compacta y matemáticamente elegante. Esta es la forma preferida en ingeniería avanzada.</p>
+                    <div class="formula">
+                        $$ f(t) = \sum_{n=-\infty}^\infty c_n e^{j n\omega_0 t} $$
+                    </div>
+                    <h3>El Coeficiente (Análisis)</h3>
+                    <p>Ahora solo hay un tipo de coeficiente, $$c_n$$, que contiene la información tanto de $$a_n$$ como de $$b_n$$ (magnitud y fase).</p>
+                    <div class="formula">
+                        $$ c_n = \frac{1}{T} \int_T f(t) e^{-j n\omega_0 t} \, dt $$
+                    </div>
+                    <p>Nota: $$c_0 = a_0$$, $$c_n = \frac{a_n - jb_n}{2}$$, y $$c_{-n} = \frac{a_n + jb_n}{2}$$.</p>
+                </div>
+            </div>
+            
+            <div class="section-divider">Las Propiedades (Los Atajos)</div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>3. Propiedad: Linealidad</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>La transformada de Fourier (y la serie) es un operador lineal. La "receta" de una mezcla de señales es la mezcla de sus recetas individuales.</p>
+                    <div class="formula">
+                        $$ \text{Si } f(t) \leftrightarrow c_n \text{ y } g(t) \leftrightarrow d_n $$
+                        $$ \mathcal{F}\{A f(t) + B g(t)\} \leftrightarrow A c_n + B d_n $$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Estrategia:</strong> Si tienes una señal complicada que es la suma de dos señales simples (ej. una onda cuadrada + una onda triangular), puedes encontrar sus series por separado y luego simplemente sumar los coeficientes.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>4. ¡El Gran Atajo! Simetría (Par/Impar)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>El Atajo Más Poderoso</h3>
+                    <p>Revisar la simetría de tu función $$f(t)$$ <strong>antes</strong> de calcular las integrales te puede ahorrar la mitad (o todo) el trabajo.</p>
+                    
+                    <h3>Si $$f(t)$$ es una Función PAR ($$f(-t) = f(t)$$)</h3>
+                    <p>Como $$\cos(t)$$ es par, pero $$\sin(t)$$ es impar.</p>
+                    <div class="formula">
+                        $$ b_n = 0 \quad (\text{para todo } n) $$
+                    </div>
+                    <p><strong>Resultado:</strong> ¡La serie es una <strong>Serie de Cosenos</strong> pura! No necesitas calcular $$b_n$$.</p>
+
+                    <h3>Si $$f(t)$$ es una Función IMPAR ($$f(-t) = -f(t)$$)</h3>
+                    <p>Como $$\sin(t)$$ es impar, pero $$\cos(t)$$ es par.</p>
+                    <div class="formula">
+                        $$ a_0 = 0 \quad \text{y} \quad a_n = 0 \quad (\text{para todo } n) $$
+                    </div>
+                    <p><strong>Resultado:</strong> ¡La serie es una <strong>Serie de Senos</strong> pura! No necesitas calcular $$a_0$$ ni $$a_n$$.</p>
+                    
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?symmetry, parabola" alt="Imagen de simetría" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>5. Propiedad: Desplazamiento en el Tiempo (Fase)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Retrasar o adelantar la señal en el tiempo ($$t_0$$) no cambia las *magnitudes* de sus armónicos, pero sí cambia su *fase* (cuándo empieza cada onda).</p>
+                    <div class="formula">
+                        $$ f(t - t_0) \leftrightarrow c_n e^{-j n\omega_0 t_0} $$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Intuición:</strong> Si tienes la serie de una onda cuadrada centrada en el origen y quieres la serie de la misma onda pero "retrasada" 2 segundos, no necesitas recalcular todas las integrales. Simplemente multiplica tus coeficientes $$c_n$$ por el factor de fase $$e^{-j n\omega_0 (2)}$$.</p>
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?time delay, phase shift" alt="Imagen de un reloj" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>6. El Superpoder (PDEs): Diferenciación</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla (El "Superpoder")</h3>
+                    <p>Esta es la propiedad que, al igual que Laplace, convierte el Cálculo en Álgebra. Derivar en el tiempo es equivalente a <strong>multiplicar</strong> en la frecuencia.</p>
+                    <div class="formula">
+                        $$ \frac{d f(t)}{dt} \leftrightarrow (j n\omega_0) c_n $$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Estrategia:</strong> ¡Esta es la clave para resolver Ecuaciones Diferenciales Parciales (PDEs) como la ecuación de calor o de onda! Se aplica la Serie de Fourier, las derivadas se convierten en multiplicaciones algebraicas por $$(j n\omega_0)$$, resuelves la ecuación de álgebra (fácil) para $$c_n$$, y luego transformas de vuelta.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>7. Propiedad: Integración</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>La integración en el tiempo es lo opuesto: se convierte en <strong>división</strong> en la frecuencia.</p>
+                    <div class="formula">
+                        $$ \int f(t) \, dt \leftrightarrow \frac{1}{(j n\omega_0)} c_n \quad (\text{para } n \neq 0) $$
+                    </div>
+                    <p>(El término $$c_0$$ para $$n=0$$ debe tratarse por separado, ya que representa la acumulación del promedio).</p>
+                    <div class="key-concept">
+                        <p><strong>Intuición:</strong> La diferenciación "enfatiza" las altas frecuencias (cambios rápidos). La integración "suaviza" la señal, atenuando las altas frecuencias (dividiendo por $$n$$).</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>8. El Superpoder (Filtros): Convolución</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Una de las operaciones más difíciles en el dominio del tiempo, la convolución (que es cómo funcionan los filtros), se convierte en <strong>multiplicación simple</strong> en el dominio de la frecuencia.</p>
+                    <div class="formula">
+                        $$ (f * g)(t) \leftrightarrow T \cdot c_n(f) \cdot d_n(g) $$
+                        <p>Donde $$(f * g)(t) = \int_T f(\tau)g(t-\tau) \, d\tau$$</p>
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Estrategia:</strong> Para saber cómo un "filtro" $$g(t)$$ afecta a una "señal" $$f(t)$$, no hagas la integral de convolución (¡es horrible!). Simplemente, encuentra la serie de ambos, multiplica sus coeficientes ($$c_n \cdot d_n$$), y esa es la serie de la señal de salida.</p>
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?audio filter, entangled" alt="Imagen de un filtro de audio" class="property-image"> -->
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>9. Teorema de Parseval (Conservación de la Energía)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Este es el teorema de la "Conservación de la Energía". Afirma que la <strong>potencia promedio</strong> total de la señal en el dominio del tiempo es <strong>exactamente igual</strong> a la suma de las potencias de todos sus armónicos en el dominio de la frecuencia.</p>
+                    <div class="formula">
+                        $$ P_{\text{avg}} = \frac{1}{T} \int_T |f(t)|^2 \, dt = \sum_{n=-\infty}^\infty |c_n|^2 $$
+                    </div>
+                    <p>En forma trigonométrica:</p>
+                    <div class="formula">
+                        $$ P_{\text{avg}} = a_0^2 + \frac{1}{2} \sum_{n=1}^\infty (a_n^2 + b_n^2) $$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Intuición:</strong> No se pierde ni se gana "energía" o "potencia" al pasar del dominio del tiempo al de la frecuencia. Simplemente estás viendo la misma información de una manera diferente.</p>
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?energy, power meter" alt="Imagen de un medidor de potencia" class="property-image"> -->
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script>
+        function toggleCard(headerElement) {
+            // Encuentra el contenido asociado
+            const content = headerElement.nextElementSibling;
+            // Encuentra el indicador
+            const indicator = headerElement.querySelector('.indicator');
+            
+            // Alterna la clase 'active' en el header
+            headerElement.classList.toggle('active');
+
+            // Alterna la clase 'visible' en el contenido
+            if (content.classList.contains('visible')) {
+                // Si está visible, lo ocultamos
+                content.classList.remove('visible');
+                indicator.textContent = '+';
+            } else {
+                // Si está oculto, lo mostramos
+                content.classList.add('visible');
+                indicator.textContent = '−'; // Usamos un signo 'menos'
+            }
+        }
+    </script>
+
+</body>
+</html>

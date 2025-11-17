@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase Interactiva: Propiedades de la Igualdad</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+    <style>
+        /* Estilos Generales */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Contenedor Principal */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        header {
+            background-color: #0056b3; /* Azul oscuro */
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.2em;
+        }
+
+        .content-wrapper {
+            padding: 30px;
+        }
+
+        .instructions {
+            font-size: 1.1em;
+            text-align: center;
+            margin-bottom: 25px;
+            color: #555;
+        }
+
+        /* Tarjetas de Propiedades */
+        .property-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .property-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .property-header {
+            background-color: #f9f9f9;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #004a99;
+        }
+
+        .property-header .indicator {
+            font-size: 1.5em;
+            font-weight: 300;
+            transition: transform 0.3s ease;
+        }
+        
+        .property-header.active .indicator {
+            transform: rotate(45deg);
+        }
+
+        /* Contenido colapsable */
+        .property-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 20px;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .property-content.visible {
+            max-height: 1000px; /* Altura máxima suficiente para el contenido */
+            opacity: 1;
+            padding: 20px 20px;
+        }
+
+        .property-content h3 {
+            color: #333;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 5px;
+        }
+
+        .property-content p {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .property-image {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 8px;
+            margin: 10px auto;
+            display: flex;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        /* Estilo para las fórmulas de MathJax */
+        .formula {
+            font-size: 1.3em;
+            text-align: center;
+            padding: 15px;
+            background-color: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+								footer {
+									text-align: center;
+									margin-top: 20px;
+								}
+								 img{ 
+									width: fill;
+									height: auto;
+									border-radius: 8px;
+									margin: 10px auto;
+									display: block;
+									box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+								}
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Clase Interactiva: Propiedades de la Igualdad</h1>
+        </header>
+
+        <div class="content-wrapper">
+            <p class="instructions">Haz clic en el título de cada propiedad para revelar su definición, fórmula y ejemplo.</p>
+
+            <div class="property-card">
+                <div class="property-header" onclick="toggleProperty(this)">
+                    <span>Propiedad Reflexiva</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="property-content">
+                    <h3>Definición</h3>
+                    <p>Todo número (o expresión) es igual a sí mismo. Es la propiedad más básica de la igualdad, similar a mirarse en un espejo.</p>
+                    
+                    <h3>Fórmula</h3>
+                    <div class="formula">
+                        $$a = a$$
+                    </div>
+                    
+                    <h3>Ejemplo</h3>
+                    <p>Sabemos que $$5 = 5$$ o que $$x + 2 = x + 2$$.</p>
+                    <!-- <img src="https://img.freepik.com/vector-premium/dibujo-mujer-mirando-su-reflejo-espejo_1316704-14606.jpg?w=2000" alt="Imagen de un reflejo" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="property-header" onclick="toggleProperty(this)">
+                    <span>Propiedad Simétrica</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="property-content">
+                    <h3>Definición</h3>
+                    <p>Si una cantidad es igual a otra, entonces la segunda cantidad es igual a la primera. El orden de la igualdad no importa, como en una balanza equilibrada.</p>
+                    
+                    <h3>Fórmula</h3>
+                    <div class="formula">
+                        Si $$a = b$$, entonces $$b = a$$
+                    </div>
+                    
+                    <h3>Ejemplo</h3>
+                    <p>Si $$x = 8$$, entonces sabemos que $$8 = x$$.</p>
+                    <!-- <img src="https://www.lifeder.com/wp-content/uploads/2022/03/simetria-concepto.png" alt="Imagen de simetría" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="property-header" onclick="toggleProperty(this)">
+                    <span>Propiedad Transitiva</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="property-content">
+                    <h3>Definición</h3>
+                    <p>Si una primera cantidad es igual a una segunda, y esa segunda cantidad es igual a una tercera, entonces la primera cantidad es igual a la tercera. Es como un "puente" o una cadena de dominós.</p>
+                    
+                    <h3>Fórmula</h3>
+                    <div class="formula">
+                        Si $$a = b$$ y $$b = c$$, entonces $$a = c$$
+                    </div>
+                    
+                    <h3>Ejemplo</h3>
+                    <p>Si $$x = y$$ y $$y = 10$$, entonces podemos concluir que $$x = 10$$.</p>
+                    <!-- <img src="https://th.bing.com/th/id/R.95ed81660aa8df8d53a2af2b692169e1?rik=YTIT3IeJSd0o3Q&pid=ImgRaw&r=0" alt="Imagen de dominós" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="property-header" onclick="toggleProperty(this)">
+                    <span>Propiedad Aditiva</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="property-content">
+                    <h3>Definición</h3>
+                    <p>Si sumamos (o restamos) la misma cantidad a ambos lados de una igualdad, la igualdad se mantiene. Es el principio fundamental para despejar ecuaciones.</p>
+                    
+                    <h3>Fórmula</h3>
+                    <div class="formula">
+                        Si $$a = b$$, entonces $$a + c = b + c$$
+                    </div>
+                    
+                    <h3>Ejemplo</h3>
+                    <p>Si tenemos $$x - 3 = 7$$, podemos sumar $$3$$ a ambos lados:</p>
+                    <p>$$(x - 3) + 3 = 7 + 3$$</p>
+                    <p>Lo que resulta en $$x = 10$$.</p>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?balance scale,weights" alt="Imagen de una balanza" class="property-image"> -->
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="property-header" onclick="toggleProperty(this)">
+                    <span>Propiedad Multiplicativa</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="property-content">
+                    <h3>Definición</h3>
+                    <p>Si multiplicamos (o dividimos) ambos lados de una igualdad por la misma cantidad (distinta de cero), la igualdad se mantiene.</p>
+                    
+                    <h3>Fórmula</h3>
+                    <div class="formula">
+                        Si $$a = b$$, entonces $$a \cdot c = b \cdot c$$
+                        <br><br>
+                        Si $$a = b$$ y $$c \neq 0$$, entonces $$\frac{a}{c} = \frac{b}{c}$$
+                    </div>
+                    
+                    <h3>Ejemplo</h3>
+                    <p>Si tenemos $$2x = 14$$, podemos dividir ambos lados entre $$2$$:</p>
+                    <p>$$\frac{2x}{2} = \frac{14}{2}$$</p>
+                    <p>Lo que resulta en $$x = 7$$.</p>oggleProperty
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?magnifying glass,zoom" alt="Imagen de multiplicación" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="property-header" onclick="toggleProperty(this)">
+                    <span>Propiedad de Sustitución</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="property-content">
+                    <h3>Definición</h3>
+                    <p>Si dos cantidades son iguales, una puede ser reemplazada o "sustituida" por la otra en cualquier expresión o ecuación sin cambiar el resultado.</p>
+                    
+                    <h3>Fórmula</h3>
+                    <div class="formula">
+                        Si $$a = b$$, entonces $$a$$ puede reemplazar a $$b$$ en cualquier expresión.
+                    </div>
+                    
+                    <h3>Ejemplo</h3>
+                    <p>Si tenemos dos ecuaciones:</p>
+                    <p>1) $$x + y = 10$$</p>
+                    <p>2) $$y = 4$$</p>
+                    <p>Podemos <strong>sustituir</strong> el valor de $$y$$ de la ecuación (2) en la ecuación (1):</p>
+                    <p>$$x + (4) = 10$$, lo que nos permite resolver que $$x = 6$$.</p>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?gears,replacement" alt="Imagen de sustitución" class="property-image"> -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <footer>
+        <p>© JMGV PTEL 2025 Propiedades de la Igualdad. Todos los derechos reservados.</p>
+    </footer>
+    <script>
+        function toggleProperty(headerElement) {
+            // Encuentra el contenido asociado a este header
+            const content = headerElement.nextElementSibling;
+            
+            // Encuentra el indicador (+/-)
+            const indicator = headerElement.querySelector('.indicator');
+            
+            // Alterna la clase 'active' en el header
+            headerElement.classList.toggle('active');
+
+            // Alterna la clase 'visible' en el contenido
+            if (content.classList.contains('visible')) {
+                content.classList.remove('visible');
+                indicator.textContent = '+';
+            } else {
+                content.classList.add('visible');
+                indicator.textContent = '−'; // Usamos un signo 'menos'
+            }
+        }
+    </script>
+
+</body>
+</html>

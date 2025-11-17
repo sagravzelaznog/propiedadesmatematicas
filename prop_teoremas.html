@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase Interactiva: Tales y Pitágoras</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+    <style>
+        /* Estilo general del cuerpo */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f7f9fa;
+            color: #333;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Contenedor principal de la clase */
+        .class-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+
+        /* Encabezado */
+        header {
+            /* Un color clásico, académico */
+            background: linear-gradient(135deg, #1d3557, #457b9d);
+            color: white;
+            padding: 30px 35px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.6em;
+            font-weight: 700;
+        }
+
+        /* Área de contenido principal */
+        .content-area {
+            padding: 25px 30px;
+        }
+
+        .instructions {
+            font-size: 1.15em;
+            text-align: center;
+            color: #555;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #1d3557;
+            padding-bottom: 15px;
+        }
+        
+        /* Divisor de secciones (Pedagógico) */
+        .section-divider {
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #1d3557;
+            margin: 40px 0 20px 0;
+            border-top: 2px solid #e0e0e0;
+            padding-top: 20px;
+        }
+
+        /* Tarjeta de propiedad (Acordeón) */
+        .property-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .property-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* Encabezado de la tarjeta (el botón clickeable) */
+        .card-header {
+            background-color: #f8faff;
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #1d3557;
+        }
+        
+        .indicator {
+            font-size: 1.6em;
+            font-weight: 300;
+            color: #457b9d;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        /* Estilo cuando está activo */
+        .card-header.active {
+            background-color: #e6f0f7;
+        }
+
+        .card-header.active .indicator {
+            transform: rotate(45deg);
+        }
+
+        /* Contenido colapsable */
+        .card-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 25px;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
+            border-top: 1px solid #e9e9e9;
+        }
+
+        .card-content.visible {
+            max-height: 3000px; /* Suficiente para contenido extenso */
+            opacity: 1;
+            padding: 20px 25px 25px 25px;
+        }
+
+        .card-content h3 {
+            color: #1d3557;
+            margin-top: 0;
+            border-bottom: 1px solid #cce2f0;
+            padding-bottom: 5px;
+        }
+
+        /* Estilo para las fórmulas de MathJax */
+        .formula {
+            font-size: 1.3em;
+            text-align: center;
+            padding: 20px;
+            background-color: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .key-concept {
+            background-color: #e6f0f7;
+            border-left: 5px solid #457b9d;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 1.1em;
+        }
+        
+        .property-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px auto;
+            display: block;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="class-container">
+        <header>
+            <h1>Teoremas Fundamentales de la Geometría</h1>
+        </header>
+
+        <div class="content-area">
+            <p class="instructions">
+                Haz clic en cada sección para revelar la intuición, las fórmulas y las aplicaciones de estos teoremas pilares.
+            </p>
+
+            <div class="section-divider">Acto I: Teorema de Tales (El Genio de la Proporción)</div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>1. Teorema de la Proporcionalidad</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Si tres o más <strong>rectas paralelas</strong> son cortadas por dos rectas <strong>transversales</strong> (no paralelas), los segmentos creados en una transversal son <strong>proporcionales</strong> a los segmentos correspondientes en la otra.</p>
+                    
+                    
+                    
+                    <div class="formula">
+                        $$ \frac{AB}{BC} = \frac{A'B'}{B'C'} $$
+                        $$ \frac{AB}{A'B'} = \frac{BC}{B'C'} = \frac{AC}{A'C'} $$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Intuición Pedagógica:</strong> Las líneas paralelas mantienen un "ritmo" o "escala" constante. Si un segmento en una línea es el doble de grande que otro, el segmento correspondiente en la otra línea también será el doble de grande que su vecino.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>2. Aplicación: Triángulos Semejantes</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla (Forma de Triángulo)</h3>
+                    <p>Si trazas una línea paralela a un lado de un triángulo que corta los otros dos lados, se forma un nuevo triángulo pequeño que es <strong>semejante</strong> (misma forma, diferente tamaño) al triángulo original.</p>
+                    <div class="formula">
+                        $$ \frac{AD}{AB} = \frac{AE}{AC} = \frac{DE}{BC} $$
+                    </div>
+                    
+                    <h3>Ejemplo (Cálculo de Alturas)</h3>
+                    <p>Esta es la técnica clásica para medir la altura de un edificio usando su sombra. El sol crea dos triángulos semejantes: uno con el edificio y su sombra, y otro contigo y tu sombra.</p>
+                    <div class="formula">
+                        $$ \frac{\text{Altura}_{\text{Edificio}}}{\text{Sombra}_{\text{Edificio}}} = \frac{\text{Altura}_{\text{Persona}}}{\text{Sombra}_{\text{Persona}}} $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>3. Corolario: El Triángulo en el Semicírculo</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Este es el "otro" teorema de Tales, igual de importante. Afirma que si $$A$$, $$B$$ y $$C$$ son puntos en una circunferencia donde $$AB$$ es el <strong>diámetro</strong>, entonces el ángulo $$\angle ACB$$ es <strong>siempre un ángulo recto (90°)</strong>.</p>
+                    
+                    
+                    
+                    <div class="formula">
+                        $$ \text{Si } AB \text{ es el diámetro, entonces } \angle ACB = 90^\circ $$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Intuición:</strong> El diámetro "subtiende" o "vigila" un ángulo de 90 grados desde cualquier punto de la circunferencia. Esta es una herramienta increíblemente poderosa para construir ángulos rectos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider">Acto II: Teorema de Pitágoras (El Genio de la Relación)</div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>1. El Teorema Fundamental</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>En todo <strong>triángulo rectángulo</strong>, la suma de los cuadrados de los <strong>catetos</strong> (los lados que forman el ángulo recto) es igual al cuadrado de la <strong>hipotenusa</strong> (el lado opuesto al ángulo recto).</p>
+                    <ul>
+                        <li>$$a, b$$: Catetos</li>
+                        <li>$$c$$: Hipotenusa</li>
+                    </ul>
+                    <div class="formula">
+                        $$ a^2 + b^2 = c^2 $$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Intuición Visual:</strong> El área del cuadrado construido sobre la hipotenusa es igual a la suma de las áreas de los cuadrados construidos sobre los dos catetos.</p>
+                    </div>
+                    
+
+[Image of Pythagorean theorem squares proof]
+
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>2. Aplicación: Encontrar Lados Desconocidos</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Encontrar la Hipotenusa ($$c$$)</h3>
+                    <p>Si conoces los dos catetos ($$a$$ y $$b$$):</p>
+                    <div class="formula">
+                        $$ c = \sqrt{a^2 + b^2} $$
+                    </div>
+                    
+                    <h3>Encontrar un Cateto ($$a$$)</h3>
+                    <p>Si conoces la hipotenusa ($$c$$) y el otro cateto ($$b$$):</p>
+                    <div class="formula">
+                        $$ a = \sqrt{c^2 - b^2} $$
+                    </div>
+                    
+                    <h3>Ejemplo (Terna Pitagórica 3-4-5)</h3>
+                    <p>Si $$a = 3$$ y $$b = 4$$:</p>
+                    <div class="formula">
+                        $$ c = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25} = 5 $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>3. La Recíproca del Teorema (La Prueba)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Esta es la "prueba" para saber si un triángulo es rectángulo *sin* ver los ángulos. Si tienes un triángulo con lados $$a$$, $$b$$ y $$c$$ (donde $$c$$ es el lado más largo) y se cumple la ecuación, entonces el triángulo <strong>es</strong> un triángulo rectángulo.</p>
+                    <div class="formula">
+                        $$ \text{Si } a^2 + b^2 = c^2 \implies \text{El triángulo es rectángulo.} $$
+                    </div>
+
+                    <h3>Extensiones (Tipos de Triángulo)</h3>
+                    <p>Esto también nos permite clasificar otros triángulos:</p>
+                    <ul>
+                        <li>Si $$a^2 + b^2 > c^2 \implies$$ Triángulo <strong>Acutángulo</strong> (ángulos agudos).</li>
+                        <li>Si $$a^2 + b^2 < c^2 \implies$$ Triángulo <strong>Obtusángulo</strong> (un ángulo obtuso).</li>
+                    </ul>
+                    
+                    <h3>Ejemplo (Probar 5, 12, 13)</h3>
+                    <p>¿Es un triángulo con lados 5, 12 y 13 un triángulo rectángulo?</p>
+                    <div class="formula">
+                        $$ 5^2 + 12^2 \stackrel{?}{=} 13^2 $$
+                        $$ 25 + 144 \stackrel{?}{=} 169 $$
+                        $$ 169 = 169 $$
+                    </div>
+                    <p><strong>Veredicto:</strong> Sí, es un triángulo rectángulo.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleCard(headerElement) {
+            // Encuentra el contenido asociado
+            const content = headerElement.nextElementSibling;
+            // Encuentra el indicador
+            const indicator = headerElement.querySelector('.indicator');
+            
+            // Alterna la clase 'active' en el header
+            headerElement.classList.toggle('active');
+
+            // Alterna la clase 'visible' en el contenido
+            if (content.classList.contains('visible')) {
+                // Si está visible, lo ocultamos
+                content.classList.remove('visible');
+                indicator.textContent = '+';
+            } else {
+                // Si está oculto, lo mostramos
+                content.classList.add('visible');
+                indicator.textContent = '−'; // Usamos un signo 'menos'
+            }
+        }
+    </script>
+
+</body>
+</html>

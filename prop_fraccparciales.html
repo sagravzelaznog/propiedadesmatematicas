@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase Interactiva: Descomposición en Fracciones Parciales</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+    <style>
+        /* Estilo general del cuerpo */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f7f9fa;
+            color: #333;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Contenedor principal de la clase */
+        .class-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+
+        /* Encabezado */
+        header {
+            /* Un color azul académico y profundo */
+            background: linear-gradient(135deg, #005A9C, #003D6A);
+            color: white;
+            padding: 30px 35px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.6em;
+            font-weight: 700;
+        }
+
+        /* Área de contenido principal */
+        .content-area {
+            padding: 25px 30px;
+        }
+
+        .instructions {
+            font-size: 1.15em;
+            text-align: center;
+            color: #555;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #005A9C;
+            padding-bottom: 15px;
+        }
+        
+        /* Divisor de secciones (Pedagógico) */
+        .section-divider {
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #003D6A;
+            margin: 40px 0 20px 0;
+            border-top: 2px solid #e0e0e0;
+            padding-top: 20px;
+        }
+
+        /* Tarjeta de propiedad (Acordeón) */
+        .property-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .property-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* Encabezado de la tarjeta (el botón clickeable) */
+        .card-header {
+            background-color: #f7faff;
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #005A9C;
+        }
+        
+        .indicator {
+            font-size: 1.6em;
+            font-weight: 300;
+            color: #007BFF;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        /* Estilo cuando está activo */
+        .card-header.active {
+            background-color: #e6f2ff;
+        }
+
+        .card-header.active .indicator {
+            transform: rotate(45deg);
+        }
+
+        /* Contenido colapsable */
+        .card-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 25px;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
+            border-top: 1px solid #e9e9e9;
+        }
+
+        .card-content.visible {
+            max-height: 2500px; /* Suficiente para contenido extenso */
+            opacity: 1;
+            padding: 20px 25px 25px 25px;
+        }
+
+        .card-content h3 {
+            color: #003D6A;
+            margin-top: 0;
+            border-bottom: 1px solid #cce5ff;
+            padding-bottom: 5px;
+        }
+
+        /* Estilo para las fórmulas de MathJax */
+        .formula {
+            font-size: 1.3em;
+            text-align: center;
+            padding: 20px;
+            background-color: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .key-concept {
+            background-color: #e6f2ff;
+            border-left: 5px solid #005A9C;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 1.1em;
+        }
+        
+        .alert-warning {
+            background-color: #fffaf0;
+            border-left: 4px solid #f9a600;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="class-container">
+        <header>
+            <h1>Maestría en Fracciones Parciales</h1>
+        </header>
+
+        <div class="content-area">
+            <p class="instructions">
+                Haz clic en cada sección para revelar la estrategia y los casos de esta poderosa técnica de integración.
+            </p>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>1. La Motivación: ¿Por qué "De-construir"?</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>El "Por Qué" Pedagógico</h3>
+                    <p>La descomposición en fracciones parciales es un método algebraico para tomar una función racional compleja y "romperla" en una suma de fracciones más simples.</p>
+                    <p><strong>El problema:</strong> Integrar esto es (casi) imposible:</p>
+                    <div class="formula">
+                        $$ \int \frac{1}{x^2 - 1} \, dx $$
+                    </div>
+                    <p><strong>La Solución:</strong> "De-construimos" la fracción primero:</p>
+                    <div class="formula">
+                        $$ \frac{1}{x^2 - 1} = \frac{1}{(x-1)(x+1)} = \frac{A}{x-1} + \frac{B}{x+1} $$
+                    </div>
+                    <p>Resolviendo para A y B (en este caso $$A=1/2, B=-1/2$$), convertimos el problema en:</p>
+                    <div class="formula">
+                        $$ \int \left( \frac{1/2}{x-1} - \frac{1/2}{x+1} \right) \, dx $$
+                    </div>
+                    <p>¡Y esto es <strong>trivial</strong> de integrar! El resultado es $$ \frac{1}{2}\ln|x-1| - \frac{1}{2}\ln|x+1| + C $$.</p>
+                    <div class="key-concept">
+                        <p><strong>Principio Andragógico:</strong> No aprendemos esta técnica por diversión. La aprendemos porque es la <strong>llave</strong> que desbloquea la integración de funciones racionales.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>2. El Prerrequisito: ¿Es la Fracción "Propia"?</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla de Oro</h3>
+                    <p>Solo puedes aplicar fracciones parciales a una <strong>fracción propia</strong>, es decir, donde el grado del numerador es <strong>menor</strong> que el grado del denominador.</p>
+                    <div class="alert-warning">
+                        <p><strong>¡Atención!</strong> Si la fracción es <strong>impropia</strong> ($$\deg(N) \ge \deg(D)$$), tu <strong>primer paso obligatorio</strong> es usar la <strong>División Larga de Polinomios</strong>.</p>
+                    </div>
+                    <h3>Ejemplo (Impropia)</h3>
+                    <p>No puedes usar fracciones parciales en $$ \frac{x^3 + x}{x^2 - 1} $$ directamente.</p>
+                    <p>1. Primero, divide:</p>
+                    <div class="formula">
+                        $$ (x^3 + x) \div (x^2 - 1) = x + \frac{2x}{x^2 - 1} $$
+                    </div>
+                    <p>2. Ahora, integra el resultado:</p>
+                    <div class="formula">
+                        $$ \int \left( x + \frac{2x}{x^2 - 1} \right) \, dx $$
+                    </div>
+                    <p>La parte del $$x$$ es fácil. A la segunda parte, $$ \frac{2x}{x^2 - 1} $$, AHORA SÍ puedes aplicarle fracciones parciales (o una simple sustitución en $$u$$).</p>
+                </div>
+            </div>
+
+            <div class="section-divider">Los 4 Casos Tácticos</div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>Caso 1: Factores Lineales Distintos</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>El Caso Más Sencillo</h3>
+                    <p>El denominador se factoriza en términos lineales (como $$ax+b$$) que no se repiten.</p>
+                    <h3>La Forma</h3>
+                    <div class="formula">
+                        $$ \frac{P(x)}{(x-r_1)(x-r_2)...(x-r_n)} $$
+                    </div>
+                    <h3>La Descomposición</h3>
+                    <p>Cada factor lineal obtiene su propia fracción con un numerador constante $$A, B, C...$$</p>
+                    <div class="formula">
+                        $$ \frac{A}{x-r_1} + \frac{B}{x-r_2} + \dots + \frac{N}{x-r_n} $$
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ \frac{7x+1}{(x-3)(x+2)} = \frac{A}{x-3} + \frac{B}{x+2} $$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Táctica Rápida (Heaviside Cover-Up):</strong> Para encontrar $$A$$, "tapa" el $$(x-3)$$ en la izquierda y sustituye $$x=3$$ en lo que queda: $$A = \frac{7(3)+1}{(3+2)} = \frac{22}{5}$$.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>Caso 2: Factores Lineales Repetidos</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>El Caso de la "Escalera"</h3>
+                    <p>El denominador tiene un factor lineal elevado a una potencia $$n$$.</p>
+                    <h3>La Forma</h3>
+                    <div class="formula">
+                        $$ \frac{P(x)}{(x-r)^n} $$
+                    </div>
+                    <h3>La Descomposición</h3>
+                    <p>Debes crear una "escalera" de fracciones para <strong>cada potencia</strong> desde 1 hasta $$n$$.</p>
+                    <div class="formula">
+                        $$ \frac{A_1}{x-r} + \frac{A_2}{(x-r)^2} + \dots + \frac{A_n}{(x-r)^n} $$
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ \frac{x^2+1}{(x+4)(x-1)^3} = \frac{A}{x+4} + \frac{B}{x-1} + \frac{C}{(x-1)^2} + \frac{D}{(x-1)^3} $$
+                    </div>
+                    <p>(Nota: Se incluye el Caso 1 junto con el 2)</p>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>Caso 3: Factores Cuadráticos Irreducibles</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>El Caso que No se Factoriza</h3>
+                    <p>El denominador contiene un factor cuadrático (como $$ax^2+bx+c$$) que no se puede factorizar más (es "irreducible", es decir, $$b^2-4ac < 0$$).</p>
+                    <h3>La Forma</h3>
+                    <div class="formula">
+                        $$ \frac{P(x)}{(ax^2+bx+c)...} $$
+                    </div>
+                    <h3>La Descomposición</h3>
+                    <p>El numerador para un factor cuadrático debe ser un término <strong>lineal</strong>, es decir, $$Ax+B$$.</p>
+                    <div class="formula">
+                        $$ \frac{Ax+B}{ax^2+bx+c} + \dots $$
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ \frac{4x^2-3x+1}{(x-5)(x^2+x+1)} = \frac{A}{x-5} + \frac{Bx+C}{x^2+x+1} $$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Principio Pedagógico:</strong> El grado del numerador debe ser <strong>uno menos</strong> que el grado del factor en el denominador. Para un factor lineal (grado 1), el numerador es constante (grado 0). Para un factor cuadrático (grado 2), el numerador es lineal (grado 1).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>Caso 4: Factores Cuadráticos Repetidos</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>El Caso "Monstruo"</h3>
+                    <p>El denominador tiene un factor cuadrático irreducible elevado a una potencia $$n$$.</s/p>
+                    <h3>La Forma</h3>
+                    <div class="formula">
+                        $$ \frac{P(x)}{(ax^2+bx+c)^n} $$
+                    </div>
+                    <h3>La Descomposición</h3>
+                    <p>Se combina la lógica del Caso 2 (escalera) y el Caso 3 (numerador lineal).</p>
+                    <div class="formula">
+                        $$ \frac{A_1x+B_1}{ax^2+bx+c} + \frac{A_2x+B_2}{(ax^2+bx+c)^2} + \dots + \frac{A_nx+B_n}{(ax^2+bx+c)^n} $$
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ \frac{x^3}{(x^2+9)^2} = \frac{Ax+B}{x^2+9} + \frac{Cx+D}{(x^2+9)^2} $$
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>5. El Paso Final: Cómo encontrar A, B, C...</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>El "Cómo" Algebraico</h3>
+                    <p>Una vez que tienes la forma de la descomposición, ¿cómo resuelves para las constantes? Hay dos métodos principales que se pueden combinar.</p>
+                    
+                    <h3>Método 1: Sistema de Ecuaciones (El "Bruto")</h3>
+                    <p>1. Multiplica ambos lados por el denominador original para "limpiar" las fracciones.</p>
+                    <p>2. Expande y agrupa todos los términos por potencias de $$x$$ (ej. todos los términos $$x^2$$, todos los términos $$x$$, etc.).</p>
+                    <p>3. Iguala los coeficientes de cada potencia de $$x$$ del lado izquierdo con los del lado derecho. Esto crea un sistema de ecuaciones lineales.</p>
+                    <p>4. Resuelve el sistema para $$A, B, C...$$</p>
+                    
+                    <h3>Método 2: Sustituir Valores "Inteligentes" (El "Astuto")</h3>
+                    <p>1. Después de "limpiar" las fracciones (Paso 1 de arriba), en lugar de expandir, sustituye valores "inteligentes" para $$x$$.</p>
+                    <p>2. Los valores "inteligentes" son las raíces de tu denominador (ej. si tienes $$(x-3)$$, sustituye $$x=3$$). Esto hará que muchos términos se cancelen (sean 0) instantáneamente, permitiéndote despejar una constante.</p>
+                    
+                    <div class="key-concept">
+                        <p><strong>Estrategia de Genio:</strong> ¡Usa ambos! Usa el Método 2 (Astuto) para encontrar tantas constantes fáciles como puedas. Luego, usa el Método 1 (Bruto) o sustituye valores fáciles (como $$x=0$$ o $$x=1$$) para encontrar las constantes restantes.</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script>
+        function toggleCard(headerElement) {
+            // Encuentra el contenido asociado
+            const content = headerElement.nextElementSibling;
+            // Encuentra el indicador
+            const indicator = headerElement.querySelector('.indicator');
+            
+            // Alterna la clase 'active' en el header
+            headerElement.classList.toggle('active');
+
+            // Alterna la clase 'visible' en el contenido
+            if (content.classList.contains('visible')) {
+                // Si está visible, lo ocultamos
+                content.classList.remove('visible');
+                indicator.textContent = '+';
+            } else {
+                // Si está oculto, lo mostramos
+                content.classList.add('visible');
+                indicator.textContent = '−'; // Usamos un signo 'menos'
+            }
+        }
+    </script>
+
+</body>
+</html>

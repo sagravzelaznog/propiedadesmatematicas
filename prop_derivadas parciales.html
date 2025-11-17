@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase Interactiva: Derivadas Parciales e Implícitas</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+    <style>
+        /* Estilo general del cuerpo */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f3f9;
+            color: #333;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Contenedor principal de la clase */
+        .class-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+
+        /* Encabezado */
+        header {
+            /* Un color "profundo" para el cálculo avanzado */
+            background: linear-gradient(135deg, #4a148c, #880e4f);
+            color: white;
+            padding: 30px 35px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.6em;
+            font-weight: 700;
+        }
+
+        /* Área de contenido principal */
+        .content-area {
+            padding: 25px 30px;
+        }
+
+        .instructions {
+            font-size: 1.15em;
+            text-align: center;
+            color: #555;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #4a148c;
+            padding-bottom: 15px;
+        }
+        
+        /* Divisor de secciones (Pedagógico) */
+        .section-divider {
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #4a148c;
+            margin: 40px 0 20px 0;
+            border-top: 2px solid #e0e0e0;
+            padding-top: 20px;
+        }
+
+        /* Tarjeta de propiedad (Acordeón) */
+        .property-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .property-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* Encabezado de la tarjeta (el botón clickeable) */
+        .card-header {
+            background-color: #f9f7ff;
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #4a00a0;
+        }
+        
+        .indicator {
+            font-size: 1.6em;
+            font-weight: 300;
+            color: #6a11cb;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .card-header.active {
+            background-color: #f0eaff;
+        }
+
+        .card-header.active .indicator {
+            transform: rotate(45deg);
+        }
+
+        /* Contenido colapsable */
+        .card-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 25px;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
+            border-top: 1px solid #e9e9e9;
+        }
+
+        .card-content.visible {
+            max-height: 2500px; /* Suficiente para contenido extenso */
+            opacity: 1;
+            padding: 20px 25px 25px 25px;
+        }
+
+        .card-content h3 {
+            color: #6a11cb;
+            margin-top: 0;
+            border-bottom: 1px solid #e0cffc;
+            padding-bottom: 5px;
+        }
+
+        /* Estilo para las fórmulas de MathJax */
+        .formula {
+            font-size: 1.3em;
+            text-align: center;
+            padding: 20px;
+            background-color: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .key-concept {
+            background-color: #f0eaff;
+            border-left: 5px solid #6a11cb;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 1.1em;
+        }
+        
+        .property-image {
+            width: 100%;
+            max-width: 450px;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px auto;
+            display: block;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="class-container">
+        <header>
+            <h1>Derivadas Parciales e Implícitas</h1>
+        </header>
+
+        <div class="content-area">
+            <p class="instructions">
+                Haz clic en cada concepto para revelar el poder del cálculo en múltiples dimensiones y con funciones complejas.
+            </p>
+
+            <div class="section-divider">Sección 1: Derivadas Parciales</div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>1. El Fundamento: ¿Qué es una Derivada Parcial?</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Definición</h3>
+                    <p>Una derivada parcial mide cómo cambia una función de <strong>múltiples variables</strong> (ej. $$f(x, y)$$) cuando <strong>una sola</strong> de sus variables cambia, mientras todas las demás se mantienen <strong>constantes</strong>.</p>
+                    <div class="key-concept">
+                        <p><strong>Intuición Pedagógica (La "Rebanada"):</strong></p>
+                        <p>Imagina que $$f(x, y)$$ es un mapa de una montaña (una superficie 3D). Quieres saber qué tan inclinada está la montaña en un punto, pero... ¿en qué dirección?</p>
+                        <ul>
+                            <li>$$\frac{\partial f}{\partial x}$$ (derivada parcial con respecto a $$x$$) te da la pendiente si solo caminas en la dirección $$x$$ (Este-Oeste).</li>
+                            <li>$$\frac{\partial f}{\partial y}$$ (derivada parcial con respecto a $$y$$) te da la pendiente si solo caminas en la dirección $$y$$ (Norte-Sur).</li>
+                        </ul>
+                    </div>
+                    <h3>Ejemplo Gráfico</h3>
+                    <p>Para encontrar $$\frac{\partial f}{\partial x}$$ en un punto, "rebanamos" la superficie 3D con un plano vertical (donde $$y$$ es constante) y encontramos la pendiente de la curva 2D resultante. Es solo Cálculo I.</p>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?3d surface plot, slice" alt="Imagen de un gráfico de superficie 3D con una rebanada" class="property-image"> -->
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>2. La Regla de Oro: Notación y Cálculo</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Notación</h3>
+                    <p>Hay dos formas comunes de escribirla:</p>
+                    <div class="formula">
+                        $$ \frac{\partial f}{\partial x} \quad \text{o} \quad f_x(x, y) $$
+                    </div>
+                    <p>Ambas significan "la derivada parcial de $$f$$ con respecto a $$x$$".</p>
+                    
+                    <h3>La Regla de Oro (El "Cómo")</h3>
+                    <p>Para calcular $$\frac{\partial f}{\partial x}$$, deriva la función con respecto a $$x$$ tratando a <strong>todas las demás variables (como $$y$$, $$z$$, etc.) como si fueran números constantes</strong> (como 5 o $$\pi$$).</p>
+                    
+                    <h3>Ejemplo</h3>
+                    <p>Sea $$f(x, y) = 3x^2y^4$$.</p>
+                    <p><strong>Para $$\frac{\partial f}{\partial x}$$ ( $$y^4$$ es una constante):</strong></p>
+                    <p>Tratamos $$f$$ como $$(3y^4) \cdot x^2$$. La derivada de $$k \cdot x^2$$ es $$k \cdot 2x$$.</p>
+                    <div class="formula">
+                        $$ \frac{\partial f}{\partial x} = (3y^4) \cdot (2x) = 6xy^4 $$
+                    </div>
+                    
+                    <p><strong>Para $$\frac{\partial f}{\partial y}$$ ( $$3x^2$$ es una constante):</strong></p>
+                    <p>Tratamos $$f$$ como $$(3x^2) \cdot y^4$$. La derivada de $$k \cdot y^4$$ es $$k \cdot 4y^3$$.</p>
+                    <div class="formula">
+                        $$ \frac{\partial f}{\partial y} = (3x^2) \cdot (4y^3) = 12x^2y^3 $$
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>3. Propiedades (Suma, Producto, Cadena)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Propiedades</h3>
+                    <p>¡Buenas noticias! Como la derivación parcial es solo una derivada normal "disfrazada", <strong>TODAS las reglas de la derivada de una variable (Cálculo I) siguen funcionando</strong>.</p>
+                    
+                    <h3>Regla de Suma/Resta</h3>
+                    <div class="formula">
+                        $$ \frac{\partial}{\partial x}(f + g) = \frac{\partial f}{\partial x} + \frac{\partial g}{\partial x} $$
+                    </div>
+
+                    <h3>Regla del Producto</h3>
+                    <div class="formula">
+                        $$ \frac{\partial}{\partial x}(f \cdot g) = \frac{\partial f}{\partial x}g + f\frac{\partial g}{\partial x} $$
+                    </div>
+                    
+                    <h3>Regla del Cociente</h3>
+                    <div class="formula">
+                        $$ \frac{\partial}{\partial x}\left(\frac{f}{g}\right) = \frac{(\frac{\partial f}{\partial x})g - f(\frac{\partial g}{\partial x})}{g^2} $$
+                    </div>
+                    
+                    <h3>Regla de la Cadena</h3>
+                    <p>Si $$z = f(u)$$ y $$u = g(x, y)$$, entonces:</p>
+                    <div class="formula">
+                        $$ \frac{\partial z}{\partial x} = \frac{df}{du} \cdot \frac{\partial u}{\partial x} $$
+                    </div>
+                    
+                    <h3>Ejemplo (Producto y Cadena)</h3>
+                    <p>Sea $$h(x, y) = x^2 \sin(xy)$$. Para $$\frac{\partial h}{\partial x}$$:</p>
+                    <p>Usamos la Regla del Producto (con $$f=x^2$$ y $$g=\sin(xy)$$):</p>
+                    <div class="formula">
+                        $$ \frac{\partial h}{\partial x} = (2x)(\sin(xy)) + (x^2)(\frac{\partial}{\partial x}\sin(xy)) $$
+                    </div>
+                    <p>Para $$\frac{\partial}{\partial x}\sin(xy)$$, usamos la Regla de la Cadena (con $$u=xy$$):</p>
+                    <p>$$\cos(u) \cdot \frac{\partial u}{\partial x} = \cos(xy) \cdot (y)$$</p>
+                    <p><strong>Resultado Final:</strong></p>
+                    <div class="formula">
+                        $$ \frac{\partial h}{\partial x} = 2x\sin(xy) + x^2y\cos(xy) $$
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>4. Propiedad Avanzada: Teorema de Clairaut</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Derivadas Mixtas</h3>
+                    <p>Podemos derivar más de una vez, incluso con respecto a variables diferentes. Esto se llama una derivada parcial mixta.</p>
+                    <ul>
+                        <li>$$f_{xy} = \frac{\partial}{\partial y}\left(\frac{\partial f}{\partial x}\right)$$ (Primero con $$x$$, luego con $$y$$)</li>
+                        <li>$$f_{yx} = \frac{\partial}{\partial x}\left(\frac{\partial f}{\partial y}\right)$$ (Primero con $$y$$, luego con $$x$$)</li>
+                    </ul>
+                    
+                    <h3>El Teorema de Clairaut (Igualdad de Mixtas)</h3>
+                    <p>Si las segundas derivadas parciales son continuas, <strong>el orden de la derivación no importa</strong>.</p>
+                    <div class="formula">
+                        $$ f_{xy} = f_{yx} $$
+                    </div>
+
+                    <h3>Ejemplo</h3>
+                    <p>Usemos $$f(x, y) = 3x^2y^4$$ de antes.</p>
+                    <p>$$f_x = 6xy^4 \implies f_{xy} = \frac{\partial}{\partial y}(6xy^4) = 6x(4y^3) = 24xy^3$$</p>
+                    <p>$$f_y = 12x^2y^3 \implies f_{yx} = \frac{\partial}{\partial x}(12x^2y^3) = (12y^3)(2x) = 24xy^3$$</p>
+                    <p>¡Funcionan!</p>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?symmetry, switch path" alt="Imagen de simetría o caminos que se cruzan" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="section-divider">Sección 2: Derivación Implícita</div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>1. ¿Qué es la Derivación Implícita?</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>El Problema</h3>
+                    <p>Hasta ahora, hemos derivado funciones <strong>explícitas</strong> como $$y = x^2 + 3$$. Es fácil, $$\frac{dy}{dx} = 2x$$.</p>
+                    <p>Pero, ¿qué pasa con una ecuación <strong>implícita</strong> como $$x^2 + y^2 = 25$$? No podemos despejar $$y$$ fácilmente (obtenemos $$y = \pm \sqrt{25 - x^2}$$, lo cual es complicado).</p>
+                    <p>La derivación implícita es una <strong>técnica</strong> para encontrar $$\frac{dy}{dx}$$ sin tener que despejar $$y$$.</p>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?implicit curve graph, complex circle" alt="Imagen de una curva implícita" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>2. La Regla de Oro (Implícita)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Técnica</h3>
+                    <p>Tratamos a $$y$$ como una función que <strong>depende de $$x$$</strong> (es decir, $$y = y(x)$$). Luego, aplicamos la Regla de la Cadena cada vez que derivamos un término con $$y$$.</p>
+                    
+                    <div class="key-concept">
+                        <p><strong>El Corazón de la Técnica (Regla de la Cadena):</strong></p>
+                        <p>Derivar $$x^2$$ con respecto a $$x$$ es $$2x$$.</p>
+                        <p>Pero, ¿cómo derivamos $$y^2$$ con respecto a $$x$$?</p>
+                        <p>Pensamos $$y^2$$ como $$(y(x))^2$$. Por la Regla de la Cadena:</p>
+                        <ol>
+                            <li>Derivada de lo de afuera (la potencia 2): $$2y$$</li>
+                            <li>Multiplicado por la derivada de lo de adentro (la derivada de $$y$$): $$\frac{dy}{dx}$$</li>
+                        </ol>
+                        <p>Por lo tanto: $$\frac{d}{dx}(y^2) = 2y \cdot \frac{dy}{dx}$$</p>
+                    </div>
+                    
+                    <h3>Ejemplo (El Círculo)</h3>
+                    <p>Encontremos $$\frac{dy}{dx}$$ para $$x^2 + y^2 = 25$$.</p>
+                    <p>1. Deriva ambos lados de la ecuación con respecto a $$x$$:</p>
+                    <div class="formula">
+                        $$ \frac{d}{dx}(x^2 + y^2) = \frac{d}{dx}(25) $$
+                    </div>
+                    <p>2. Aplica la derivada a cada término:</p>
+                    <div class="formula">
+                        $$ \frac{d}{dx}(x^2) + \frac{d}{dx}(y^2) = \frac{d}{dx}(25) $$
+                        $$ 2x + 2y \cdot \frac{dy}{dx} = 0 $$
+                    </div>
+                    <p>3. Despeja $$\frac{dy}{dx}$$:</p>
+                    <div class="formula">
+                        $$ 2y \frac{dy}{dx} = -2x $$
+                        $$ \frac{dy}{dx} = \frac{-2x}{2y} = -\frac{x}{y} $$
+                    </div>
+                    <p>¡Encontramos la pendiente en cualquier punto $$(x, y)$$ del círculo sin despejar $$y$$!</p>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>3. El Puente Secreto (La Fórmula Avanzada)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Conectando los Dos Mundos</h3>
+                    <p>Aquí es donde los dos temas se unen. Hay una fórmula que usa <strong>derivadas parciales</strong> para encontrar <strong>derivadas implícitas</strong> de forma instantánea.</p>
+                    
+                    <h3>La Fórmula</h3>
+                    <p>1. Toma tu ecuación implícita (ej. $$x^2 + y^2 = 25$$) y muévelo todo a un lado para igualarlo a cero. A esto lo llamamos $$F(x, y)$$.</p>
+                    <div class="formula">
+                        $$ F(x, y) = x^2 + y^2 - 25 = 0 $$
+                    </div>
+                    <p>2. La fórmula mágica es:</p>
+                    <div class="formula">
+                        $$ \frac{dy}{dx} = - \frac{F_x}{F_y} = - \frac{\frac{\partial F}{\partial x}}{\frac{\partial F}{\partial y}} $$
+                    </div>
+
+                    <h3>Prueba (Con el Círculo)</h3>
+                    <p>$$F(x, y) = x^2 + y^2 - 25$$</p>
+                    <p>1. $$F_x$$ (derivada parcial con $$x$$, $$y$$ es constante):</p>
+                    <div class="formula">
+                        $$ F_x = 2x + 0 - 0 = 2x $$
+                    </div>
+                    <p>2. $$F_y$$ (derivada parcial con $$y$$, $$x$$ es constante):</p>
+                    <div class="formula">
+                        $$ F_y = 0 + 2y - 0 = 2y $$
+                    </div>
+                    <p>3. Aplica la fórmula:</p>
+                    <div class="formula">
+                        $$ \frac{dy}{dx} = - \frac{F_x}{F_y} = - \frac{2x}{2y} = -\frac{x}{y} $$
+                    </div>
+                    <p>¡Es exactamente el mismo resultado que obtuvimos con el método largo! Este es el poder de conectar conceptos.</p>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?bridge, connecting dots" alt="Imagen de un puente conectando" class="property-image"> -->
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script>
+        function toggleCard(headerElement) {
+            // Encuentra el contenido asociado
+            const content = headerElement.nextElementSibling;
+            // Encuentra el indicador
+            const indicator = headerElement.querySelector('.indicator');
+            
+            // Alterna la clase 'active' en el header
+            headerElement.classList.toggle('active');
+
+            // Alterna la clase 'visible' en el contenido
+            if (content.classList.contains('visible')) {
+                // Si está visible, lo ocultamos
+                content.classList.remove('visible');
+                indicator.textContent = '+';
+            } else {
+                // Si está oculto, lo mostramos
+                content.classList.add('visible');
+                indicator.textContent = '−'; // Usamos un signo 'menos'
+            }
+        }
+    </script>
+
+</body>
+</html>

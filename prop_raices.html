@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase Interactiva: Propiedades de las Raíces</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+    <style>
+        /* Estilo general del cuerpo */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f3f9;
+            color: #333;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Contenedor principal de la clase */
+        .class-container {
+            max-width: 850px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+
+        /* Encabezado */
+        header {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 30px 35px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.6em;
+            font-weight: 700;
+        }
+
+        /* Área de contenido principal */
+        .content-area {
+            padding: 25px 30px;
+        }
+
+        .instructions {
+            font-size: 1.15em;
+            text-align: center;
+            color: #555;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #6a11cb;
+            padding-bottom: 15px;
+        }
+
+        /* Tarjeta de propiedad (Acordeón) */
+        .property-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .property-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* Encabezado de la tarjeta (el botón clickeable) */
+        .card-header {
+            background-color: #f9f7ff;
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #4a00a0;
+        }
+        
+        /* Indicador de expandir/colapsar */
+        .indicator {
+            font-size: 1.6em;
+            font-weight: 300;
+            color: #6a11cb;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        /* Estilo cuando está activo */
+        .card-header.active {
+            background-color: #f0eaff;
+        }
+
+        .card-header.active .indicator {
+            transform: rotate(45deg);
+        }
+
+        /* Contenido colapsable */
+        .card-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 25px;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
+            border-top: 1px solid #e9e9e9;
+        }
+
+        .card-content.visible {
+            max-height: 2000px; /* Suficiente para contenido extenso */
+            opacity: 1;
+            padding: 20px 25px 25px 25px;
+        }
+
+        .card-content h3 {
+            color: #6a11cb;
+            margin-top: 0;
+            border-bottom: 1px solid #e0cffc;
+            padding-bottom: 5px;
+        }
+
+        /* Estilo para las fórmulas de MathJax */
+        .formula {
+            font-size: 1.3em;
+            text-align: center;
+            padding: 20px;
+            background-color: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .key-concept {
+            background-color: #f0eaff;
+            border-left: 5px solid #6a11cb;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 1.1em;
+        }
+        
+        .property-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px auto;
+            display: block;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="class-container">
+        <header>
+            <h1>Dominando las Raíces (Radicales)</h1>
+        </header>
+
+        <div class="content-area">
+            <p class="instructions">
+                Haz clic en cada propiedad para descubrirla.
+                <br><strong>El secreto:</strong> ¡Las raíces son solo exponentes disfrazados!
+            </p>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>1. El Concepto Clave: Raíz como Exponente</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La "Piedra Rosetta" de las Matemáticas</h3>
+                    <p>Esta es la idea más importante que debes aprender. Un radical (raíz) es simplemente otra forma de escribir un <strong>exponente fraccionario</strong>.</p>
+                    <p>El <strong>índice</strong> de la raíz ($$n$$) es el <strong>denominador</strong> del exponente.</p>
+                    <div class="formula">
+                        $$\sqrt[n]{a} = a^{1/n}$$
+                    </div>
+                    <p>Si el número tiene un exponente ($$m$$), ese es el numerador:</p>
+                    <div class="formula">
+                        $$\sqrt[n]{a^m} = a^{m/n}$$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Intuición:</strong> Una vez que "traduces" la raíz a su forma de exponente, ¡todas las "Leyes de los Exponentes" que ya conoces se aplican automáticamente! Las "propiedades de las raíces" no son reglas nuevas, son solo un re-descubrimiento.</p>
+                    </div>
+                    <h3>Ejemplos</h3>
+                    <div class="formula">
+                        $$ \sqrt{9} = \sqrt[2]{9^1} = 9^{1/2} = 3 $$
+                        $$ \sqrt[3]{8} = \sqrt[3]{8^1} = 8^{1/3} = 2 $$
+                        $$ \sqrt[4]{x^3} = x^{3/4} $$
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?key,lock,translate" alt="Imagen de una llave" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>2. Anatomía de un Radical</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Las Partes de una Raíz</h3>
+                    <p>Para hablar el mismo idioma, llamamos a las partes de esta forma:</p>
+                    <div class="formula">
+                        $$ \sqrt[\text{n}]{\text{a}} $$
+                    </div>
+                    <ul>
+                        <li><strong>$$a$$ (Radicando):</strong> El número o expresión *dentro* del símbolo de la raíz.</li>
+                        <li><strong>$$n$$ (Índice):</strong> El número pequeño que indica *qué tipo* de raíz es (cuadrada, cúbica, etc.). Si no se escribe, se asume que es 2 (raíz cuadrada).</li>
+                        <li><strong>$$\sqrt{\quad}$$ (Símbolo Radical):</strong> El símbolo de la operación.</li>
+                    </ul>
+                    <h3>Ejemplo</h3>
+                    <p>En $$\sqrt[3]{27}$$, el radicando es $$27$$ y el índice es $$3$$.</p>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?diagram,blueprint" alt="Imagen de un diagrama" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>3. Propiedad: Raíz de un Producto</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla (Forma Radical)</h3>
+                    <p>La raíz de una multiplicación se puede "repartir" como una multiplicación de raíces (siempre que tengan el mismo índice).</p>
+                    <div class="formula">
+                        $$\sqrt[n]{a \cdot b} = \sqrt[n]{a} \cdot \sqrt[n]{b}$$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>La Intuición (Forma Exponencial):</strong></p>
+                        <p>Simplemente estamos "traduciendo" la regla:
+                        $$\sqrt[n]{a \cdot b} = (a \cdot b)^{1/n}$$</p>
+                        <p>Y por la "Potencia de un Producto" (que ya conoces), esto es:</p>
+                        <p>$$a^{1/n} \cdot b^{1/n}$$, que "traducido" de vuelta es $$\sqrt[n]{a} \cdot \sqrt[n]{b}$$.</p>
+                    </div>
+                    <h3>Ejemplo (Para simplificar)</h3>
+                    <p>Esta es la propiedad que usamos para <strong>simplificar</strong> radicales:</p>
+                    <div class="formula">
+                        $$ \sqrt{50} = \sqrt{25 \cdot 2} = \sqrt{25} \cdot \sqrt{2} = 5\sqrt{2} $$
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?chain,links,connect" alt="Imagen de eslabones" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>4. Propiedad: Raíz de un Cociente</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla (Forma Radical)</h3>
+                    <p>La raíz de una división se puede "repartir" al numerador y al denominador.</p>
+                    <div class="formula">
+                        $$\sqrt[n]{\frac{a}{b}} = \frac{\sqrt[n]{a}}{\sqrt[n]{b}} \quad (\text{con } b \neq 0)$$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>La Intuición (Forma Exponencial):</strong></p>
+                        <p>$$\sqrt[n]{\frac{a}{b}} = \left(\frac{a}{b}\right)^{1/n}$$</p>
+                        <p>Por la "Potencia de un Cociente" (que ya conoces), esto es:</p>
+                        <p>$$\frac{a^{1/n}}{b^{1/n}}$$, que "traducido" de vuelta es $$\frac{\sqrt[n]{a}}{\sqrt[n]{b}}$$.</p>
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ \sqrt{\frac{81}{16}} = \frac{\sqrt{81}}{\sqrt{16}} = \frac{9}{4} $$
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?splitting,divide" alt="Imagen de algo dividiéndose" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>5. Propiedad: Raíz de una Raíz</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla (Forma Radical)</h3>
+                    <p>Cuando tienes una raíz dentro de otra, puedes combinarlas en una sola raíz <strong>multiplicando los índices</strong>.</p>
+                    <div class="formula">
+                        $$\sqrt[m]{\sqrt[n]{a}} = \sqrt[m \cdot n]{a}$$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>La Intuición (Forma Exponencial):</strong></p>
+                        <p>$$\sqrt[m]{\sqrt[n]{a}} = \sqrt[m]{a^{1/n}} = (a^{1/n})^{1/m}$$</p>
+                        <p>Por la "Potencia de una Potencia" (que ya conoces), multiplicamos los exponentes:</p>
+                        <p>$$a^{(1/n) \cdot (1/m)} = a^{1/(m \cdot n)}$$, que "traducido" de vuelta es $$\sqrt[m \cdot n]{a}$$.</p>
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ \sqrt[3]{\sqrt{64}} = \sqrt[3 \cdot 2]{64} = \sqrt[6]{64} = 2 $$
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?fractal,nested,zoom" alt="Imagen de un fractal" class="property-image"> -->
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>6. Propiedad: Cancelación de Raíz y Potencia</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla (Forma Radical)</h3>
+                    <p>Una raíz y una potencia con el mismo número (índice y exponente) son operaciones inversas y se "cancelan".</p>
+                    <div class="formula">
+                        $$(\sqrt[n]{a})^n = a \quad \text{y} \quad \sqrt[n]{a^n} = a$$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>La Intuición (Forma Exponencial):</strong></p>
+                        <p>$$(\sqrt[n]{a})^n = (a^{1/n})^n = a^{(1/n) \cdot n} = a^1 = a$$</p>
+                        <p>$$\sqrt[n]{a^n} = (a^n)^{1/n} = a^{n \cdot (1/n)} = a^1 = a$$</p>
+                    </div>
+                    <h3>Nota Pedagógica Importante</h3>
+                    <p>Esta regla funciona perfectamente para números positivos o si el índice $$n$$ es impar. Si $$n$$ es <strong>par</strong> y $$a$$ puede ser negativo, debemos usar el valor absoluto:</p>
+                    <p>$$\sqrt[2]{(-5)^2} = \sqrt{25} = 5$$, no $$-5$$.</p>
+                    <p>Por lo tanto, la regla precisa es: $$\sqrt[n]{a^n} = |a|$$ si $$n$$ es par.</p>
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ (\sqrt[3]{125})^3 = 125 $$
+                        $$ \sqrt[7]{x^7} = x $$
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?undo,reverse" alt="Imagen de deshacer" class="property-image"> -->
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>7. Habilidad: Introducir y Extraer Factores</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Extracción (Simplificación)</h3>
+                    <p>Usamos la "Raíz de un Producto" (Propiedad 3) para "romper" el radicando y extraer las raíces exactas.</p>
+                    <div class="formula">
+                        $$\sqrt{72} = \sqrt{36 \cdot 2} = \sqrt{36} \cdot \sqrt{2} = 6\sqrt{2}$$
+                    </div>
+                    
+                    <h3>Introducción</h3>
+                    <p>Es el proceso inverso. Usamos la "Cancelación" (Propiedad 6) para meter un factor dentro de la raíz, elevándolo al índice.</p>
+                    <div class="formula">
+                        $$ 5\sqrt{3} = \sqrt{5^2} \cdot \sqrt{3} = \sqrt{25} \cdot \sqrt{3} = \sqrt{25 \cdot 3} = \sqrt{75} $$
+                    </div>
+                    <!-- <img src="https://source.unsplash.com/random/600x300/?filter,sorting" alt="Imagen de un filtro" class="property-image"> -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleCard(headerElement) {
+            // Encuentra el contenido asociado
+            const content = headerElement.nextElementSibling;
+            // Encuentra el indicador
+            const indicator = headerElement.querySelector('.indicator');
+            
+            // Alterna la clase 'active' en el header
+            headerElement.classList.toggle('active');
+
+            // Alterna la clase 'visible' en el contenido
+            if (content.classList.contains('visible')) {
+                // Si está visible, lo ocultamos
+                content.classList.remove('visible');
+                indicator.textContent = '+';
+            } else {
+                // Si está oculto, lo mostramos
+                content.classList.add('visible');
+                indicator.textContent = '−'; // Usamos un signo 'menos'
+            }
+        }
+    </script>
+
+</body>
+</html>

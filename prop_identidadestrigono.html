@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase Interactiva: Identidades Trigonométricas</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+    <style>
+        /* Estilo general del cuerpo */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f7f9fa;
+            color: #333;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Contenedor principal de la clase */
+        .class-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+
+        /* Encabezado */
+        header {
+            /* Un color "matemático" profundo */
+            background: linear-gradient(135deg, #0d3b66, #1a535c);
+            color: white;
+            padding: 30px 35px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.6em;
+            font-weight: 700;
+        }
+
+        /* Área de contenido principal */
+        .content-area {
+            padding: 25px 30px;
+        }
+
+        .instructions {
+            font-size: 1.15em;
+            text-align: center;
+            color: #555;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #1a535c;
+            padding-bottom: 15px;
+        }
+        
+        /* Divisor de secciones (Pedagógico) */
+        .section-divider {
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #0d3b66;
+            margin: 40px 0 20px 0;
+            border-top: 2px solid #e0e0e0;
+            padding-top: 20px;
+        }
+
+        /* Tarjeta de propiedad (Acordeón) */
+        .property-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .property-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* Encabezado de la tarjeta (el botón clickeable) */
+        .card-header {
+            background-color: #f7faff;
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #0d3b66;
+        }
+        
+        .indicator {
+            font-size: 1.6em;
+            font-weight: 300;
+            color: #1a535c;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        /* Estilo cuando está activo */
+        .card-header.active {
+            background-color: #e6f0f7;
+        }
+
+        .card-header.active .indicator {
+            transform: rotate(45deg);
+        }
+
+        /* Contenido colapsable */
+        .card-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 25px;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
+            border-top: 1px solid #e9e9e9;
+        }
+
+        .card-content.visible {
+            max-height: 3000px; /* Suficiente para contenido extenso */
+            opacity: 1;
+            padding: 20px 25px 25px 25px;
+        }
+
+        .card-content h3 {
+            color: #0d3b66;
+            margin-top: 0;
+            border-bottom: 1px solid #cce2f0;
+            padding-bottom: 5px;
+        }
+
+        /* Estilo para las fórmulas de MathJax */
+        .formula {
+            font-size: 1.3em;
+            text-align: center;
+            padding: 20px;
+            background-color: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .key-concept {
+            background-color: #e6f0f7;
+            border-left: 5px solid #1a535c;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 1.1em;
+        }
+        
+        .property-image {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px auto;
+            display: block;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="class-container">
+        <header>
+            <h1>Dominando las Identidades Trigonométricas</h1>
+        </header>
+
+        <div class="content-area">
+            <p class="instructions">
+                Haz clic en cada sección para revelar la identidad, su intuición y su aplicación.
+            </p>
+
+            <div class="section-divider">Grupo 1: Los Fundamentos (Innegociables)</div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>1. Identidades Recíprocas</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Definición</h3>
+                    <p>Estas identidades definen las tres funciones "recíprocas" (cosecante, secante y cotangente) como el inverso multiplicativo (1 dividido por) de las funciones básicas (seno, coseno y tangente).</p>
+                    <div class="formula">
+                        $$ \csc(\theta) = \frac{1}{\sin(\theta)} $$
+                        $$ \sec(\theta) = \frac{1}{\cos(\theta)} $$
+                        $$ \cot(\theta) = \frac{1}{\tan(\theta)} $$
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>2. Identidades de Cociente (Razón)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Definición</h3>
+                    <p>Estas identidades definen la tangente y la cotangente como una razón (división) entre el seno y el coseno.</p>
+                    <div class="formula">
+                        $$ \tan(\theta) = \frac{\sin(\theta)}{\cos(\theta)} $$
+                        $$ \cot(\theta) = \frac{\cos(\theta)}{\sin(\theta)} $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>3. Identidades Pitagóricas (Las Más Importantes)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Identidad Maestra</h3>
+                    <p>Esta es la identidad más importante de toda la trigonometría. Todas las demás se pueden derivar de ella.</p>
+                    <div class="formula">
+                        $$ \sin^2(\theta) + \cos^2(\theta) = 1 $$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Intuición (El Círculo Unitario):</strong> Esta fórmula es simplemente el <strong>Teorema de Pitágoras ($$a^2 + b^2 = c^2$$)</strong> aplicado al círculo unitario (un círculo con radio $$c=1$$).</p>
+                        <p>En el círculo unitario, para cualquier ángulo $$\theta$$:</p>
+                        <ul>
+                            <li>La coordenada $$x$$ es $$\cos(\theta)$$.</li>
+                            <li>La coordenada $$y$$ es $$\sin(\theta)$$.</li>
+                        </ul>
+                        <p>Si dibujas el triángulo rectángulo, el cateto $$a$$ es $$x = \cos(\theta)$$ y el cateto $$b$$ es $$y = \sin(\theta)$$. Al aplicar $$a^2 + b^2 = c^2$$, obtenemos $$(\cos(\theta))^2 + (\sin(\theta))^2 = 1^2$$, que es la identidad.</p>
+                    </div>
+                    
+                    
+                    <h3>Las Dos "Hijas"</h3>
+                    <p>Si tomas la identidad maestra y la divides por $$\cos^2(\theta)$$ o $$\sin^2(\theta)$$, obtienes las otras dos identidades pitagóricas:</p>
+                    <div class="formula">
+                        $$ \tan^2(\theta) + 1 = \sec^2(\theta) $$
+                        $$ 1 + \cot^2(\theta) = \csc^2(\theta) $$
+                    </div>
+                    <p><strong>Estrategia:</strong> ¡No memorices estas dos! Solo memoriza $$\sin^2 + \cos^2 = 1$$ y aprende a derivarlas en 5 segundos.</p>
+                </div>
+            </div>
+            
+            <div class="section-divider">Grupo 2: Simetría y Desplazamiento</div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>4. Identidades Pares/Impares (Simetría)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Estas reglas describen la simetría de las gráficas de las funciones con respecto al eje Y.</p>
+                    <p><strong>Funciones Impares (Simetría de Origen):</strong> $$f(-x) = -f(x)$$</p>
+                    <div class="formula">
+                        $$ \sin(-\theta) = -\sin(\theta) $$
+                        $$ \csc(-\theta) = -\csc(\theta) $$
+                        $$ \tan(-\theta) = -\tan(\theta) $$
+                        $$ \cot(-\theta) = -\cot(\theta) $$
+                    </div>
+                    <p><strong>Funciones Pares (Simetría del Eje Y):</strong> $$f(-x) = f(x)$$</p>
+                    <div class="formula">
+                        $$ \cos(-\theta) = \cos(\theta) $$
+                        $$ \sec(-\theta) = \sec(\theta) $$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Intuición:</strong> El Coseno es la única función "padre" que es Par. Todas las demás que dependen del Seno (como la tangente) son Impares.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>5. Identidades de Co-función (Complementarias)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Describen cómo una función de un ángulo es igual a la "co-función" de su ángulo complementario (el que suma 90° o $$\pi/2$$ radianes).</p>
+                    <div class="formula">
+                        $$ \sin\left(\frac{\pi}{2} - \theta\right) = \cos(\theta) $$
+                        $$ \cos\left(\frac{\pi}{2} - \theta\right) = \sin(\theta) $$
+                        $$ \tan\left(\frac{\pi}{2} - \theta\right) = \cot(\theta) $$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Intuición:</strong> En un triángulo rectángulo, el "seno" de un ángulo agudo es el "co-seno" del *otro* ángulo agudo. El nombre "co-seno" significa literalmente "el seno del complemento".</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider">Grupo 3: Fórmulas "Quirúrgicas"</div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>6. Fórmulas de Suma y Diferencia</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>¡Cuidado! $$\sin(A+B)$$ <strong>NO</strong> es $$\sin(A) + \sin(B)$$. Estas fórmulas son la "cirugía" necesaria para sumar o restar ángulos dentro de una función trigonométrica.</p>
+                    <div class="formula">
+                        $$ \sin(A \pm B) = \sin(A)\cos(B) \pm \cos(A)\sin(B) $$
+                        $$ \cos(A \pm B) = \cos(A)\cos(B) \mp \sin(A)\sin(B) $$
+                        <p>(Nota el cambio de signo en el Coseno)</p>
+                        $$ \tan(A \pm B) = \frac{\tan(A) \pm \tan(B)}{1 \mp \tan(A)\tan(B)} $$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Aplicación:</strong> Estas son cruciales en Cálculo para derivar las funciones trigonométricas y en física para analizar la interferencia de ondas.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>7. Fórmulas de Ángulo Doble</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Estas fórmulas <strong>son un caso especial</strong> de las Fórmulas de Suma. Se obtienen simplemente haciendo $$A=B$$ (ej. $$\sin(2A) = \sin(A+A)$$).</p>
+                    <div class="formula">
+                        $$ \sin(2A) = 2\sin(A)\cos(A) $$
+                        $$ \cos(2A) = \cos^2(A) - \sin^2(A) $$
+                        $$ \tan(2A) = \frac{2\tan(A)}{1 - \tan^2(A)} $$
+                    </div>
+                    <h3>Las 3 Formas del Coseno</h3>
+                    <p>La fórmula de $$\cos(2A)$$ es la más poderosa. Usando la identidad pitagórica ($$\sin^2 + \cos^2 = 1$$), podemos reescribirla de dos maneras más, que son <strong>vitales</strong> para Cálculo:</p>
+                    <div class="formula">
+                        $$ \cos(2A) = 2\cos^2(A) - 1 $$
+                        $$ \cos(2A) = 1 - 2\sin^2(A) $$
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>8. Fórmulas de Reducción de Potencia</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Estas fórmulas son la clave para integrar en Cálculo. Toman un término al cuadrado (difícil de integrar) y lo convierten en un término de ángulo doble (fácil de integrar).</p>
+                    <p>Simplemente son las "3 Formas del Coseno" (de arriba) reordenadas para despejar $$\sin^2(A)$$ o $$\cos^2(A)$$.</p>
+                    <div class="formula">
+                        $$ \sin^2(A) = \frac{1 - \cos(2A)}{2} $$
+                        $$ \cos^2(A) = \frac{1 + \cos(2A)}{2} $$
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>9. Fórmulas de Ángulo Medio</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Estas son, otra vez, las Fórmulas de Reducción de Potencia pero "disfrazadas". Si en $$\sin^2(A) = \frac{1 - \cos(2A)}{2}$$ reemplazamos $$A$$ por $$\frac{\theta}{2}$$, obtenemos:</p>
+                    <div class="formula">
+                        $$ \sin\left(\frac{\theta}{2}\right) = \pm\sqrt{\frac{1 - \cos(\theta)}{2}} $$
+                        $$ \cos\left(\frac{\theta}{2}\right) = \pm\sqrt{\frac{1 + \cos(\theta)}{2}} $$
+                    </div>
+                    <p>El signo $$\pm$$ depende del cuadrante en el que se encuentre $$\frac{\theta}{2}$$.</p>
+                </div>
+            </div>
+
+            <div class="section-divider">Grupo 4: Fórmulas de Transformación</div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>10. Fórmulas de Producto a Suma</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>Usadas en procesamiento de señales y física (análisis de "batidos" o pulsos). Toman un producto de ondas y lo convierten en una suma.</p>
+                    <div class="formula">
+                        $$ \sin(A)\cos(B) = \frac{1}{2}[\sin(A+B) + \sin(A-B)] $$
+                        $$ \cos(A)\cos(B) = \frac{1}{2}[\cos(A+B) + \cos(A-B)] $$
+                        $$ \sin(A)\sin(B) = \frac{1}{2}[\cos(A-B) - \cos(A+B)] $$
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>11. Fórmulas de Suma a Producto</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Regla</h3>
+                    <p>El inverso de las anteriores. Toman una suma de ondas (interferencia) y la convierten en un producto (una onda "portadora" modulada).</p>
+                    <div class="formula">
+                        $$ \sin(A) + \sin(B) = 2\sin\left(\frac{A+B}{2}\right)\cos\left(\frac{A-B}{2}\right) $$
+                        $$ \sin(A) - \sin(B) = 2\cos\left(\frac{A+B}{2}\right)\sin\left(\frac{A-B}{2}\right) $$
+                        $$ \cos(A) + \cos(B) = 2\cos\left(\frac{A+B}{2}\right)\cos\left(\frac{A-B}{2}\right) $$
+                        $$ \cos(A) - \cos(B) = -2\sin\left(\frac{A+B}{2}\right)\sin\left(\frac{A-B}{2}\right) $$
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleCard(headerElement) {
+            // Encuentra el contenido asociado
+            const content = headerElement.nextElementSibling;
+            // Encuentra el indicador
+            const indicator = headerElement.querySelector('.indicator');
+            
+            // Alterna la clase 'active' en el header
+            headerElement.classList.toggle('active');
+
+            // Alterna la clase 'visible' en el contenido
+            if (content.classList.contains('visible')) {
+                // Si está visible, lo ocultamos
+                content.classList.remove('visible');
+                indicator.textContent = '+';
+            } else {
+                // Si está oculto, lo mostramos
+                content.classList.add('visible');
+                indicator.textContent = '−'; // Usamos un signo 'menos'
+            }
+        }
+    </script>
+
+</body>
+html	>
