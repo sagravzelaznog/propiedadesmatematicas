@@ -424,12 +424,12 @@ footer {
 /* Responsive Design */
 @media (max-width: 992px) {
     .container, .class-container {
-        margin: 15px;
+        margin: 10px;
         border-radius: 8px;
     }
     
     header h1 {
-        font-size: 2em;
+        font-size: 1.5em;
     }
     
     .content-wrapper, .content-area {
@@ -489,7 +489,7 @@ footer {
     }
     
     .content-wrapper, .content-area {
-        padding: 5px;
+        padding: 2px;
     }
     
     .sidebar {
@@ -503,11 +503,13 @@ footer {
     
     .formula {
         font-size: 0.7em;
-        padding: 5px;
+        padding: 2px;
+        display: flex;
     }
     
     .instructions {
         font-size: 0.7em;
+        display: flex;
     }
 }
 
