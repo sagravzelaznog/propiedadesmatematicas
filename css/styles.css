@@ -303,7 +303,7 @@ header h1 {
 .formula {
     font-size: .8em;
     text-align: center;
-    display: inline-flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     padding: 2px;
