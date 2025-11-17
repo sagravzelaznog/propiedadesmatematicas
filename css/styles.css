@@ -301,14 +301,13 @@ header h1 {
 
 /* Fórmulas matemáticas */
 .formula {
-    font-size: 1em;
+    font-size: .8em;
     text-align: center;
-    display: flex;
-    content: "flex";
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-    padding: 15px;
-    margin: 15px 0;
+    padding: 2px;
+    margin: 2px 0;
     background-color: #f8f9fa;
     border-left: 4px solid var(--accent-color);
     border-radius: 0 4px 4px 0;
