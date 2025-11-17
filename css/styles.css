@@ -304,6 +304,7 @@ header h1 {
     font-size: 1em;
     text-align: center;
     display: flex;
+    content: "flex";
     justify-content: center;
     align-items: center;
     padding: 15px;
