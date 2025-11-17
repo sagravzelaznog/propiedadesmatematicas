@@ -301,18 +301,35 @@ header h1 {
 
 /* Fórmulas matemáticas */
 .formula {
-    font-size: .8em;
+    font-size: 0.9em;
     text-align: left;
     display: block;
-    padding: 10px 15px;
-    margin: 5px 0;
+    padding: 12px 15px;
+    margin: 8px 0;
     background-color: #f8f9fa;
     border-left: 4px solid var(--accent-color);
     border-radius: 0 4px 4px 0;
-    word-wrap: break-word;
-    white-space: normal;
+    word-break: break-word;
+    white-space: pre-wrap;
     overflow-wrap: break-word;
-    line-height: 1.6;
+    line-height: 1.8;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 768px) {
+    .formula {
+        font-size: 0.85em;
+        padding: 10px 12px;
+        line-height: 1.7;
+    }
+    
+    /* Asegurar que los elementos en línea dentro de las fórmulas se ajusten */
+    .formula span, .formula code, .formula var {
+        display: inline-block;
+        max-width: 100%;
+    }
 }
 
 /* Ejemplos y demostraciones */
