@@ -330,6 +330,7 @@ header h1 {
     text-align: center;
     margin: 0 !important;
     padding: 0 !important;
+    overflow: auto;
 }
 
 /* Ajustes para dispositivos móviles */
@@ -339,26 +340,29 @@ header h1 {
         padding: 10px 8px !important;
         margin: 8px 0 !important;
         text-align: center;
+        overflow: auto;
     }
     
     /* Asegurar que los contenedores de MathJax sean responsivos */
     .formula mjx-container {
-        max-width: 100% !important;
+        max-width: 80% !important;
         overflow-x: auto !important;
         display: block !important;
+        overflow: auto;
     }
     
     /* Ajustar el tamaño de las fórmulas en móviles */
     .formula .mjx-chtml {
         font-size: 1em !important;
-        max-width: 100% !important;
-        overflow-x: auto !important;
+        max-width: 80% !important;
+        overflow: auto !important;
     }
     
     /* Asegurar que las fórmulas no se salgan del contenedor */
     .formula mjx-container > svg {
-        max-width: 100% !important;
+        max-width: 80% !important;
         height: auto !important;
+        overflow: auto !important;
     }
 }
 
