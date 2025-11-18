@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase Interactiva: Propiedades de los Binomios</title>
+    
+    <!-- MathJax para fórmulas matemáticas -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+    
+    <!-- Fuente Roboto de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Estilos específicos para esta página -->
+    <style>
+        /* Estilos específicos para esta página */
+        .formula {
+            font-size: 1em;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #0056b3;
+            margin: 15px 0;
+            overflow: auto;
+        }
+        
+        .card-content h3 {
+            color: #004a99;
+            margin-top: 0;
+            border-bottom: 1px solid #cce5ff;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+	  <!-- Sidebar Navigation -->
+		<div class="sidebar">
+			<div class="sidebar-header">
+							<button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+							<a href="index.html" class="sidebar-title">Matemáticas</a>
+			</div>
+			<nav class="sidebar-nav">
+							<a href="prop_suma.html"><i>+</i> Propiedad de la Suma</a>
+							<a href="prop_resta.html"><i>-</i> Propiedad de la Resta</a>
+							<a href="prop_multiplicacion.html"><i>×</i> Propiedad Multiplicativa</a>
+							<a href="prop_division.html"><i>÷</i> Propiedad de la División</a>
+							<a href="prop_potencia.html"><i>x²</i> Propiedad de la Potencia</a>
+							<a href="prop_raices.html"><i>√</i> Propiedad de la Raíz</a>
+							<a href="prop_igualdad.html"><i>=</i> Propiedad de la Igualdad</a>
+							<a href="prop_teoremas.html"><i>📚</i> Teoremas Fundamentales</a>
+							<a href="prop_derivada.html"><i>d/dx</i> Propiedades de la Derivada</a>
+							<a href="prop_integral.html"><i>∫</i> Propiedades de la Integral</a>
+			</nav>
+</div>
+
+<div class="content-wrapper">
+			<div class="class-container">
+							<header>
+											<h1>Dominando las Propiedades de los Binomios</h1>
+											<div class="back-to-home">
+															<a href="index.html" class="btn-back">
+																			<span class="material-icons-round">home</span>
+																			Inicio
+															</a>
+											</div>
+							</header>
+
+        <div class="content-area">
+            <p class="instructions">
+                Un <strong>binomio</strong> es una expresión algebraica con dos términos ($a+b$). Sus "propiedades" son los patrones que emergen al multiplicarlos (Productos Notables).
+                <br>Haz clic en cada sección para revelar los "atajos" del álgebra.
+            </p>
+
+            <div class="section-divider">Grupo 1: Patrones de Grado 2</div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>1. Binomio al Cuadrado (Suma)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Fórmula</h3>
+                    <div class="formula">
+                        $$ (a+b)^2 = a^2 + 2ab + b^2 $$
+                    </div>
+                    <p><strong>La Mnemotecnia:</strong> "El cuadrado del primero, MÁS el doble producto del primero por el segundo, MÁS el cuadrado del segundo."</p>
+                    
+                    <h3>Intuición Geométrica (El "Por Qué")</h3>
+                    <p>Esta es la propiedad más importante. No es una regla mágica, es la fórmula para el <strong>área de un cuadrado</strong> cuyo lado mide $(a+b)$.</p>
+                    <p>Imagina ese cuadrado. Puedes dividirlo en 4 piezas:</p>
+                    <ul>
+                        <li>Un cuadrado grande de área $a^2$</li>
+                        <li>Un cuadrado pequeño de área $b^2$</li>
+                        <li>Dos rectángulos, cada uno de área $a \cdot b$</li>
+                    </ul>
+                    <p>El área total es la suma de las piezas: $a^2 + b^2 + 2ab$.</p>
+                    
+                    
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ (x+3)^2 = (x)^2 + 2(x)(3) + (3)^2 = x^2 + 6x + 9 $$
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>2. Binomio al Cuadrado (Resta)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Fórmula</h3>
+                    <div class="formula">
+                        $$ (a-b)^2 = a^2 - 2ab + b^2 $$
+                    </div>
+                    <p><strong>La Mnemotecnia:</strong> "El cuadrado del primero, *MENOS* el doble producto del primero por el segundo, MÁS el cuadrado del segundo."</p>
+                    
+                    <div class="key-concept">
+                        <p><strong>Intuición:</strong> Nota que el $b^2$ sigue siendo <strong>positivo</strong>, porque $(-b) \cdot (-b) = +b^2$. Este es el error más común. Es la misma regla que la suma, pero tratando el segundo término como $(-b)$.</p>
+                        <p>$(a + (-b))^2 = a^2 + 2(a)(-b) + (-b)^2 = a^2 - 2ab + b^2$.</p>
+                    </div>
+
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ (2x - 5)^2 = (2x)^2 - 2(2x)(5) + (5)^2 = 4x^2 - 20x + 25 $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>3. Binomios Conjugados (Diferencia de Cuadrados)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Fórmula</h3>
+                    <p>Dos binomios son "conjugados" si son idénticos excepto por el signo del medio ($a+b$ y $a-b$).</p>
+                    <div class="formula">
+                        $$ (a+b)(a-b) = a^2 - b^2 $$
+                    </div>
+                    <p><strong>La Mnemotecnia:</strong> "El cuadrado del primero MENOS el cuadrado del segundo."</p>
+                    
+                    <div class="key-concept">
+                        <p><strong>Intuición (El Término Medio Desaparece):</strong> ¿Por qué no hay término medio? Cuando aplicas la propiedad distributiva (FOIL), los términos medios se cancelan perfectamente:</p>
+                        <p>$(a+b)(a-b) = a \cdot a - a \cdot b + b \cdot a - b \cdot b$</p>
+                        <p>$= a^2 - ab + ab - b^2 = a^2 - b^2$</p>
+                    </div>
+
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ (3y + 4)(3y - 4) = (3y)^2 - (4)^2 = 9y^2 - 16 $$
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>4. Binomios con Término Común</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Fórmula</h3>
+                    <div class="formula">
+                        $$ (x+a)(x+b) = x^2 + (a+b)x + ab $$
+                    </div>
+                    <p><strong>La Mnemotecnia:</strong> "El término común al cuadrado ($x^2$), MÁS la <strong>suma</strong> de los no comunes ($a+b$) multiplicada por el común ($x$), MÁS el <strong>producto</strong> de los no comunes ($ab$)."</p>
+                    
+                    <div class="key-concept">
+                        <p><strong>Conexión Pedagógica:</strong> Esta es la "Regla General" de la que el Binomio al Cuadrado es un caso especial. Si $a = b$, entonces:</p>
+                        <p>$(x+a)(x+a) = x^2 + (a+a)x + (a \cdot a) = x^2 + 2ax + a^2$. ¡Funciona!</p>
+                        <p>Esta es la habilidad clave para aprender a **factorizar** trinomios.</p>
+                    </div>
+
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ (x+6)(x-4) = x^2 + (6 + (-4))x + (6)(-4) = x^2 + 2x - 24 $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider">Grupo 2: Patrones de Grado 3</div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>5. Binomio al Cubo (Suma)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Fórmula</h3>
+                    <div class="formula">
+                        $$ (a+b)^3 = a^3 + 3a^2b + 3ab^2 + b^3 $$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Intuición (Triángulo de Pascal):</strong> Los coeficientes (los números al frente) no son aleatorios. Siguen el Triángulo de Pascal:</p>
+                        <p>$(a+b)^0 \implies 1$</p>
+                        <p>$(a+b)^1 \implies 1 \quad 1$</p>
+                        <p>$(a+b)^2 \implies 1 \quad 2 \quad 1$</p>
+                        <p>$(a+b)^3 \implies \mathbf{1 \quad 3 \quad 3 \quad 1}$</p>
+                        <p>Nota cómo las potencias de $a$ bajan ($a^3, a^2, a^1, a^0$) mientras las de $b$ suben ($b^0, b^1, b^2, b^3$).</p>
+                    </div>
+                    
+
+[Image of Pascal's triangle]
+
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ (x+2)^3 = (x)^3 + 3(x)^2(2) + 3(x)(2)^2 + (2)^3 $$
+                        $$ = x^3 + 6x^2 + 12x + 8 $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>6. Binomio al Cubo (Resta)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Fórmula</h3>
+                    <div class="formula">
+                        $$ (a-b)^3 = a^3 - 3a^2b + 3ab^2 - b^3 $$
+                    </div>
+                    <div class="key-concept">
+                        <p><strong>Intuición:</strong> Es la misma fórmula que la suma, pero como $b$ es negativo, los signos se <strong>alternan</strong>: ($+, -, +, -$).</p>
+                        <p>Esto sucede porque $(-b)^1 = -b$, $(-b)^2 = +b^2$, y $(-b)^3 = -b^3$.</p>
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <div class="formula">
+                        $$ (x-1)^3 = (x)^3 - 3(x)^2(1) + 3(x)(1)^2 - (1)^3 $$
+                        $$ = x^3 - 3x^2 + 3x - 1 $$
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider">Grupo 3: La Regla Maestra (Generalización)</div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <span>7. El Teorema del Binomio (Caso General)</span>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Fórmula Maestra</h3>
+                    <p>¿Qué pasa si quieres expandir $(a+b)^7$ sin multiplicar a mano siete veces? Para eso usamos el Teorema del Binomio, que generaliza todos los patrones anteriores.</p>
+                    <div class="formula">
+                        $$ (a+b)^n = \sum_{k=0}^n \binom{n}{k} a^{n-k} b^k $$
+                    </div>
+                    <h3>Desglose</h3>
+                    <ul>
+                        <li>$\sum$ (Sigma) significa "sumar" todos los términos.</li>
+                        <li>$n$ es la potencia a la que elevas el binomio (ej. 7).</li>
+                        <li>$k$ es un contador que va de $0$ hasta $n$.</li>
+                        <li>$\binom{n}{k}$ es el <strong>coeficiente binomial</strong>. Es el número "n sobre k" que se encuentra en el Triángulo de Pascal. Se calcula como $\frac{n!}{k!(n-k)!}$.</li>
+                        <li>$a^{n-k} b^k$ es la parte de la variable. Nota cómo las potencias siempre suman $n$: $(n-k) + k = n$.</li>
+                    </ul>
+                    <div class="key-concept">
+                        <p><strong>Andragogía:</strong> No necesitas usar esta fórmula compleja para $n=2$ o $n=3$ (para eso son los atajos), pero es crucial entender que esos atajos no son magia: son solo los casos más simples de esta única y poderosa regla universal.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleCard(headerElement) {
+            // Encuentra el contenido asociado
+            const content = headerElement.nextElementSibling;
+            // Encuentra el indicador
+            const indicator = headerElement.querySelector('.indicator');
+            
+            // Alterna la clase 'active' en el header
+            headerElement.classList.toggle('active');
+
+            // Alterna la clase 'visible' en el contenido
+            if (content.classList.contains('visible')) {
+                // Si está visible, lo ocultamos
+                content.classList.remove('visible');
+                indicator.textContent = '+';
+            } else {
+                // Si está oculto, lo mostramos
+                content.classList.add('visible');
+                indicator.textContent = '−'; // Usamos un signo 'menos'
+            }
+        }
+    </script>
+
+</body>
+</html>
