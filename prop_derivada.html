@@ -76,23 +76,44 @@
                 <!-- Contenido existente de las tarjetas de propiedades de derivadas -->
                 <div class="property-card">
                     <div class="card-header" onclick="toggleCard(this)">
-                        <span>1. Regla de la Constante</span>
+                        <span>1. El Fundamento: La Definición (Límite)</span>
                         <span class="indicator">+</span>
                     </div>
                     <div class="card-content">
-                        <h3>Definición</h3>
-                        <p>La derivada de una función constante es cero.</p>
-                        
-                        <h3>Fórmula</h3>
+                        <h3>¿Qué es una Derivada?</h3>
+                        <p>Todas las reglas que siguen son "atajos" elegantes que provienen de esta única idea fundamental. La derivada $f'(x)$ de una función $f(x)$ es la <strong>pendiente de la línea tangente</strong> en el punto $x$.</p>
                         <div class="formula">
-                            $$\frac{d}{dx}(c) = 0$$
+                            $$ f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h} $$
                         </div>
-                        
+                        <div class="intuition">
+                            <p><strong>Intuición:</strong> Mide la <strong>tasa de cambio instantánea</strong>. Si $f(x)$ es tu posición, $f'(x)$ es tu velocidad exacta en ese instante.</p>
+                        </div>
+                        <h3>Ejemplo Gráfico</h3>
+                        <p>Imagina una curva. La derivada en un punto es la pendiente de la línea recta que "roza" la curva en ese único punto.</p>
+                        <!-- <img src="https://source.unsplash.com/random/600x300/?graph,tangent line" alt="Imagen de una línea tangente en una gráfica" class="property-image"> -->
+                    </div>
+                </div>
+    
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>2. Regla de la Constante</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>La Regla</h3>
+                        <p>La derivada de cualquier función constante $c$ es <strong>cero</strong>.</p>
+                        <div class="formula">
+                            $$ \frac{d}{dx}(c) = 0 $$
+                        </div>
+                        <div class="intuition">
+                            <p><strong>Intuición Pedagógica:</strong> Una función constante como $f(x)=5$ es una <strong>línea perfectamente horizontal</strong>. Su "tasa de cambio" (pendiente) es cero. No sube ni baja.</p>
+                        </div>
                         <h3>Ejemplo</h3>
-                        <p>Si f(x) = 5, entonces:</p>
                         <div class="formula">
-                            $$f'(x) = 0$$
+                            $$ f(x) = 17 \implies f'(x) = 0 $$
+                            $$ \frac{d}{dx}(2\pi) = 0 $$
                         </div>
+                        <!-- <img src="https://source.unsplash.com/random/600x300/?flat horizon,water level" alt="Imagen de un horizonte plano" class="property-image"> -->
                     </div>
                 </div>
                 <div class="property-card">
