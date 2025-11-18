@@ -95,7 +95,150 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>3. Regla de la Potencia</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>La Regla</h3>
+                        <p>La "bestia de carga" del cálculo. Para derivar $x^n$, "bajas" el exponente para que sea un coeficiente y le restas 1 al exponente.</p>
+                        <div class="formula">
+                            $$ \frac{d}{dx}(x^n) = n \cdot x^{n-1} $$
+                        </div>
+                        <div class="intuition">
+                            <p><strong>Intuición:</strong> Esta regla es el motor para derivar todos los polinomios. Funciona para cualquier $n$ (entero, fracción, negativo).</p>
+                        </div>
+                        <h3>Ejemplo</h3>
+                        <div class="formula">
+                            $$ \frac{d}{dx}(x^3) = 3x^{3-1} = 3x^2 $$
+                            $$ \frac{d}{dx}(\sqrt{x}) = \frac{d}{dx}(x^{1/2}) = \frac{1}{2}x^{-1/2} = \frac{1}{2\sqrt{x}} $$
+                        </div>
+                        <img src="https://source.unsplash.com/random/600x300/?engine,gears" alt="Imagen de engranajes" class="property-image">
+                    </div>
+                </div>
+                
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>4. Regla del Múltiplo Constante</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>La Regla</h3>
+                        <p>Las constantes que multiplican a una función "sobreviven" a la derivada. Simplemente se quedan esperando fuera.</p>
+                        <div class="formula">
+                            $$ \frac{d}{dx}(c \cdot f(x)) = c \cdot f'(x) $$
+                        </div>
+                        <div class="intuition">
+                            <p><strong>Intuición Andragógica:</strong> Si $f(x)$ es una curva, $5f(x)$ es la misma curva "estirada" 5 veces más alta. Por lo tanto, en cada punto, su pendiente también es 5 veces más pronunciada.</p>
+                        </div>
+                        <h3>Ejemplo</h3>
+                        <div class="formula">
+                            $$ \frac{d}{dx}(7x^3) = 7 \cdot \frac{d}{dx}(x^3) = 7 \cdot (3x^2) = 21x^2 $$
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>5. Regla de la Suma y Resta</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>La Regla</h3>
+                        <p>La derivada es un operador <strong>lineal</strong>. Esto significa que la derivada de una suma es simplemente la suma de las derivadas.</p>
+                        <div class="formula">
+                            $$ \frac{d}{dx}(f(x) \pm g(x)) = f'(x) \pm g'(x) $$
+                        </div>
+                        <div class="intuition">
+                            <p><strong>Intuición:</strong> Si tu tasa de ingreso total es la suma de dos trabajos ($f(x) + g(x)$), entonces la tasa a la que *cambia* tu ingreso ($ (f+g)' $) es la suma de las tasas de cambio de cada trabajo ($f' + g'$).</p>
+                        </div>
+                        <h3>Ejemplo</h3>
+                        <p>Esta regla, junto con la de la Potencia, nos permite derivar cualquier polinomio.</p>
+                        <div class="formula">
+                            $$ \frac{d}{dx}(x^2 + 5x - 3) = \frac{d}{dx}(x^2) + \frac{d}{dx}(5x) - \frac{d}{dx}(3) $$
+                            $$ = (2x) + (5) - (0) = 2x + 5 $$
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>6. Regla del Producto</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>La Regla</h3>
+                        <p>¡Cuidado! <strong>No</strong> es $f' \cdot g'$. Es "la derivada del primero por el segundo sin derivar, más el primero sin derivar por la derivada del segundo".</p>
+                        <div class="formula">
+                            $$ \frac{d}{dx}(f(x)g(x)) = f'(x)g(x) + f(x)g'(x) $$
+                        </div>
+                        <div class="intuition">
+                            <p><strong>Analogía del Rectángulo Creciente:</strong> Imagina un rectángulo con lados $f$ y $g$. Su área es $A = f \cdot g$. Si ambos lados están creciendo, ¿qué tan rápido crece el área?</p>
+                            <ul>
+                                <li>El área crece por $f'$ (el cambio del primer lado) multiplicado por $g$ (el segundo lado).</li>
+                                <li><strong>MÁS</strong> el área que crece por $g'$ (el cambio del segundo lado) multiplicado por $f$ (el primer lado).</li>
+                            </ul>
+                        </div>
+                        <h3>Ejemplo</h3>
+                        <div class="formula">
+                            $$ \frac{d}{dx}(x^2 \cdot \sin(x)) = (2x)(\sin(x)) + (x^2)(\cos(x)) $$
+                        </div>
+                        <img src="https://source.unsplash.com/random/600x300/?rectangle,area,growth" alt="Imagen de un área rectangular" class="property-image">
+                    </div>
+                </div>
+    
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>7. Regla del Cociente</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>La Regla</h3>
+                        <p>Una de las más complejas. La mnemotecnia es: "El de abajo por la derivada del de arriba, MENOS el de arriba por la derivada del de abajo, TODO sobre el de abajo al cuadrado".</p>
+                        <div class="formula">
+                            $$ \frac{d}{dx}\left(\frac{f(x)}{g(x)}\right) = \frac{f'(x)g(x) - f(x)g'(x)}{[g(x)]^2} $$
+                        </div>
+                        <div class="intuition">
+                            <p><strong>Dato Clave:</strong> Esta regla es en realidad una combinación de la Regla del Producto y la Regla de la Cadena (derivando $f \cdot g^{-1}$). El signo negativo aparece porque la derivada de $g^{-1}$ introduce un signo menos.</p>
+                        </div>
+                        <h3>Ejemplo</h3>
+                        <div class="formula">
+                            $$ \frac{d}{dx}\left(\frac{x}{\cos(x)}\right) = \frac{(1)(\cos(x)) - (x)(-\sin(x))}{[\cos(x)]^2} $$
+                            $$ = \frac{\cos(x) + x\sin(x)}{\cos^2(x)} $$
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="property-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <span>8. Regla de la Cadena (La Más Importante)</span>
+                        <span class="indicator">+</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>La Regla</h3>
+                        <p>Se usa para derivar <strong>funciones compuestas</strong> (una función "dentro" de otra). Es la regla más poderosa de todas.</p>
+                        <div class="formula">
+                            $$ \frac{d}{dx}(f(g(x))) = f'(g(x)) \cdot g'(x) $$
+                        </div>
+                        <div class="intuition">
+                            <p><strong>Analogía de las Muñecas Rusas (Matryoshka):</strong></p>
+                            <ol>
+                                <li>Derivas la función "de afuera" ( $f'$ ), pero dejas la función "de adentro" ($g(x)$) intacta.</li>
+                                <li>Luego, <strong>multiplicas</strong> todo por la derivada de la función "de adentro" ($g'$).</li>
+                            </ol>
+                            <p>Es como pelar una cebolla, capa por capa, de afuera hacia adentro.</p>
+                        </div>
+                        <h3>Ejemplo</h3>
+                        <p>Para derivar $\sin(x^3)$:</p>
+                        <p>Función de afuera: $\sin(u)$ (cuya derivada es $\cos(u)$)</p>
+                        <p>Función de adentro: $u = x^3$ (cuya derivada es $3x^2$)</p>
+                        <div class="formula">
+                            $$ \frac{d}{dx}(\sin(x^3)) = \underbrace{\cos(x^3)}_{\text{Derivada de la de afuera}} \cdot \underbrace{(3x^2)}_{\text{Derivada de la de adentro}} $$
+                        </div>
+                        <img src="https://source.unsplash.com/random/600x300/?nested dolls,chain links" alt="Imagen de muñecas rusas anidadas" class="property-image">
+                    </div>
+                </div>
                 <!-- Más tarjetas de propiedades de derivadas... -->
                 
             </div>
