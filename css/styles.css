@@ -574,7 +574,15 @@ footer {
         display: flex;
         overflow: auto;
     }
-    
+    div.formula {
+        font-size: 0.7em;
+        padding: 2px;
+        margin: 2px;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+        border-left: 4px solid var(--accent-color);
+        overflow: auto;
+    }
     .instructions {
         font-size: 0.7em;
         display: flex;
