@@ -86,7 +86,7 @@
                 </div>
                 <div class="card-content">
                     <h3>Definición Formal</h3>
-                    <p>Un número primo $p$ es un número natural <strong>mayor que 1</strong> ($p > 1$) que tiene <strong>exactamente dos divisores</strong> positivos: el 1 y él mismo ($p$).</p>
+                    <p>Un número primo $$p$$ es un número natural <strong>mayor que 1</strong> ($$p > 1$$) que tiene <strong>exactamente dos divisores</strong> positivos: el 1 y él mismo ($$p$$).</p>
                     <p>Cualquier número natural mayor que 1 que no es primo, se llama <strong>número compuesto</strong>.</p>
                     <h3>Ejemplos</h3>
                     <ul>
@@ -95,7 +95,7 @@
                         <li><strong>11 es primo:</strong> Sus únicos divisores son 1 y 11.</li>
                         <li><strong>9 es compuesto:</strong> Sus divisores son 1, 3, y 9.</li>
                     </ul>
-                    <p>Los primeros números primos son: $2, 3, 5, 7, 11, 13, 17, 19, 23, \dots$</p>
+                    <p>Los primeros números primos son: $$2, 3, 5, 7, 11, 13, 17, 19, 23, \dots$$</p>
                 </div>
             </div>
 
@@ -112,11 +112,11 @@
                     <h3>El Pilar de la Criptografía Moderna</h3>
                     <p>La seguridad de tus tarjetas de crédito, tus mensajes de WhatsApp y todas las transacciones seguras en internet se basa en un hecho sobre los números primos:</p>
                     <div class="key-concept">
-                        <p><strong>Hecho Clave (RSA):</strong> Es <strong>muy fácil</strong> tomar dos números primos gigantes ( $p$ y $q$ ) y multiplicarlos para obtener un número compuesto enorme $N$.</p>
+                        <p><strong>Hecho Clave (RSA):</strong> Es <strong>muy fácil</strong> tomar dos números primos gigantes ( $$p$$ y $$q$$ ) y multiplicarlos para obtener un número compuesto enorme $$N$$.</p>
                         <p>$$ p \cdot q = N \quad (\text{Fácil})$$</p>
-                        <p>Pero es <strong>computacionalmente imposible</strong> (tomaría a las supercomputadoras actuales miles de años) tomar ese número $N$ y encontrar los factores $p$ y $q$ originales.</p>
+                        <p>Pero es <strong>computacionalmente imposible</strong> (tomaría a las supercomputadoras actuales miles de años) tomar ese número $$N$$ y encontrar los factores $$p$$ y $$q$$ originales.</p>
                         <p>$$ N = ? \cdot ? \quad (\text{Imposible})$$</p>
-                        <p>Tu "llave pública" es $N$, y tu "llave privada" (que solo tú conoces) son $p$ y $q$.</p>
+                        <p>Tu "llave pública" es $$N$$, y tu "llave privada" (que solo tú conoces) son $$p$$ y $$q$$.</p>
                     </div>
                 </div>
             </div>
@@ -130,12 +130,12 @@
                     <h3>La "Piedra Rosetta" de los Números</h3>
                     <p>Este es el teorema más importante sobre los números primos. Afirma que todo número natural mayor que 1 tiene una y solo una "receta" de números primos.</p>
                     <div class="formula">
-                        Todo $n > 1$ es primo o puede escribirse de forma <strong>única</strong> como un producto de números primos.
+                        Todo $$n > 1$$ es primo o puede escribirse de forma <strong>única</strong> como un producto de números primos.
                     </div>
                     <h3>Ejemplo: La "Receta" del 360</h3>
                     <p>No importa cómo empieces a factorizar el 360, siempre terminarás con la misma lista de "átomos" primos:</p>
-                    <p>$360 = 36 \cdot 10 = (6 \cdot 6) \cdot (2 \cdot 5) = (2 \cdot 3) \cdot (2 \cdot 3) \cdot (2 \cdot 5)$</p>
-                    <p>$360 = 30 \cdot 12 = (3 \cdot 10) \cdot (3 \cdot 4) = (3 \cdot 2 \cdot 5) \cdot (3 \cdot 2 \cdot 2)$</p>
+                    <p>$$360 = 36 \cdot 10 = (6 \cdot 6) \cdot (2 \cdot 5) = (2 \cdot 3) \cdot (2 \cdot 3) \cdot (2 \cdot 5)$$</p>
+                    <p>$$360 = 30 \cdot 12 = (3 \cdot 10) \cdot (3 \cdot 4) = (3 \cdot 2 \cdot 5) \cdot (3 \cdot 2 \cdot 2)$$</p>
                     <p>En ambos casos, la "receta" única, una vez ordenada, es:</p>
                     <div class="formula">
                         $$ 360 = 2^3 \cdot 3^2 \cdot 5^1 $$
@@ -150,13 +150,13 @@
                 </div>
                 <div class="card-content">
                     <h3>¿Es el 0 un número primo?</h3>
-                    <p><strong>No.</strong> Un primo debe tener *exactamente* dos divisores. El 0 tiene un número infinito de divisores (todos los números excepto el 0 mismo dividen al 0, ya que $0 \div n = 0$). Además, la definición dice $p > 1$.</p>
+                    <p><strong>No.</strong> Un primo debe tener *exactamente* dos divisores. El 0 tiene un número infinito de divisores (todos los números excepto el 0 mismo dividen al 0, ya que $$0 \div n = 0$$). Además, la definición dice $$p > 1$$.</p>
                     
                     <h3>¿Es el 1 un número primo?</h3>
                     <p><strong>No.</strong> Esta es la confusión más común. El 1 falla la definición porque tiene <strong>solo un divisor</strong>: el 1.</p>
                     <div class="key-concept">
                         <p><strong>Razón Pedagógica:</strong> Si *permitiéramos* que el 1 fuera primo, el Teorema Fundamental de la Aritmética (la "receta única") se destruiría.</p>
-                        <p>Ejemplo: $6 = 2 \cdot 3$. Si el 1 fuera primo, también podríamos escribir $6 = 1 \cdot 2 \cdot 3$, o $6 = 1^2 \cdot 2 \cdot 3$, o $6 = 1^{99} \cdot 2 \cdot 3$. La factorización ya no sería "única".</p>
+                        <p>Ejemplo: $$6 = 2 \cdot 3$$. Si el 1 fuera primo, también podríamos escribir $$6 = 1 \cdot 2 \cdot 3$$, o $$6 = 1^2 \cdot 2 \cdot 3$$, o $$6 = 1^{99} \cdot 2 \cdot 3$$. La factorización ya no sería "única".</p>
                         <p>Por lo tanto, por definición, el 1 <strong>no es primo</strong> (y tampoco es compuesto, es una "unidad").</p>
                     </div>
 
@@ -180,15 +180,15 @@
                     <h3>La Elegante Prueba de Euclides (c. 300 a.C.)</h3>
                     <p>Euclides demostró esto con un argumento brillante por contradicción:</p>
                     <ol>
-                        <li><strong>Supongamos</strong> que hay un número finito de primos. Hacemos una lista de todos ellos, desde $p_1$ hasta el "último" primo, $p_n$.</li>
-                        <li><strong>Construyamos</strong> un nuevo número, $N$, multiplicando *todos* los primos de nuestra lista y sumando 1.</li>
+                        <li><strong>Supongamos</strong> que hay un número finito de primos. Hacemos una lista de todos ellos, desde $$p_1$$ hasta el "último" primo, $$p_n$$.</li>
+                        <li><strong>Construyamos</strong> un nuevo número, $$N$$, multiplicando *todos* los primos de nuestra lista y sumando 1.</li>
                         <div class="formula">
                             $$ N = (p_1 \cdot p_2 \cdot p_3 \cdots p_n) + 1 $$
                         </div>
-                        <li><strong>Preguntemos:</strong> ¿Es $N$ primo o compuesto?</li>
-                        <li>Si dividimos $N$ por *cualquier* primo de nuestra lista ( $p_1, p_2$, etc.), siempre obtendremos un residuo de 1.</li>
-                        <li>Esto significa que $N$ no es divisible por *ningún* primo de nuestra "lista completa".</li>
-                        <li>Por lo tanto, $N$ debe ser primo él mismo, O debe ser divisible por un nuevo primo que *no estaba* en nuestra lista.</li>
+                        <li><strong>Preguntemos:</strong> ¿Es $$N$$ primo o compuesto?</li>
+                        <li>Si dividimos $$N$$ por *cualquier* primo de nuestra lista ( $$p_1, p_2$$, etc.), siempre obtendremos un residuo de 1.</li>
+                        <li>Esto significa que $$N$$ no es divisible por *ningún* primo de nuestra "lista completa".</li>
+                        <li>Por lo tanto, $$N$$ debe ser primo él mismo, O debe ser divisible por un nuevo primo que *no estaba* en nuestra lista.</li>
                         <li><strong>Conclusión:</strong> En cualquier caso, hemos encontrado un nuevo primo que no estaba en nuestra lista "finita", lo cual es una contradicción. Por lo tanto, la lista debe ser infinita.</li>
                     </ol>
                 </div>
@@ -201,15 +201,15 @@
                 </div>
                 <div class="card-content">
                     <h3>Cómo Encontrar Primos</h3>
-                    <p>Este es un algoritmo antiguo y eficiente para encontrar todos los números primos hasta un cierto límite $N$.</p>
+                    <p>Este es un algoritmo antiguo y eficiente para encontrar todos los números primos hasta un cierto límite $$N$$.</p>
                     <ol>
-                        <li>Haz una lista de todos los números desde 2 hasta $N$.</li>
-                        <li>Empieza con el primer número, $p=2$. Márcalo como primo.</li>
-                        <li>Tacha todos los múltiplos de $p$ (4, 6, 8, 10, ...).</li>
+                        <li>Haz una lista de todos los números desde 2 hasta $$N$$.</li>
+                        <li>Empieza con el primer número, $$p=2$$. Márcalo como primo.</li>
+                        <li>Tacha todos los múltiplos de $$p$$ (4, 6, 8, 10, ...).</li>
                         <li>Busca el siguiente número que no esté tachado (será el 3). Márcalo como primo.</li>
-                        <li>Tacha todos los múltiplos del nuevo $p$ (6, 9, 12, 15, ...).</li>
+                        <li>Tacha todos los múltiplos del nuevo $$p$$ (6, 9, 12, 15, ...).</li>
                         <li>Repite este proceso. El siguiente número no tachado es 5. Márcalo como primo y tacha sus múltiplos.</li>
-                        <li>Continúa hasta que $p^2 > N$.</li>
+                        <li>Continúa hasta que $$p^2 > N$$.</li>
                     </ol>
                     <p>Todos los números que queden sin tachar al final son números primos.</p>
                     
@@ -224,13 +224,13 @@
                 <div class="card-content">
                     <h3>La Propiedad</h3>
                     <p>Sabemos que hay infinitos primos, pero... ¿qué tan "raros" se vuelven? ¿Están muy separados?</p>
-                    <p>El Teorema de los Números Primos (probado en 1896) nos da una fórmula asintótica para *estimar* cuántos primos hay por debajo de un número $x$.</p>
-                    <p>Llamamos $\pi(x)$ a la "función contadora de primos" (el número de primos $\le x$).</p>
+                    <p>El Teorema de los Números Primos (probado en 1896) nos da una fórmula asintótica para *estimar* cuántos primos hay por debajo de un número $$x$$.</p>
+                    <p>Llamamos $$\pi(x)$$ a la "función contadora de primos" (el número de primos $$\le x$$).</p>
                     <div class="formula">
                         $$ \pi(x) \approx \frac{x}{\ln(x)} $$
                     </div>
                     <div class="key-concept">
-                        <p><strong>Intuición:</strong> Esto nos dice que los primos se vuelven más raros a medida que avanzamos, pero lo hacen de una manera predecible y logarítmica. La probabilidad de que un número aleatorio $N$ sea primo es aproximadamente $1 / \ln(N)$.</p>
+                        <p><strong>Intuición:</strong> Esto nos dice que los primos se vuelven más raros a medida que avanzamos, pero lo hacen de una manera predecible y logarítmica. La probabilidad de que un número aleatorio $$N$$ sea primo es aproximadamente $$1 / \ln(N)$$.</p>
                     </div>
                 </div>
             </div>
@@ -249,7 +249,7 @@
                     <div class="formula">
                         Todo número par mayor que 2 es la suma de dos números primos.
                     </div>
-                    <p>Ej: $4 = 2+2$, $6 = 3+3$, $8 = 3+5$, $10 = 3+7$, $100 = 29+71$...</p>
+                    <p>Ej: $$4 = 2+2$$, $$6 = 3+3$$, $$8 = 3+5$$, $$10 = 3+7$$, $$100 = 29+71$$...</p>
                     <p>Parece ser cierto (se ha comprobado por computadora hasta números gigantescos), pero nadie ha podido *probar* que funciona para *todos* los números.</p>
                     
                     <h3>La Hipótesis de Riemann</h3>
