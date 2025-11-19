@@ -16,29 +16,31 @@
             --dark: #2c3e50;
             --text: #34495e;
         }
-
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f7f6;
             color: var(--text);
+        }
+        .main-container {
             display: flex;
             min-height: 100vh;
         }
-
-        /* Sidebar Navigation */
         .sidebar {
             width: 250px;
             background-color: var(--primary);
             color: white;
             display: flex;
             flex-direction: column;
+            height: 100vh;
             position: fixed;
-            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
             overflow-y: auto;
         }
-
         .sidebar h2 {
             text-align: center;
             padding: 20px 0;
@@ -46,7 +48,6 @@
             border-bottom: 1px solid rgba(255,255,255,0.1);
             font-size: 1.2rem;
         }
-
         .nav-btn {
             background: none;
             border: none;
@@ -57,38 +58,32 @@
             transition: 0.3s;
             font-size: 0.95rem;
             border-left: 4px solid transparent;
+            width: 100%;
         }
-
         .nav-btn:hover, .nav-btn.active {
             background-color: rgba(255,255,255,0.1);
             color: white;
             border-left: 4px solid var(--secondary);
         }
-
-        /* Main Content */
         .main-content {
             flex: 1;
             margin-left: 250px;
             padding: 40px;
+            transition: margin-left 0.3s ease-in-out;
         }
-
-        header {
+        .main-content header {
             margin-bottom: 30px;
             border-bottom: 2px solid var(--secondary);
             padding-bottom: 10px;
+            position: relative;
         }
-
         h1 { color: var(--primary); }
         .subtitle { color: var(--secondary); font-weight: 300; font-size: 1.2rem; }
-
-        /* Concept Grid */
         .concept-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
         }
-
-        /* Concept Card */
         .card {
             background: white;
             border-radius: 8px;
@@ -97,82 +92,69 @@
             transition: transform 0.2s;
             border-top: 4px solid var(--secondary);
         }
-
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
-
-        .card-number {
-            font-size: 0.8rem;
-            color: #95a5a6;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-            display: block;
+        .card-number { font-size: 0.8rem; color: #95a5a6; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        .card h3 { margin: 0 0 10px 0; color: var(--dark); }
+        .card p { font-size: 0.95rem; line-height: 1.5; }
+        .latex-example { background-color: var(--light); padding: 10px; border-radius: 4px; margin-top: 10px; text-align: center; font-size: 1.1rem; }
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1001;
+            color: var(--primary);
         }
-
-        .card h3 {
-            margin: 0 0 10px 0;
-            color: var(--dark);
-        }
-
-        .card p {
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .latex-example {
-            background-color: var(--light);
-            padding: 10px;
-            border-radius: 4px;
-            margin-top: 10px;
-            text-align: center;
-            font-size: 1.1rem;
-        }
-
-        /* Responsive */
+        .back-to-home { margin-top: 20px; text-align: center; margin-bottom: 20px; }
+        
         @media (max-width: 768px) {
-            .sidebar { width: 60px; }
-            .sidebar h2, .nav-btn span { display: none; }
-            .nav-btn { text-align: center; padding: 15px 0; }
-            .main-content { margin-left: 60px; padding: 20px; }
-        }
-        .back-to-home {
-            margin-top: 20px;
-            text-align: center;
-            margin-bottom: 20px;
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.visible {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+                padding-top: 60px;
+            }
+            .menu-toggle {
+                display: block;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>🧮 Aritmética Pro</h1>
-        <p>Conceptos fundamentales</p>
-    </header>
+    <div class="main-container">
+        <nav class="sidebar" id="sidebar">
+            <h2>🧮 Aritmética Pro</h2>
+            <button class="nav-btn active" onclick="loadModule(0)">1. Básicos y Sistemas</button>
+            <button class="nav-btn" onclick="loadModule(1)">2. Clasificación Numérica</button>
+            <button class="nav-btn" onclick="loadModule(2)">3. Operaciones Básicas</button>
+            <button class="nav-btn" onclick="loadModule(3)">4. Propiedades</button>
+            <button class="nav-btn" onclick="loadModule(4)">5. Teoría de Números</button>
+            <button class="nav-btn" onclick="loadModule(5)">6. Fracciones</button>
+            <button class="nav-btn" onclick="loadModule(6)">7. Decimales y %</button>
+            <button class="nav-btn" onclick="loadModule(7)">8. Potencias y Raíces</button>
+            <button class="nav-btn" onclick="loadModule(8)">9. Orden y Aprox.</button>
+        </nav>
 
-    <nav class="sidebar">
-        <h2>🧮 Aritmética Pro</h2>
-        <button class="nav-btn active" onclick="loadModule(0)">1. Básicos y Sistemas</button>
-        <button class="nav-btn" onclick="loadModule(1)">2. Clasificación Numérica</button>
-        <button class="nav-btn" onclick="loadModule(2)">3. Operaciones Básicas</button>
-        <button class="nav-btn" onclick="loadModule(3)">4. Propiedades</button>
-        <button class="nav-btn" onclick="loadModule(4)">5. Teoría de Números</button>
-        <button class="nav-btn" onclick="loadModule(5)">6. Fracciones</button>
-        <button class="nav-btn" onclick="loadModule(6)">7. Decimales y %</button>
-        <button class="nav-btn" onclick="loadModule(7)">8. Potencias y Raíces</button>
-        <button class="nav-btn" onclick="loadModule(8)">9. Orden y Aprox.</button>
-    </nav>
-
-    <main class="main-content">
-        <header>
-            <h1 id="module-title">Módulo 1</h1>
-            <div class="subtitle" id="module-desc">Conceptos fundamentales</div>
-        </header>
-        
-        <div id="content-area" class="concept-grid">
-            </div>
-            <!-- Botón de Volver al Inicio al final -->
+        <main class="main-content">
+            <header>
+                <h1 id="module-title">Módulo 1</h1>
+                <div class="subtitle" id="module-desc">Conceptos fundamentales</div>
+            </header>
+            
+            <div id="content-area" class="concept-grid"></div>
+            
             <div class="back-to-home bottom">
                 <a href="index.html" class="btn-back">
                     <span class="material-icons-round">home</span>
@@ -182,10 +164,12 @@
             <footer>
                 <p>© JMGV PTEL 2025 Conceptos de la Aritmética. Todos los derechos reservados.</p>
             </footer>
-    </main>
+        </main>
+    </div>
+
+    <button class="menu-toggle" id="menu-toggle">&#9776;</button>
 
     <script>
-        // Base de datos de los 100 conceptos organizados por módulos
         const curriculum = [
             {
                 title: "I. Elementos Básicos y Sistemas",
@@ -343,27 +327,20 @@
             }
         ];
 
-        // Motor de la Aplicación
         function loadModule(index) {
             const module = curriculum[index];
             const container = document.getElementById('content-area');
             const title = document.getElementById('module-title');
             const desc = document.getElementById('module-desc');
             const buttons = document.querySelectorAll('.nav-btn');
-
-            // Actualizar Títulos
+            
             title.innerText = module.title;
-            title.style.opacity = 0;
-            setTimeout(() => { title.style.opacity = 1; }, 100); // Efecto fade
             desc.innerText = module.desc;
 
-            // Actualizar Navegación Activa
             buttons.forEach((btn, i) => {
-                if (i === index) btn.classList.add('active');
-                else btn.classList.remove('active');
+                btn.classList.toggle('active', i === index);
             });
 
-            // Generar Contenido (Cards)
             container.innerHTML = '';
             module.concepts.forEach(concept => {
                 const card = document.createElement('div');
@@ -377,16 +354,20 @@
                 container.appendChild(card);
             });
 
-            // Re-renderizar MathJax para el nuevo contenido
             if (window.MathJax) {
                 MathJax.typesetPromise([container]);
             }
         }
 
-        // Inicializar primer módulo
-        window.onload = () => {
-            loadModule(0);
-        };
+        const sidebar = document.getElementById('sidebar');
+        const menuToggle = document.getElementById('menu-toggle');
+        
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('visible');
+        });
+
+        // Carga inicial
+        loadModule(0);
 
     </script>
 </body>
