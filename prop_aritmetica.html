@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MasterClass: Aritmética Interactiva (100 Conceptos)</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #34495e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 250px;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            padding: 20px 0;
+            margin: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 1.2rem;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #bdc3c7;
+            padding: 15px 20px;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.95rem;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+            border-left: 4px solid var(--secondary);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 40px;
+        }
+
+        header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+
+        h1 { color: var(--primary); }
+        .subtitle { color: var(--secondary); font-weight: 300; font-size: 1.2rem; }
+
+        /* Concept Grid */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Concept Card */
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            padding: 20px;
+            transition: transform 0.2s;
+            border-top: 4px solid var(--secondary);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-number {
+            font-size: 0.8rem;
+            color: #95a5a6;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .card h3 {
+            margin: 0 0 10px 0;
+            color: var(--dark);
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .latex-example {
+            background-color: var(--light);
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar { width: 60px; }
+            .sidebar h2, .nav-btn span { display: none; }
+            .nav-btn { text-align: center; padding: 15px 0; }
+            .main-content { margin-left: 60px; padding: 20px; }
+        }
+        .back-to-home {
+            margin-top: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🧮 Aritmética Pro</h1>
+        <p>Conceptos fundamentales</p>
+    </header>
+
+    <nav class="sidebar">
+        <h2>🧮 Aritmética Pro</h2>
+        <button class="nav-btn active" onclick="loadModule(0)">1. Básicos y Sistemas</button>
+        <button class="nav-btn" onclick="loadModule(1)">2. Clasificación Numérica</button>
+        <button class="nav-btn" onclick="loadModule(2)">3. Operaciones Básicas</button>
+        <button class="nav-btn" onclick="loadModule(3)">4. Propiedades</button>
+        <button class="nav-btn" onclick="loadModule(4)">5. Teoría de Números</button>
+        <button class="nav-btn" onclick="loadModule(5)">6. Fracciones</button>
+        <button class="nav-btn" onclick="loadModule(6)">7. Decimales y %</button>
+        <button class="nav-btn" onclick="loadModule(7)">8. Potencias y Raíces</button>
+        <button class="nav-btn" onclick="loadModule(8)">9. Orden y Aprox.</button>
+    </nav>
+
+    <main class="main-content">
+        <header>
+            <h1 id="module-title">Módulo 1</h1>
+            <div class="subtitle" id="module-desc">Conceptos fundamentales</div>
+        </header>
+        
+        <div id="content-area" class="concept-grid">
+            </div>
+            <!-- Botón de Volver al Inicio al final -->
+            <div class="back-to-home bottom">
+                <a href="index.html" class="btn-back">
+                    <span class="material-icons-round">home</span>
+                    Volver al Inicio
+                </a>
+            </div>
+            <footer>
+                <p>© JMGV PTEL 2025 Conceptos de la Aritmética. Todos los derechos reservados.</p>
+            </footer>
+    </main>
+
+    <script>
+        // Base de datos de los 100 conceptos organizados por módulos
+        const curriculum = [
+            {
+                title: "I. Elementos Básicos y Sistemas",
+                desc: "Los ladrillos fundamentales de la matemática.",
+                concepts: [
+                    {id: 1, term: "Número", def: "Concepto abstracto que expresa una cantidad o magnitud.", ex: "$$x = 5$$"},
+                    {id: 2, term: "Dígito", def: "Símbolo básico (grafía) usado para escribir números.", ex: "$$0, 1, 2... 9$$"},
+                    {id: 3, term: "Cifra", def: "Cada uno de los caracteres que componen un número.", ex: "En 123 hay 3 cifras."},
+                    {id: 4, term: "Sistema Decimal", def: "Sistema posicional en base 10.", ex: "$$N = \\sum d_i \\cdot 10^i$$"},
+                    {id: 5, term: "Valor Posicional", def: "Valor que adquiere un dígito según su lugar.", ex: "En 25, el 2 vale 20."},
+                    {id: 6, term: "Unidad", def: "Elemento entero más pequeño de conteo.", ex: "$$1$$"},
+                    {id: 7, term: "Decena", def: "Conjunto de 10 unidades.", ex: "$$10^1$$"},
+                    {id: 8, term: "Centena", def: "Conjunto de 100 unidades.", ex: "$$10^2$$"},
+                    {id: 9, term: "Millar", def: "Conjunto de 1,000 unidades.", ex: "$$10^3$$"},
+                    {id: 10, term: "Recta Numérica", def: "Gráfico unidimensional de los números reales.", ex: "$$\\leftarrow -2, -1, 0, 1, 2 \\rightarrow$$"},
+                    {id: 11, term: "Antecesor", def: "El número entero inmediatamente anterior ($n-1$).", ex: "De 5 es 4."},
+                    {id: 12, term: "Sucesor", def: "El número entero inmediatamente posterior ($n+1$).", ex: "De 5 es 6."}
+                ]
+            },
+            {
+                title: "II. Clasificación de los Números",
+                desc: "Comprendiendo los conjuntos numéricos.",
+                concepts: [
+                    {id: 13, term: "Naturales (N)", def: "Números usados para contar elementos.", ex: "$$\\mathbb{N} = \\{1, 2, 3...\\}$$"},
+                    {id: 14, term: "Enteros (Z)", def: "Naturales más sus negativos y el cero.", ex: "$$\\mathbb{Z} = \\{...-2, -1, 0, 1...\\}$$"},
+                    {id: 15, term: "Racionales (Q)", def: "Números expresables como fracción $a/b$.", ex: "$$\\frac{1}{2}, 0.75$$"},
+                    {id: 16, term: "Irracionales (I)", def: "Decimales infinitos no periódicos.", ex: "$$\\pi, \\sqrt{2}, e$$"},
+                    {id: 17, term: "Reales (R)", def: "Unión de racionales e irracionales.", ex: "$$\\mathbb{R} = \\mathbb{Q} \\cup \\mathbb{I}$$"},
+                    {id: 18, term: "Par", def: "Número divisible exactamente entre 2.", ex: "$$2n$$"},
+                    {id: 19, term: "Impar", def: "Número no divisible entre 2.", ex: "$$2n + 1$$"},
+                    {id: 20, term: "Primo", def: "Solo divisible por 1 y por sí mismo.", ex: "$$2, 3, 5, 7, 11...$$"},
+                    {id: 21, term: "Compuesto", def: "Tiene más de dos divisores.", ex: "$$4, 6, 8, 9...$$"},
+                    {id: 22, term: "Coprimos", def: "Números cuyo MCD es 1.", ex: "8 y 15 son coprimos."},
+                    {id: 23, term: "Positivo", def: "Mayor que cero.", ex: "$$x > 0$$"},
+                    {id: 24, term: "Negativo", def: "Menor que cero.", ex: "$$x < 0$$"},
+                    {id: 25, term: "Cardinal", def: "Indica cantidad total.", ex: "Hay 5 manzanas."},
+                    {id: 26, term: "Ordinal", def: "Indica posición u orden.", ex: "1º, 2º, 3º"},
+                    {id: 27, term: "Valor Absoluto", def: "Distancia al cero.", ex: "$$|-5| = 5$$"},
+                    {id: 28, term: "Inverso Aditivo", def: "Mismo valor, signo contrario.", ex: "$$-a$$"},
+                    {id: 29, term: "Inverso Multiplicativo", def: "Número que al multiplicar da 1.", ex: "$$1/a$$"},
+                    {id: 30, term: "Infinito", def: "Concepto de cantidad sin fin.", ex: "$$\\infty$$"}
+                ]
+            },
+            {
+                title: "III. Operaciones Básicas",
+                desc: "La mecánica de la aritmética.",
+                concepts: [
+                    {id: 31, term: "Adición", def: "Operación de combinar cantidades.", ex: "$$a + b = c$$"},
+                    {id: 32, term: "Sumando", def: "Partes que se suman.", ex: "En $2+3$, 2 y 3 son sumandos."},
+                    {id: 33, term: "Sustracción", def: "Operación de diferencia.", ex: "$$a - b = c$$"},
+                    {id: 34, term: "Minuendo", def: "Cantidad total antes de restar.", ex: "El $a$ en $a-b$."},
+                    {id: 35, term: "Sustraendo", def: "Cantidad que se quita.", ex: "El $b$ en $a-b$."},
+                    {id: 36, term: "Diferencia", def: "Resultado de la resta.", ex: "El $c$ en $a-b=c$."},
+                    {id: 37, term: "Multiplicación", def: "Suma iterada.", ex: "$$a \\times b$$"},
+                    {id: 38, term: "Factor", def: "Números que se multiplican.", ex: "$$a$$ y $$b$$"},
+                    {id: 39, term: "Producto", def: "Resultado de multiplicar.", ex: "$$c$$"},
+                    {id: 40, term: "División", def: "Reparto equitativo.", ex: "$$a \\div b$$"},
+                    {id: 41, term: "Dividendo", def: "Lo que se va a repartir.", ex: "$$D$$"},
+                    {id: 42, term: "Divisor", def: "Entre cuánto se reparte.", ex: "$$d$$"},
+                    {id: 43, term: "Cociente", def: "Resultado de la división.", ex: "$$q$$"},
+                    {id: 44, term: "Residuo", def: "Lo que sobra.", ex: "$$r$$"},
+                    {id: 45, term: "División Exacta", def: "Cuando el residuo es cero.", ex: "$$r = 0$$"}
+                ]
+            },
+            {
+                title: "IV. Propiedades de Operaciones",
+                desc: "Reglas del juego matemático.",
+                concepts: [
+                    {id: 46, term: "Conmutativa", def: "El orden no altera el resultado.", ex: "$$a+b = b+a$$"},
+                    {id: 47, term: "Asociativa", def: "La agrupación no altera el resultado.", ex: "$$(a+b)+c = a+(b+c)$$"},
+                    {id: 48, term: "Distributiva", def: "Multiplicación sobre suma.", ex: "$$a(b+c) = ab + ac$$"},
+                    {id: 49, term: "Neutro Aditivo", def: "Elemento que no cambia la suma.", ex: "$$a + 0 = a$$"},
+                    {id: 50, term: "Neutro Multiplicativo", def: "Elemento que no cambia el producto.", ex: "$$a \\times 1 = a$$"},
+                    {id: 51, term: "Clausura", def: "Operar reales da un real.", ex: "$$a,b \\in \\mathbb{R} \\rightarrow a+b \\in \\mathbb{R}$$"},
+                    {id: 52, term: "Ley de Signos", def: "Reglas para positivos y negativos.", ex: "$$(-) \\times (-) = (+)$$"},
+                    {id: 53, term: "Elemento Absorbente", def: "Anula la operación.", ex: "$$a \\times 0 = 0$$"}
+                ]
+            },
+            {
+                title: "V. Teoría de Números",
+                desc: "El estudio profundo de los enteros.",
+                concepts: [
+                    {id: 54, term: "Divisibilidad", def: "Cuando un número contiene a otro n veces exactas.", ex: "$$b \\mid a$$"},
+                    {id: 55, term: "Múltiplo", def: "Resultado de multiplicar por un entero.", ex: "$$M_5 = \\{5, 10, 15...\\}$$"},
+                    {id: 56, term: "Divisor", def: "Número que divide exactamente.", ex: "$$D_{10} = \\{1, 2, 5, 10\\}$$"},
+                    {id: 57, term: "Criterios Divisibilidad", def: "Reglas rápidas (ej. termina en 0 es div por 10).", ex: "Suma de dígitos div por 3."},
+                    {id: 58, term: "Factorización", def: "Descomponer en factores.", ex: "$$12 = 3 \\times 4$$"},
+                    {id: 59, term: "Descomposición Prima", def: "Producto único de primos.", ex: "$$12 = 2^2 \\times 3$$"},
+                    {id: 60, term: "MCD", def: "Máximo Común Divisor.", ex: "$$MCD(8, 12) = 4$$"},
+                    {id: 61, term: "MCM", def: "Mínimo Común Múltiplo.", ex: "$$MCM(3, 4) = 12$$"},
+                    {id: 62, term: "Árbol de Factores", def: "Método gráfico de descomposición.", ex: "Ramificaciones hasta llegar a primos."}
+                ]
+            },
+            {
+                title: "VI. Fracciones",
+                desc: "El mundo de los Racionales.",
+                concepts: [
+                    {id: 63, term: "Fracción", def: "Parte de un todo.", ex: "$$\\frac{a}{b}$$"},
+                    {id: 64, term: "Numerador", def: "Partes que se toman.", ex: "$$a$$ en $$\\frac{a}{b}$$"},
+                    {id: 65, term: "Denominador", def: "Partes totales.", ex: "$$b$$ en $$\\frac{a}{b}$$"},
+                    {id: 66, term: "Propia", def: "Menor que la unidad.", ex: "$$\\frac{1}{2}$$ ($$N < D$$)"},
+                    {id: 67, term: "Impropia", def: "Mayor que la unidad.", ex: "$$\\frac{5}{2}$$ ($$N > D$$)"},
+                    {id: 68, term: "Número Mixto", def: "Entero + Fracción.", ex: "$$2 \\frac{1}{2}$$"},
+                    {id: 69, term: "Equivalentes", def: "Valen lo mismo.", ex: "$$\\frac{1}{2} = \\frac{2}{4}$$"},
+                    {id: 70, term: "Simplificación", def: "Reducir términos.", ex: "$$\\frac{4}{8} \\rightarrow \\frac{1}{2}$$"},
+                    {id: 71, term: "Irreductible", def: "No se puede simplificar más.", ex: "$$\\frac{1}{3}$$"},
+                    {id: 72, term: "Amplificación", def: "Multiplicar N y D por mismo número.", ex: "$$\\times k$$"},
+                    {id: 73, term: "Común Denominador", def: "Mismo denominador para operar.", ex: "$$MCM$$ de denominadores."},
+                    {id: 74, term: "Homogéneas", def: "Igual denominador.", ex: "$$\\frac{1}{4}, \\frac{3}{4}$$"},
+                    {id: 75, term: "Heterogéneas", def: "Distinto denominador.", ex: "$$\\frac{1}{3}, \\frac{1}{4}$$"},
+                    {id: 76, term: "Fracción Decimal", def: "Denominador potencia de 10.", ex: "$$\\frac{3}{100}$$"}
+                ]
+            },
+            {
+                title: "VII. Decimales y Porcentajes",
+                desc: "Precisión y proporciones.",
+                concepts: [
+                    {id: 77, term: "Punto Decimal", def: "Separa enteros de fracción.", ex: "$$3.14$$"},
+                    {id: 78, term: "Décima", def: "1/10 de la unidad.", ex: "$$0.1$$"},
+                    {id: 79, term: "Centésima", def: "1/100 de la unidad.", ex: "$$0.01$$"},
+                    {id: 80, term: "Milésima", def: "1/1000 de la unidad.", ex: "$$0.001$$"},
+                    {id: 81, term: "Exacto", def: "Cifras finitas.", ex: "$$0.25$$"},
+                    {id: 82, term: "Periódico Puro", def: "Repetición infinita desde el punto.", ex: "$$0.333...$$"},
+                    {id: 83, term: "Periódico Mixto", def: "Repetición no inmediata.", ex: "$$0.1666...$$"},
+                    {id: 84, term: "Porcentaje", def: "Razón sobre 100.", ex: "$$50\\% = \\frac{50}{100}$$"},
+                    {id: 85, term: "Conversión", def: "Transformar tipos.", ex: "$$0.5 = \\frac{1}{2} = 50\\%$$"}
+                ]
+            },
+            {
+                title: "VIII. Potenciación y Radicación",
+                desc: "Crecimiento exponencial y sus inversos.",
+                concepts: [
+                    {id: 86, term: "Potenciación", def: "Multiplicación repetida.", ex: "$$b^n$$"},
+                    {id: 87, term: "Base", def: "Número a multiplicar.", ex: "$$b$$ en $$b^n$$"},
+                    {id: 88, term: "Exponente", def: "Veces que se multiplica.", ex: "$$n$$ en $$b^n$$"},
+                    {id: 89, term: "Cuadrado", def: "Exponente 2.", ex: "$$x^2$$"},
+                    {id: 90, term: "Cubo", def: "Exponente 3.", ex: "$$x^3$$"},
+                    {id: 91, term: "Potencia de 10", def: "Base 10, agrega ceros.", ex: "$$10^3 = 1000$$"},
+                    {id: 92, term: "Radicación", def: "Inversa de potencia.", ex: "$$\\sqrt[n]{x}$$"},
+                    {id: 93, term: "Raíz Cuadrada", def: "Índice 2.", ex: "$$\\sqrt{16} = 4$$"},
+                    {id: 94, term: "Radicando", def: "Lo de adentro de la raíz.", ex: "$$x$$"},
+                    {id: 95, term: "Índice", def: "Grado de la raíz.", ex: "$$n$$"},
+                    {id: 96, term: "Notación Científica", def: "Abreviación de números grandes.", ex: "$$3 \\times 10^8$$"}
+                ]
+            },
+            {
+                title: "IX. Orden y Aproximación",
+                desc: "Jerarquías y estimaciones.",
+                concepts: [
+                    {id: 97, term: "Jerarquía (PEMDAS)", def: "Orden de operaciones.", ex: "1.Paréntesis 2.Exp 3.Mult/Div 4.Sum/Rest"},
+                    {id: 98, term: "Signos Agrupación", def: "Definen prioridad.", ex: "$$( ), [ ], \\{ \\}$$"},
+                    {id: 99, term: "Redondeo", def: "Aproximar al más cercano.", ex: "$$4.8 \\approx 5$$"},
+                    {id: 100, term: "Truncamiento", def: "Cortar decimales.", ex: "$$4.89 \\rightarrow 4.8$$"}
+                ]
+            }
+        ];
+
+        // Motor de la Aplicación
+        function loadModule(index) {
+            const module = curriculum[index];
+            const container = document.getElementById('content-area');
+            const title = document.getElementById('module-title');
+            const desc = document.getElementById('module-desc');
+            const buttons = document.querySelectorAll('.nav-btn');
+
+            // Actualizar Títulos
+            title.innerText = module.title;
+            title.style.opacity = 0;
+            setTimeout(() => { title.style.opacity = 1; }, 100); // Efecto fade
+            desc.innerText = module.desc;
+
+            // Actualizar Navegación Activa
+            buttons.forEach((btn, i) => {
+                if (i === index) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+
+            // Generar Contenido (Cards)
+            container.innerHTML = '';
+            module.concepts.forEach(concept => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <span class="card-number">Concepto #${concept.id}</span>
+                    <h3>${concept.term}</h3>
+                    <p>${concept.def}</p>
+                    <div class="latex-example">${concept.ex}</div>
+                `;
+                container.appendChild(card);
+            });
+
+            // Re-renderizar MathJax para el nuevo contenido
+            if (window.MathJax) {
+                MathJax.typesetPromise([container]);
+            }
+        }
+
+        // Inicializar primer módulo
+        window.onload = () => {
+            loadModule(0);
+        };
+
+    </script>
+</body>
+</html>
