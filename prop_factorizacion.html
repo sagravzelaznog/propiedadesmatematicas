@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase Interactiva: Propiedades de la Factorización</title>
+    
+    <!-- MathJax para fórmulas matemáticas -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+    
+    <!-- Fuente Roboto de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Estilos específicos para esta página -->
+    <style>
+        /* Estilos específicos para esta página */
+        .formula {
+            font-size: 1em;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #0056b3;
+            margin: 15px 0;
+            overflow: auto;
+        }
+        
+        .card-content h3 {
+            color: #004a99;
+            margin-top: 0;
+            border-bottom: 1px solid #cce5ff;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+            <a href="index.html" class="sidebar-title">Matemáticas</a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="prop_suma.html"><i>+</i> Propiedad de la Suma</a>
+            <a href="prop_resta.html"><i>-</i> Propiedad de la Resta</a>
+            <a href="prop_multiplicacion.html"><i>×</i> Propiedad Multiplicativa</a>
+            <a href="prop_division.html"><i>÷</i> Propiedad de la División</a>
+            <a href="prop_potencia.html"><i>x²</i> Propiedad de la Potencia</a>
+            <a href="prop_raices.html"><i>√</i> Propiedad de la Raíz</a>
+            <a href="prop_igualdad.html"><i>=</i> Propiedad de la Igualdad</a>
+            <a href="prop_teoremas.html"><i>📚</i> Teoremas Fundamentales</a>
+            <a href="prop_derivada.html" class="active"><i>d/dx</i> Propiedades de la Derivada</a>
+            <a href="prop_integral.html"><i>∫</i> Propiedades de la Integral</a>
+        </nav>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="class-container">
+            <header>
+													<h1>Maestría en Factorización</h1>
+													<p>El Arte de la Ingeniería Inversa Algebraica</p>
+                <div class="back-to-home">
+                    <a href="index.html" class="btn-back">
+                        <span class="material-icons-round">home</span>
+                        Inicio
+                    </a>
+                </div>
+            </header>
+
+        <div class="content-area">
+            <p class="instructions">
+                Factorizar es transformar una <strong>suma</strong> de términos en un <strong>producto</strong> de factores.
+                <br>Para factorizar, primero cuenta los términos y luego aplica la estrategia correspondiente.
+            </p>
+
+            <div class="section-title">Paso 0: La Regla de Oro</div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-title">Factor Común (MCD)</div>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Prioridad Absoluta</h3>
+                    <p>Antes de intentar cualquier técnica compleja, <strong>siempre</strong> busca si hay algo que se repita en <em>todos</em> los términos.</p>
+                    <div class="formula">
+                        $$ ab + ac = a(b+c) $$
+                    </div>
+                    <div class="key-concept">
+                        <strong>Intuición:</strong> Es la propiedad distributiva hecha al revés. Extrae el Máximo Común Divisor de los números y la variable con el menor exponente.
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <p>$$4x^3 + 8x^2 = 4x^2(x + 2)$$</p>
+                </div>
+            </div>
+
+            <div class="section-title">Caso A: Tienes 2 Términos (Binomios)</div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-title">Diferencia de Cuadrados</div>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Identificación</h3>
+                    <p>Tienes una resta (diferencia) y ambos términos tienen raíz cuadrada exacta.</p>
+                    <div class="formula">
+                        $$ a^2 - b^2 = (a+b)(a-b) $$
+                    </div>
+                    <p>El resultado siempre son <strong>binomios conjugados</strong>.</p>
+                    
+                    <div class="warning-box">
+                        <strong>¡Alerta!</strong> La <strong>Suma de Cuadrados</strong> ($$a^2 + b^2$$) <strong>NO</strong> se puede factorizar en los números reales. Es "primo".
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <p>$$x^2 - 9 = (x+3)(x-3)$$</p>
+                    
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-title">Suma o Diferencia de Cubos</div>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Identificación</h3>
+                    <p>Tienes dos términos y ambos tienen raíz cúbica exacta. Aquí sí se puede factorizar la suma.</p>
+                    <div class="formula">
+                        $$ a^3 + b^3 = (a+b)(a^2 - ab + b^2) $$
+                        $$ a^3 - b^3 = (a-b)(a^2 + ab + b^2) $$
+                    </div>
+                    
+                    <div class="key-concept">
+                        <strong>Mnemotecnia "SOAP" (para los signos):</strong>
+                        <ul>
+                            <li><strong>S</strong>ame (Mismo signo que el original)</li>
+                            <li><strong>O</strong>pposite (Signo opuesto)</li>
+                            <li><strong>A</strong>lways <strong>P</strong>ositive (Siempre positivo al final)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">Caso B: Tienes 3 Términos (Trinomios)</div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-title">Trinomio Cuadrado Perfecto (TCP)</div>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Identificación</h3>
+                    <p>El primero y último término son cuadrados positivos. El del medio es el doble producto de sus raíces.</p>
+                    <div class="formula">
+                        $$ a^2 \pm 2ab + b^2 = (a \pm b)^2 $$
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-title">Trinomio de la forma $$x^2 + bx + c$$</div>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>El Juego de Números</h3>
+                    <p>Cuando el coeficiente principal es 1.</p>
+                    <div class="key-concept">
+                        Buscas dos números que:
+                        <ol>
+                            <li>Multiplicados den $$c$$ (el último).</li>
+                            <li>Sumados den $$b$$ (el del medio).</li>
+                        </ol>
+                    </div>
+                    <div class="formula">
+                        $$ x^2 + (p+q)x + pq = (x+p)(x+q) $$
+                    </div>
+                    <h3>Ejemplo</h3>
+                    <p>$$x^2 + 5x + 6 = (x+2)(x+3)$$ porque $$2\cdot3=6$$ y $$2+3=5$$.</p>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-title">Trinomio de la forma $$ax^2 + bx + c$$</div>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>Método de Agrupación (Método AC)</h3>
+                    <p>Cuando tienes un número al frente ($$a \neq 1$$).</p>
+                    <ol>
+                        <li>Multiplica $$a \cdot c$$.</li>
+                        <li>Busca dos números que multipliquen ese resultado y sumen $$b$$.</li>
+                        <li>Rompe el término del medio en esos dos números.</li>
+                        <li>Factoriza por agrupación (ver abajo).</li>
+                    </ol>
+                    <h3>Ejemplo: $$2x^2 + 7x + 3$$</h3>
+                    <p>$$a \cdot c = 6$$. Números que dan 6 y suman 7: $$6$$ y $$1$$.</p>
+                    <p>Reescribe: $$2x^2 + 6x + 1x + 3$$</p>
+                    <p>Agrupa: $$2x(x+3) + 1(x+3) = (2x+1)(x+3)$$</p>
+                </div>
+            </div>
+
+            <div class="section-title">Caso C: Tienes 4 o más Términos</div>
+
+            <div class="property-card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-title">Factorización por Agrupación</div>
+                    <span class="indicator">+</span>
+                </div>
+                <div class="card-content">
+                    <h3>La Estrategia de "Divide y Vencerás"</h3>
+                    <p>Se usa generalmente cuando tienes 4 términos y no hay un factor común para todos.</p>
+                    <div class="formula">
+                        $$ ax + ay + bx + by $$
+                        $$ = a(x+y) + b(x+y) $$
+                        $$ = (a+b)(x+y) $$
+                    </div>
+                    <div class="key-concept">
+                        <strong>El Secreto:</strong> Después de agrupar parejas y sacar factor común, lo que queda dentro del paréntesis DEBE ser idéntico. Ese paréntesis se convierte en tu nuevo factor común gigante.
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleCard(headerElement) {
+            // Encuentra el contenido asociado
+            const content = headerElement.nextElementSibling;
+            // Encuentra el indicador
+            const indicator = headerElement.querySelector('.indicator');
+            
+            // Alterna la clase 'active' en el header
+            headerElement.classList.toggle('active');
+
+            // Alterna la clase 'visible' en el contenido
+            if (content.classList.contains('visible')) {
+                // Si está visible, lo ocultamos
+                content.classList.remove('visible');
+                indicator.style.transform = 'rotate(0deg)';
+            } else {
+                // Si está oculto, lo mostramos
+                content.classList.add('visible');
+                indicator.style.transform = 'rotate(45deg)';
+            }
+        }
+    </script>
+
+</body>
+</html>
