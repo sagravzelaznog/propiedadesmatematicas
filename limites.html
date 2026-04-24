@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterclass: Límites Matemáticos</title>
+    <link rel="stylesheet" href="styles.css">
+				<style>
+					/* =========================================
+   ESTILOS MASTERCLASS LÍMITES (JMGV-PTEL)
+========================================= */
+.lim-body {
+    background-color: #0f172a;
+    color: #f8fafc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+}
+
+.lim-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.lim-title {
+    text-align: center;
+    color: #06b6d4;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer; /* Indica que se puede interactuar */
+}
+
+.lim-section {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #334155;
+}
+
+.lim-section h2 {
+    color: #8b5cf6;
+}
+
+/* Modo Maestro Oculto */
+.lim-teacher-hidden {
+    display: none;
+    background: #fbbf24;
+    color: #1e293b;
+    padding: 15px;
+    border-left: 6px solid #d97706;
+    border-radius: 4px;
+    margin: 20px 0;
+    font-size: 0.95em;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Matemáticas y Laboratorio */
+.lim-math-box, .lim-interactive-box {
+    background: #0f172a;
+    border: 2px dashed #334155;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.lim-formula {
+    font-size: 2em;
+    color: #38bdf8;
+    letter-spacing: 3px;
+}
+
+input[type=range]#lim-slider {
+    width: 80%;
+    margin: 20px 0;
+}
+
+.lim-highlight {
+    font-weight: bold;
+    color: #f43f5e;
+    font-size: 1.2em;
+}
+
+.lim-alert {
+    color: #fbbf24;
+    font-weight: bold;
+    min-height: 24px;
+}
+
+/* Quiz Kahoot Style */
+.lim-quiz-card {
+    background: #0f172a;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.lim-answers-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.lim-btn-ans {
+    padding: 20px 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.3);
+}
+
+.lim-btn-ans:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+}
+
+.lim-btn-ans:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+
+/* Colores Kahoot */
+.lim-red { background-color: #e21b3c; }
+.lim-blue { background-color: #1368ce; }
+.lim-yellow { background-color: #d89e00; }
+.lim-green { background-color: #26890c; }
+
+.hidden { display: none !important; }
+
+.lim-btn-restart {
+    background-color: #8b5cf6;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.lim-footer {
+    text-align: center;
+    color: #64748b;
+    font-size: 0.8em;
+    margin-top: 40px;
+}
+				</style>
+</head>
+<body class="lim-body">
+
+    <div class="lim-container">
+        <h1 class="lim-title" ondblclick="activarModoMaestroLim()">Masterclass: Comprendiendo los Límites</h1>
+        
+        <div id="teacher-notes-lim" class="lim-teacher-hidden">
+            <h3>🎓 Notas del Maestro (JMGV)</h3>
+            <p><strong>Tip Pedagógico:</strong> Antes de mostrar la fórmula, haz que caminen hacia la pared dando siempre la mitad del paso anterior. Pregúntales: "¿Llegarás a tocar la pared?". Esa es la esencia del límite.</p>
+            <p><strong>Atención:</strong> En el ejercicio práctico, recalca que evaluar en la calculadora f(3) da ERROR (0/0), pero el deslizador demuestra visualmente que el límite es 6. ¡Ese es el choque cognitivo que buscamos!</p>
+        </div>
+
+        <section class="lim-section">
+            <h2>1. ¿Qué es un Límite? (Definición)</h2>
+            <p>Imagina que caminas hacia una puerta. Cada paso que das cubre la mitad de la distancia restante. Te acercas infinitamente a la puerta, pero matemáticamente, bajo esta regla, nunca la cruzas. El <strong>límite</strong> es ese destino al que te estás acercando (la puerta).</p>
+            <div class="lim-math-box">
+                <p>Matemáticamente se escribe:</p>
+                <h3 class="lim-formula">lim <sub>x &rarr; a</sub> f(x) = L</h3>
+                <p>"El límite de la función f(x) a medida que 'x' se acerca al valor 'a', es igual a 'L'."</p>
+            </div>
+        </section>
+
+        <section class="lim-section">
+            <h2>2. Laboratorio Práctico: El Agujero Matemático</h2>
+            <p>Analicemos la función <strong>f(x) = (x² - 9) / (x - 3)</strong>. ¿Qué pasa si <em>x = 3</em>? Obtendríamos 0/0 (una indeterminación). ¡La calculadora explota! Pero veamos qué pasa si nos <em>acercamos</em> a 3 sin llegar a tocarlo.</p>
+            
+            <div class="lim-interactive-box">
+                <label for="lim-slider">Mueve el valor de <strong>x</strong> hacia 3:</label>
+                <input type="range" id="lim-slider" min="2.5" max="3.5" step="0.01" value="2.5" oninput="calcularLimite()">
+                
+                <div class="lim-results">
+                    <p>Valor de x: <span id="val-x" class="lim-highlight">2.50</span></p>
+                    <p>Valor de f(x): <span id="val-fx" class="lim-highlight">5.50</span></p>
+                    <p id="lim-warning" class="lim-alert"></p>
+                </div>
+            </div>
+            
+            <div id="teacher-notes-lim2" class="lim-teacher-hidden">
+                <h3>🎓 Tip de Factorización</h3>
+                <p>Aquí puedes mostrar en la pizarra que (x² - 9) es una diferencia de cuadrados: (x-3)(x+3). Al cancelar (x-3) arriba y abajo, nos queda f(x) = x + 3. Por eso, al acercarnos a 3, el límite es 3 + 3 = 6.</p>
+            </div>
+        </section>
+
+        <section class="lim-section">
+            <h2>3. Desafío Kahoot: Límites</h2>
+            <p>¡Demuestra tu genialidad! Responde correctamente para sumar puntos.</p>
+            
+            <div id="lim-quiz-container" class="lim-quiz-card">
+                <div id="lim-quiz-score-board" class="hidden">
+                    <h2 id="lim-final-score"></h2>
+                    <button class="lim-btn lim-btn-restart" onclick="reiniciarQuizLim()">Intentar de Nuevo</button>
+                </div>
+                
+                <div id="lim-quiz-content">
+                    <h3 id="lim-question-text">Pregunta...</h3>
+                    <div class="lim-answers-grid">
+                        <button class="lim-btn-ans lim-red" onclick="verificarRespuestaLim(0)" id="lim-ans-0">Opción 1</button>
+                        <button class="lim-btn-ans lim-blue" onclick="verificarRespuestaLim(1)" id="lim-ans-1">Opción 2</button>
+                        <button class="lim-btn-ans lim-yellow" onclick="verificarRespuestaLim(2)" id="lim-ans-2">Opción 3</button>
+                        <button class="lim-btn-ans lim-green" onclick="verificarRespuestaLim(3)" id="lim-ans-3">Opción 4</button>
+                    </div>
+                    <p id="lim-quiz-progress">Pregunta 1 de 10</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="lim-footer">
+        <p>copyright &copy;jmgv-ptel- 2026. masterclass limites. todos los derechos reservados</p>
+    </footer>
+
+    <script src="script.js"></script>
+				<script>
+					/* =========================================
+   SCRIPT MASTERCLASS LÍMITES (JMGV-PTEL)
+========================================= */
+
+// 1. MODO MAESTRO (Contraseña 1983)
+function activarModoMaestroLim() {
+    let pwd = prompt("Acceso Restringido. Ingrese código de maestro:");
+    if (pwd === "1983") {
+        document.querySelectorAll('.lim-teacher-hidden').forEach(el => {
+            el.style.display = 'block';
+        });
+        alert("Modo Maestro Activado. Notas pedagógicas reveladas.");
+    } else if (pwd !== null) {
+        alert("Código incorrecto. Solo para personal docente.");
+    }
+}
+
+// 2. SIMULADOR DE LÍMITE (Laboratorio)
+function calcularLimite() {
+    let slider = document.getElementById("lim-slider");
+    let xStr = slider.value;
+    let x = parseFloat(xStr);
+    let valXDisplay = document.getElementById("val-x");
+    let valFxDisplay = document.getElementById("val-fx");
+    let alertDisplay = document.getElementById("lim-warning");
+
+    valXDisplay.innerText = x.toFixed(2);
+
+    if (x === 3.00 || xStr === "3" || xStr === "3.00") {
+        valFxDisplay.innerText = "ERROR (0 / 0)";
+        valFxDisplay.style.color = "#e21b3c"; // Rojo error
+        alertDisplay.innerText = "¡Indeterminación detectada! La función no existe en x=3, pero nota hacia dónde se acercan los valores.";
+    } else {
+        // Calculamos f(x) = (x^2 - 9) / (x - 3)
+        let fx = (Math.pow(x, 2) - 9) / (x - 3);
+        valFxDisplay.innerText = fx.toFixed(2);
+        valFxDisplay.style.color = "#f43f5e"; // Color normal
+        alertDisplay.innerText = "";
+    }
+}
+
+// 3. LOGICA DEL QUIZ KAHOOT
+const limQuizData = [
+    {
+        question: "¿Qué representa matemáticamente un límite?",
+        options: ["El punto exacto donde termina una gráfica", "El valor al que se acerca una función f(x) cuando x se acerca a un valor 'a'", "El punto de corte en el eje Y", "El resultado de multiplicar x por f(x)"],
+        correct: 1
+    },
+    {
+        question: "Si evaluamos un límite directamente y obtenemos 0/0, ¿qué significa?",
+        options: ["Que el límite es cero", "Que el límite no existe", "Que es una Indeterminación y debemos factorizar o simplificar", "Que el resultado es Infinito"],
+        correct: 2
+    },
+    {
+        question: "¿Cuál es el límite de una constante 'k' cuando x tiende a 'a'?",
+        options: ["k", "a", "0", "Infinito"],
+        correct: 0
+    },
+    {
+        question: "Si los límites laterales (por la izquierda y por la derecha) son diferentes, entonces el límite...",
+        options: ["Es igual al mayor de los dos", "Es igual a cero", "No existe", "Es infinito"],
+        correct: 2
+    },
+    {
+        question: "Evalúa: lim(x→2) de f(x) = 3x + 1",
+        options: ["6", "7", "5", "8"],
+        correct: 1
+    },
+    {
+        question: "¿Cuál es el resultado de la factorización de (x² - 16)?",
+        options: ["(x-4)(x-4)", "(x-8)(x+2)", "(x-4)(x+4)", "(x+4)²"],
+        correct: 2
+    },
+    {
+        question: "Si una función tiene un 'agujero' en x=5, ¿puede existir el límite cuando x tiende a 5?",
+        options: ["Sí, el límite se refiere a dónde se acerca, no a si toca el punto", "No, si hay un agujero el límite es cero", "No, si no existe el punto no hay límite", "Solo si f(5) es positivo"],
+        correct: 0
+    },
+    {
+        question: "Evalúa: lim(x→1) de (x² - 1) / (x - 1)",
+        options: ["0", "1", "Indeterminado para siempre", "2"],
+        correct: 3
+    },
+    {
+        question: "¿A qué tiende 1/x cuando x se acerca a 0 por la derecha (+)?",
+        options: ["A cero", "A uno", "A Infinito Positivo (+∞)", "A Infinito Negativo (-∞)"],
+        correct: 2
+    },
+    {
+        question: "Al resolver un límite al infinito de un polinomio sobre otro polinomio del mismo grado, el resultado es...",
+        options: ["Cero", "La división de los coeficientes principales", "Infinito", "Uno"],
+        correct: 1
+    }
+];
+
+let limCurrentQuestion = 0;
+let limScore = 0;
+
+function cargarPreguntaLim() {
+    const qData = limQuizData[limCurrentQuestion];
+    document.getElementById("lim-question-text").innerText = qData.question;
+    document.getElementById("lim-ans-0").innerText = qData.options[0];
+    document.getElementById("lim-ans-1").innerText = qData.options[1];
+    document.getElementById("lim-ans-2").innerText = qData.options[2];
+    document.getElementById("lim-ans-3").innerText = qData.options[3];
+    document.getElementById("lim-quiz-progress").innerText = `Pregunta ${limCurrentQuestion + 1} de ${limQuizData.length}`;
+}
+
+function verificarRespuestaLim(selectedIndex) {
+    if (selectedIndex === limQuizData[limCurrentQuestion].correct) {
+        limScore++;
+    }
+    
+    limCurrentQuestion++;
+    
+    if (limCurrentQuestion < limQuizData.length) {
+        cargarPreguntaLim();
+    } else {
+        mostrarResultadosLim();
+    }
+}
+
+function mostrarResultadosLim() {
+    document.getElementById("lim-quiz-content").classList.add("hidden");
+    const scoreBoard = document.getElementById("lim-quiz-score-board");
+    scoreBoard.classList.remove("hidden");
+    
+    let mensaje = "";
+    if(limScore === 10) mensaje = "¡Perfección! Eres un genio de los límites 🧠🚀";
+    else if(limScore >= 7) mensaje = "¡Excelente trabajo! Has comprendido la esencia 👍";
+    else mensaje = "Buen intento. ¡Repasa el simulador y vuelve a intentarlo! 💪";
+
+    document.getElementById("lim-final-score").innerText = `Puntuación: ${limScore} / 10\n${mensaje}`;
+}
+
+function reiniciarQuizLim() {
+    limCurrentQuestion = 0;
+    limScore = 0;
+    document.getElementById("lim-quiz-score-board").classList.add("hidden");
+    document.getElementById("lim-quiz-content").classList.remove("hidden");
+    cargarPreguntaLim();
+}
+
+// Inicializar la primera pregunta al cargar (si el div existe)
+window.addEventListener('DOMContentLoaded', (event) => {
+    if(document.getElementById("lim-question-text")) {
+        cargarPreguntaLim();
+    }
+});
+				</script>
+
+</body>
+</html>
